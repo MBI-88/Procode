@@ -14,7 +14,7 @@ class ProfileUser(models.Model):
     address = models.CharField(max_length=50,null=True)
 
     class Meta:
-        ordering = ['-created_name','name']
+        ordering = ['-created_date']
     
     def __str__(self) -> str:
         return f'Profile for user {self.user.username}'

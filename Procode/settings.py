@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,10 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # User name: Procode password: pr0c0d3 email:procodecubashop@gmail.com
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tx^m7&!dk1pdfri*+roe+2-&#^^x-cph^aknzv60l9x&dwxbkc'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+if (DEBUG):
+    SECRET_KEY = 'django-insecure-tx^m7&!dk1pdfri*+roe+2-&#^^x-cph^aknzv60l9x&dwxbkc'
+
+else: SECRET_KEY =  b'django-secure-' + os.urandom(20)
+
 
 ALLOWED_HOSTS = []
 
@@ -124,3 +131,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Media file (user images, cells images,etc)
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
