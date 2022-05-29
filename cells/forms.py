@@ -5,12 +5,18 @@ from .models import ProfileUser
 # Forms
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=50)
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(max_length=50,attrs={'class':'form'})
+    password = forms.CharField(widget=forms.PasswordInput,attrs={'class':'form'})
 
-class UserRegistration(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput,label='Password')
-    password2 = forms.CharField(widget=forms.PasswordInput,label='Confirm')
+
+class UserRegistrationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput,attrs={'class':'form'})
+    password2 = forms.CharField(widget=forms.PasswordInput,attrs={'class':'form'})
+
+    def __init__(self,*args, **kwargs) -> None:
+        self.fields['username'].widget_attrs({'class':'form'})
+        self.fields['first_name'].widget_attrs({'class':'form'})
+        self.fields['email'].widget_attrs({'class':'form'})
 
     class Meta:
         model = User
@@ -24,6 +30,21 @@ class UserRegistration(forms.ModelForm):
         return cd['password2']
 
 class ProfileEditForm(forms.ModelForm):
+    def __init__(self,*args, **kwargs) -> None:
+        self.fields['image'].widget_attrs({'class':'form'})
+        self.fields['address'].widget_attrs({'class':'form'})
+        self.fields['phone'].widget_attrs({'class':'form'})
+
     class Meta:
         model = ProfileUser
         fields = ('image','address','phone')
+
+class UserEditForm(forms.ModelForm):
+    def __init__(self,*args, **kwargs) -> None:
+        self.fields['username'].widget_attrs({'class':'form'})
+        self.fields['first_name'].widget_attrs({'class':'form'})
+        self.fields['email'].widget_attrs({'class':'form'})
+
+    class Meta:
+        model = User
+        fields = ('username','email') 

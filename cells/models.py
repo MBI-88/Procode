@@ -11,7 +11,9 @@ class ProfileUser(models.Model):
     phone = models.CharField(max_length=20)
     created_date = models.DateTimeField(auto_now_add=True,db_index=True)
     image = models.ImageField(upload_to='user/%Y/%m/%d',blank=True)
-    address = models.CharField(max_length=50,null=True)
+    address = models.CharField(max_length=100,null=True)
+    key_token = models.CharField(blank=True,max_length=500)
+    key_date = models.DateTimeField(blank=True,null=True)
 
     class Meta:
         ordering = ['-created_date']
@@ -25,7 +27,7 @@ class ShopingCell(models.Model):
     """
     Tabla para el guardado de datos de telefonos
     """
-    owner_user = models.ForeignKey(ProfileUser,related_name='cell_owner',on_delete=models.CASCADE)
+    owner_user = models.ForeignKey('auth.User',related_name='cell_owner',on_delete=models.CASCADE)
     model_name = models.CharField(max_length=100,db_index=True)
     slug = models.SlugField(max_length=100,db_index=True)
     created_date = models.DateTimeField(auto_now_add=True)
