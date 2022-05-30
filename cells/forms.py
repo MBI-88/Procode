@@ -1,24 +1,40 @@
-from email.mime import image
 from django import forms
-
+import re
 
 # Forms
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=50,attrs={'class':'forms'})
-    password = forms.CharField(widget=forms.PasswordInput,attrs={'class':'forms'})
+    username = forms.CharField(max_length=25,required=True)
+    password = forms.CharField(widget=forms.PasswordInput,required=True)
+
+    def __init__(self, *args, **kwargs) -> None:
+        self.username.widget_attrs({'class':'forms'})
+        self.password.widget_attrs({'class':'forms'})
 
 
 class UserRegistrationForm(forms.Form):
-    username = forms.CharField(max_length=25,attrs={'class':'forms'})
-    first_name = forms.CharField(max_length=50,attrs={'class':'forms'})
-    last_name = forms.CharField(max_length=100,attrs={'class':'forms'})
-    password = forms.CharField(widget=forms.PasswordInput,attrs={'class':'forms'})
-    password2 = forms.CharField(widget=forms.PasswordInput,attrs={'class':'forms'})
-    email = forms.EmailField(attrs={'class':'forms'})
-    phone = forms.CharField(max_length=15,attrs={'class':'forms'})
-    image = forms.ImageField(attrs={'class':'forms'})
-    address = forms.CharField(max_length=100,attrs={'class':'forms'})
+    username = forms.CharField(max_length=25,required=True)
+    first_name = forms.CharField(max_length=50,required=True)
+    last_name = forms.CharField(max_length=100,required=True)
+    password = forms.CharField(widget=forms.PasswordInput,required=True)
+    password2 = forms.CharField(widget=forms.PasswordInput,required=True)
+    email = forms.CharField(widget=forms.EmailField,required=True,help_text='example@example.com')
+    phone = forms.CharField(max_length=8,required=True,help_text='53482459')
+    image = forms.CharField(widget=forms.ImageField)
+    address = forms.CharField(max_length=100,required=True,
+                              help_text='Lucia street betwen 42 and 44, Bultding 120,City...')
+
+    def __init__(self,*args, **kwargs) -> None:
+        self.username.widget_attrs({'class':'forms'})
+        self.first_name.widget_attrs({'class':'forms'})
+        self.last_name.widget_attrs({'class':'forms'})
+        self.password.widget_attrs({'class':'forms'})
+        self.password2.widget_attrs({'class':'forms'})
+        self.email.widget_attrs({'class':'forms'})
+        self.phone.widget_attrs({'class':'forms'})
+        self.image.widget_attrs({'class':'forms'})
+        self.address.widget_attrs({'class':'forms'})
+
 
 
     
@@ -28,6 +44,16 @@ class UserRegistrationForm(forms.Form):
             raise forms.ValidationError('Passwords don\'t match')
         
         return cd['password2']
+    
+    def clean_phone(self) -> str:
+        cd = self.cleaned_data
+        pattern = re.compile("^5[2-8]")   
+        if (len(cd['phone']) == 8):
+            if (pattern.search(cd['phone'])):
+                return cd['phone']
+        
+        raise forms.ValidationError('Error phone')
+
 
 
 
