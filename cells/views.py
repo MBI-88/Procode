@@ -80,6 +80,10 @@ class RgisterUser(View):
                                         key_token=key_token,
                                         key_date=key_datetoken)
                 # email_sender
+                
+                new_user.save()
+                new_user2.save()
+
             else:
                 return HttpResponse('The user {} is in the system'.format(cd['username']))
         
