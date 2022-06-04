@@ -24,20 +24,7 @@ class UserRegistrationForm(forms.Form):
     address = forms.CharField(max_length=100,required=True,
                               help_text='Lucia street betwen 42 and 44, Bultding 120,City...')
 
-    def __init__(self,*args, **kwargs) -> None:
-        self.username.widget_attrs({'class':'forms'})
-        self.first_name.widget_attrs({'class':'forms'})
-        self.last_name.widget_attrs({'class':'forms'})
-        self.password.widget_attrs({'class':'forms'})
-        self.password2.widget_attrs({'class':'forms'})
-        self.email.widget_attrs({'class':'forms'})
-        self.phone.widget_attrs({'class':'forms'})
-        self.image.widget_attrs({'class':'forms'})
-        self.address.widget_attrs({'class':'forms'})
 
-
-
-    
     def clean_password2(self) -> str:
         cd = self.cleaned_data
         if (cd['password'] != cd['password2']):
