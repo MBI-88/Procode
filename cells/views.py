@@ -1,29 +1,28 @@
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.utils.encoding import force_bytes
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 from django.utils.decorators import method_decorator
-from django.utils import timezone
 from django.views.generic import ListView,DetailView,View
-from django.http import HttpResponse, HttpResponseServerError, JsonResponse
+from django.http import JsonResponse
 from .forms import LoginForm,UserRegistrationForm
-from django.contrib.auth.views import LoginView,LogoutView
+from django.contrib.auth.views import LoginView,LogoutView,PasswordResetDoneView,PasswordResetView
 from django.contrib.auth import authenticate
+from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from .models import ProfileUser
-import hashlib
 from threading import Thread
 
 
+
 # Send Email
-def sendEmail(recipient_list:str,html_message:str,name_thred:str) -> None:
-    thred = Thread(target=send_mail,kwargs={
-                    'subject': 'Authenticated\'count',
-                    'message':'<h2> Please click here to authenticate <a>...</a></h2>',
-                    'from_email':'procodecubashop@gmail.com',
-                    'recipient_list':[recipient_list],
-                    'html_message': html_message
-                    },name=name_thred)
+def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> None:
+    thred = Thread(target=send_mail,args=[subject,message,'procodecubashop@gmail.com',
+                    [recipient_list]],name=name_thred)
     thred.start()
 
 
@@ -41,8 +40,6 @@ class LoginUser(LoginView):
     next_page = 'accounts/profile/profile.html'
     
   
- 
-
 # Route Logged out
 class LoggedoutUser(LogoutView):
     template_name = 'accounts/registration/logged_out.html'
@@ -75,7 +72,7 @@ class RgisterUser(View):
         form = self.form_class(request.POST)
         cd = form.cleaned_data
         if form.is_valid():
-            user = User.objects.filter(first_name=cd['first_name'],last_name=cd['last_name'],email=cd['email'])
+            user = User.objects.filter(username=cd['username'])
             if (user is None):
                 new_user = User()
                 new_user.username = cd['username']
@@ -85,35 +82,52 @@ class RgisterUser(View):
                 new_user.last_name = cd['last_name']
                 new_user.email = cd['email']
 
-                hash = hashlib.md5()
-                hash.update(bytes(new_user.username,encoding="utf-8"))
-                key_token = hash.hexdigest()
-                key_datetoken = timezone.now() + timezone.timedelta(1)
 
-                new_user2 = ProfileUser(phone=cd['phone'],
-                                        image=cd['image'],
-                                        address=cd['address'],
-                                        key_token=key_token,
-                                        key_date=key_datetoken)
+                #email
+                subject = 'ProC0d3 Activaion\'account' 
+                message = render_to_string('email/email.html',{
+                    'domain': get_current_site(request),
+                    'user': new_user.username,
+                    'uid64': urlsafe_base64_encode(force_bytes(new_user.pk)),
+                    'token': default_token_generator.make_token(new_user)
+                })
                 
                 # email_sender
                 try:
-                    sendEmail(new_user.email,'Hacer html',new_user.username)
+                    sendEmail(subject,message,cd['email'],new_user.username)
                     new_user.save()
-                    new_user2.save()
+                    ProfileUser.objects.create(user=new_user,phone=cd['phone'],
+                                        image=cd['image'],
+                                        address=cd['address'])
                     
                     # redireccion
+                    return redirect('login')
 
                 except:
-                    raise HttpResponseServerError('Error to send messages')
-                
-                
-
-            else:
-                return HttpResponse('The user {} is in the system'.format(cd['username']))
+                    raise render(request,'')
         
-        return render(request,self.template_name,{'form':form.errors})
+            else:
+                return render(request,'') 
+        
+        return render(request,self.template_name,{'form':form})
 
+
+# Registration succefull
+def registrationSuccefull(request:str,uid64:bytes,token:str) -> render:
+    try:
+        uid = urlsafe_base64_decode(uid64).decode()
+        user = User.objects.get(pk=uid)
+    except(TypeError,ValueError,OverflowError,User.DoesNotExist):
+        user = None
+
+    if (user is not None and default_token_generator.check_token(user,token)):
+        user.is_active = True
+        user.save()
+    else:
+        user.delete()
+        return render(request,'') # El token no es valido
+
+    return redirect('index') # Respuesta correcta y redirección
 
 
 
