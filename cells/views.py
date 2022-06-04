@@ -113,7 +113,7 @@ class RgisterUser(View):
 
 
 # Registration succefull
-def registrationSuccefull(request:str,uid64:bytes,token:str) -> render:
+def registrationUserDone(request:str,uid64:bytes,token:str) -> render:
     try:
         uid = urlsafe_base64_decode(uid64).decode()
         user = User.objects.get(pk=uid)
