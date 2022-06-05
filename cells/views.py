@@ -190,3 +190,5 @@ class DetailItem(DetailView):
     template_name = 'dashboard/cell_detail.html'
     model = ShopingCell
     context_object_name = 'itemcell'
+
+    
