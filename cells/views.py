@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DetailView,View
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from .forms import LoginForm,UserRegistrationForm
 from .models import ShopingCell
 from django.contrib.auth.views import (LoginView,LogoutView,PasswordResetDoneView,
@@ -17,6 +17,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from .models import ProfileUser
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from threading import Thread
 
 
@@ -156,15 +157,36 @@ class ResetUserPasswordComplete(PasswordResetCompleteView):
 
 # List Items
 class ShowItems(ListView):
-    template_name = 'dashboard/shoping_items.html'
+    template_name = 'dashboard/cell_items.html'
     model = ShopingCell
-    context_object_name = 'cellItems'
-    
-    
+    context_object_name = 'itemcells'
 
+    def get(self, request:str, *args, **kwargs) -> render:
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        items = self.model.object.all()
+        count = len(items)
+        orphans = count - 8 if count > 8 else 0
+        paginator = Paginator(items,8,orphans=orphans)
+        page = request.GET.get('page')
 
+        try:
+            items = paginator.page(page)
+        except PageNotAnInteger:
+            items = paginator.page(1)
+        except EmptyPage:
+            if is_ajax:
+                return HttpResponse('')
+            items = paginator.page(paginator.num_pages)
+        
+        if is_ajax:
+            return render(request,'dashboard/cell_ajax.html',{self.context_object_name:items})
+
+        return render(request,self.template_name,{self.context_object_name:items})
+    
 
 
 # Detail Items
 class DetailItem(DetailView):
-    pass
+    template_name = 'dashboard/cell_detail.html'
+    model = ShopingCell
+    context_object_name = 'itemcell'
