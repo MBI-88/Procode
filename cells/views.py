@@ -129,7 +129,7 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> render:
     else:
         user.delete()
         return render(request,'') # El token no es valido
-
+    
     return redirect('index') # Respuesta correcta y redirección
 
 
