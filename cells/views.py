@@ -9,6 +9,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DetailView,View
 from django.http import JsonResponse
 from .forms import LoginForm,UserRegistrationForm
+from .models import ShopingCell
 from django.contrib.auth.views import (LoginView,LogoutView,PasswordResetDoneView,
                                         PasswordResetView,PasswordResetCompleteView,PasswordResetConfirmView)
 from django.contrib.auth import authenticate
@@ -134,6 +135,7 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> render:
 # Reset Password
 class ResetUserPassword(PasswordResetView):
     template_name = 'accounts/registeration/reset_password.html'
+    email_template_name = 'email/email.html'
 
 
 # Reset Done
@@ -152,11 +154,17 @@ class ResetUserPasswordComplete(PasswordResetCompleteView):
 
 
 
-# Route List Items
+# List Items
 class ShowItems(ListView):
-    pass
+    template_name = 'dashboard/shoping_items.html'
+    model = ShopingCell
+    context_object_name = 'cellItems'
+    
+    
 
 
-# Route Detail Items
+
+
+# Detail Items
 class DetailItem(DetailView):
     pass

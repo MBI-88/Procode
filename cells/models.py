@@ -1,5 +1,7 @@
+from platform import architecture
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 
 # Create your models here.
 
@@ -26,8 +28,8 @@ class ShopingCell(models.Model):
     Tabla para el guardado de datos de telefonos
     """
     owner_user = models.ForeignKey('auth.User',related_name='cell_owner',on_delete=models.CASCADE)
-    model_name = models.CharField(max_length=100,db_index=True)
-    slug = models.SlugField(max_length=100,db_index=True)
+    model_name = models.CharField(max_length=100,db_index=True,unique=True)
+    slug = models.SlugField(max_length=100,db_index=True,unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     price = models.DecimalField(max_digits=10,decimal_places=2)
@@ -40,4 +42,8 @@ class ShopingCell(models.Model):
         
     def __str__(self) -> str:
         return f'Item cell {self.model_name}'
+    
+    def get_absolute_url(self):
+        return reverse("cells:model_detail", args=[self.id,self.slug])
+    
 
