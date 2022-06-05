@@ -9,7 +9,8 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DetailView,View
 from django.http import JsonResponse
 from .forms import LoginForm,UserRegistrationForm
-from django.contrib.auth.views import LoginView,LogoutView,PasswordResetDoneView,PasswordResetView
+from django.contrib.auth.views import (LoginView,LogoutView,PasswordResetDoneView,
+                                        PasswordResetView,PasswordResetCompleteView,PasswordResetConfirmView)
 from django.contrib.auth import authenticate
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
@@ -128,6 +129,26 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> render:
         return render(request,'') # El token no es valido
 
     return redirect('index') # Respuesta correcta y redirección
+
+
+# Reset Password
+class ResetUserPassword(PasswordResetView):
+    template_name = 'accounts/registeration/reset_password.html'
+
+
+# Reset Done
+class ResetUserPasswordDone(PasswordResetDoneView):
+    template_name = 'accounts/registration/reset_password_done.html'
+
+
+# Reset Confirmation
+class ResetUserPasswordConfirm(PasswordResetConfirmView):
+    template_name = 'accounts/registration/reset_password_confirm.html'
+
+
+# Reset Complete
+class ResetUserPasswordComplete(PasswordResetCompleteView):
+    template_name = 'accounts/registration/reset_password_complete.html'
 
 
 
