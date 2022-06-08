@@ -1,18 +1,19 @@
-from django.shortcuts import redirect, render
+from django import views
+from django.shortcuts import redirect, render,get_object_or_404
 from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView,DetailView,View
-from django.http import HttpResponse, JsonResponse
+from django.views.generic import ListView,DetailView,View,TemplateView
+from django.http import HttpResponse
 from .forms import LoginForm,UserRegistrationForm
 from .models import ShopingCell
 from django.contrib.auth.views import (LoginView,LogoutView,PasswordResetDoneView,
                                         PasswordResetView,PasswordResetCompleteView,PasswordResetConfirmView)
-from django.contrib.auth import authenticate
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
@@ -31,26 +32,26 @@ def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> Non
 
 # Create your views here.
 
-# Route Index
+# Index
 def index(request:str) -> render:
     return render(request,'base.html')
 
 
-# Route Login
+# Login (Register)
 class LoginUser(LoginView):
     template_name = 'accounts/registration/login.html'
     form_class = LoginForm
     next_page = 'accounts/profile/profile.html'
     
   
-# Route Logged out
+# Logged out (Register)
 class LoggedoutUser(LogoutView):
     template_name = 'accounts/registration/logged_out.html'
     next_page = ''
     title = 'Logged out'
 
 
-# Route Register
+# Register (Register)
 class RgisterUser(View):
     template_name = 'accounts/registration/register.html'
     form_class = UserRegistrationForm
@@ -113,9 +114,10 @@ class RgisterUser(View):
                 return render(request,'') 
         
         return render(request,self.template_name,{'form':form})
+    
 
 
-# Registration succefull
+# Registration succefull  (Register)
 def registrationUserDone(request:str,uid64:bytes,token:str) -> render:
     try:
         uid = urlsafe_base64_decode(uid64).decode()
@@ -133,29 +135,29 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> render:
     return redirect('index') # Respuesta correcta y redirección
 
 
-# Reset Password
+# Reset Password (Register)
 class ResetUserPassword(PasswordResetView):
     template_name = 'accounts/registeration/reset_password.html'
     email_template_name = 'email/email.html'
 
 
-# Reset Done
+# Reset Done (Register)
 class ResetUserPasswordDone(PasswordResetDoneView):
     template_name = 'accounts/registration/reset_password_done.html'
 
 
-# Reset Confirmation
+# Reset Confirmation (Register)
 class ResetUserPasswordConfirm(PasswordResetConfirmView):
     template_name = 'accounts/registration/reset_password_confirm.html'
 
 
-# Reset Complete
+# Reset Complete (Register)
 class ResetUserPasswordComplete(PasswordResetCompleteView):
     template_name = 'accounts/registration/reset_password_complete.html'
 
 
 
-# List Items
+# List Items (Dashboard)
 class ShowItems(ListView):
     template_name = 'dashboard/cell_items.html'
     model = ShopingCell
@@ -185,10 +187,102 @@ class ShowItems(ListView):
     
 
 
-# Detail Items
+# Detail Items (Dashboard)
 class DetailItem(DetailView):
     template_name = 'dashboard/cell_detail.html'
     model = ShopingCell
     context_object_name = 'itemcell'
 
+
+
+# Create Item (Profile)
+class CreateItem(CreateView):
+    template_name = 'accounts/profile/create_item.html'
+    model = ShopingCell
+    fields = ['model_name','slug','price','image','description']
+
+    @method_decorator(login_required)
+    def dispatch(self, request:str, *args, **kwargs) -> HttpResponse:
+        return super().dispatch(request, *args, **kwargs)
+
+
+# Update Item (Profile)
+class UpdateItem(UpdateView):
+    template_name = 'accounts/profile/update_item.html'
+    model = ShopingCell
+    fields = ['price','image','description']
+
+    @method_decorator(login_required)
+    def dispatch(self, request:str, *args, **kwargs) -> HttpResponse:
+        return super().dispatch(request, *args, **kwargs)
+
+
+
+# Delete Item (Profile)
+class DeleteItem(DeleteView):
+    template_name = 'accounts/profile/delete_item.html'
+    model = ShopingCell
+    success_url = reverse_lazy('profile')
+
+
+
+
+# Profile (Profile)
+class ProfileUser(TemplateView):
+    template_name = 'accounts/profile/profile.html'
+
+    @method_decorator(login_required)
+    def get(self,request:str,*args, **kwargs) -> HttpResponse:
+        context = super().get_context_data(**kwargs)
+        context["user"] = get_object_or_404(User,username=request.user.username,is_active=True)
+        return context
+
+
+# Update (Profile)
+class UpdateProfile(UpdateView):
+    template_name = 'accounts/profile/update_profile.html'
+    form_class = UserRegistrationForm
+    context_object_name = 'form_update'
+
     
+    @method_decorator(login_required)
+    def post(self, request:str, *args, **kwargs) -> HttpResponse:
+        form = self.form_class(request.POST)
+        cd = form.cleaned_data
+        if form.is_valid():
+            new_user = get_object_or_404(User,username=request.user.username,is_active=True)
+            new_user.username = cd['username']
+            new_user.is_active = False
+            new_user.set_password(cd['password'])
+            new_user.first_name = cd['first_name']
+            new_user.last_name = cd['last_name']
+            new_user.email = cd['email']
+           
+            #email
+            subject = 'ProC0d3 Activaion\'account' 
+            message = render_to_string('email/email.html',{
+                'domain': get_current_site(request),
+                'user': new_user.username,
+                'uid64': urlsafe_base64_encode(force_bytes(new_user.pk)),
+                'token': default_token_generator.make_token(new_user)
+            })
+                
+            # email_sender
+            try:
+                sendEmail(subject,message,cd['email'],new_user.username)
+                new_user.save()
+                ProfileUser.objects.update(user=new_user,phone=cd['phone'],
+                                          image=cd['image'],address=cd['address'])
+                
+                # redireccion
+                return redirect('login')
+
+            except:
+                raise render(request,'')
+        
+       
+        
+        return render(request,self.template_name,{'form':form})
+
+    
+  

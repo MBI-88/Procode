@@ -7,10 +7,6 @@ class LoginForm(forms.Form):
     username = forms.CharField(max_length=25,required=True)
     password = forms.CharField(widget=forms.PasswordInput,required=True)
 
-    def __init__(self, *args, **kwargs) -> None:
-        self.username.widget_attrs({'class':'forms'})
-        self.password.widget_attrs({'class':'forms'})
-
 
 class UserRegistrationForm(forms.Form):
     username = forms.CharField(max_length=25,required=True)

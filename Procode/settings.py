@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from telnetlib import LOGOUT
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cells.apps.CellsConfig',
+    'easy_thumbnails'
     
 ]
 
@@ -135,3 +137,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Media file (user images, cells images,etc)
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+
+# Redirect Urls
+
+LOGING_REDIRECT_URL = 'profile_user'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'

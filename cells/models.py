@@ -11,6 +11,7 @@ class ProfileUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="profile")
     phone = models.CharField(max_length=20)
     created_date = models.DateTimeField(auto_now_add=True,db_index=True)
+    updated_date = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='user/%Y/%m/%d',blank=True)
     address = models.CharField(max_length=100,null=True)
 
