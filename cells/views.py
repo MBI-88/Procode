@@ -243,8 +243,13 @@ class UpdateProfile(UpdateView):
     template_name = 'accounts/profile/update_profile.html'
     form_class = UserRegistrationForm
     context_object_name = 'form_update'
-
     
+
+    @method_decorator(login_required)
+    def get(self, request:str, *args, **kwargs) -> HttpResponse:
+        return super().get(request, *args, **kwargs)
+    
+
     @method_decorator(login_required)
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
@@ -271,7 +276,7 @@ class UpdateProfile(UpdateView):
             try:
                 sendEmail(subject,message,cd['email'],new_user.username)
                 new_user.save()
-                ProfileUser.objects.update(user=new_user,phone=cd['phone'],
+                ProfileUser.objects.filter(user=new_user).update(phone=cd['phone'],
                                           image=cd['image'],address=cd['address'])
                 
                 # redireccion
