@@ -27,7 +27,7 @@ class ShopingCell(models.Model):
     Tabla para el guardado de datos de telefonos
     """
     owner_user = models.ForeignKey('auth.User',related_name='shopingcell',on_delete=models.CASCADE)
-    model_name = models.CharField(max_length=100,db_index=True)
+    model_name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100,db_index=True,unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
