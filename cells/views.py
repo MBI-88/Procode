@@ -294,7 +294,7 @@ class UpdateProfile(UpdateView):
                     return redirect('profile')
 
                 except:
-                    raise render(request,'accounts/errors/500.html')
+                    return render(request,'accounts/errors/500.html')
             
             else:
                 messages.add_message(request,level=1,message="There are not changes in your profile")
@@ -303,6 +303,10 @@ class UpdateProfile(UpdateView):
         return render(request,self.template_name,{self.context_object_name:form})
 
 
+
+# Profile Delete (Profile)
+class DeleteProfileUser(DeleteView):
+    template_name = 'account/profile/delete_account.html'
 
     
   
