@@ -39,6 +39,8 @@ class UserRegistrationForm(forms.Form):
         raise forms.ValidationError('Error phone')
     
 
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=100)
     
 
 
