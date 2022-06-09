@@ -132,7 +132,7 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> render:
         user.delete()
         return render(request,'') # El token no es valido
     
-    return redirect('index') # Respuesta correcta y redirección
+    return redirect('login') # Respuesta correcta y redirección
 
 
 # Reset Password (Register)
@@ -294,7 +294,7 @@ class UpdateProfile(UpdateView):
                     return redirect('profile')
 
                 except:
-                    return render(request,'accounts/errors/500.html')
+                    return render(request,'errors/500.html')
             
             else:
                 messages.add_message(request,level=1,message="There are not changes in your profile")
