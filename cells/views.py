@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DetailView,View,TemplateView
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseServerError
 from .forms import LoginForm,UserRegistrationForm
 from .models import ShopingCell
 from django.contrib.auth.views import (LoginView,LogoutView,PasswordResetDoneView,
@@ -124,13 +124,13 @@ class RegisterUser(View):
                                         address=cd['address'])
                     
                     # redireccion
-                    return redirect('login')
+                    return redirect('index')
 
                 except:
-                    raise render(request,'')
+                    return HttpResponseServerError('errors/500.html')
         
             else:
-                return render(request,'') 
+                messages.add_message(request,level=messages.WARNING,message='This user olready exist!')
         
         return render(request,self.template_name,{'form':form})
     
@@ -293,6 +293,10 @@ class DeleteItem(DeleteView):
     model = ShopingCell
     success_url = reverse_lazy('profile')
 
+    @method_decorator(login_required)
+    def dispatch(self, request:str, *args, **kwargs) -> HttpResponse:
+        return super().dispatch(request, *args, **kwargs)
+
 
 
 
@@ -367,16 +371,16 @@ class UpdateProfile(UpdateView):
                     ProfileUser.objects.filter(user=new_user).update(phone=cd['phone'],
                                             image=cd['image'],address=cd['address'])
                     
-                    messages.add_message(request,level=2,message="Updating successful!")
+                    messages.add_message(request,level=messages.SUCCESS,message="Updating successful!")
 
                     # redireccion
                     return redirect('profile')
 
                 except:
-                    return render(request,'errors/500.html')
+                    return HttpResponseServerError('errors/500.html')
             
             else:
-                messages.add_message(request,level=1,message="There are not changes in your profile")
+                messages.add_message(request,level=messages.INFO,message="There are not changes in your profile")
                 return redirect('profile')
         
         return render(request,self.template_name,{self.context_object_name:form})
