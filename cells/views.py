@@ -306,7 +306,9 @@ class UpdateProfile(UpdateView):
 
 # Profile Delete (Profile)
 class DeleteProfileUser(DeleteView):
-    template_name = 'account/profile/delete_account.html'
+    template_name = 'accounts/profile/delete_account.html'
+    model = User
+    success_url = reverse_lazy('index')
 
     
   
