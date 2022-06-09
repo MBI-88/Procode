@@ -39,13 +39,7 @@ class UserRegistrationForm(forms.Form):
         raise forms.ValidationError('Error phone')
     
 
-    def clean_username(self) -> str:
-        cd = self.cleaned_data
-        user = User.objects.filter(username=cd['username'])
-        if (user is not None):
-            raise forms.ValidationError('This username olready exits in the system')
-        
-        return cd['username']
+    
 
 
 

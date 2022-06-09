@@ -1,4 +1,3 @@
-from django import views
 from django.shortcuts import redirect, render,get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -17,6 +16,7 @@ from django.contrib.auth.views import (LoginView,LogoutView,PasswordResetDoneVie
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
+from django.contrib import messages
 from .models import ProfileUser
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from threading import Thread
@@ -238,7 +238,8 @@ class ProfileUser(TemplateView):
         return context
 
 
-# Update (Profile)
+
+# Profile Update (Profile)
 class UpdateProfile(UpdateView):
     template_name = 'accounts/profile/update_profile.html'
     form_class = UserRegistrationForm
@@ -247,7 +248,17 @@ class UpdateProfile(UpdateView):
 
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
-        return super().get(request, *args, **kwargs)
+        form = self.form_class(initial={
+                'username': request.user.username,
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                'email': request.user.email,
+                'phone': request.user.profile.phone,
+                'image': request.user.profile.image,
+                'address': request.user.profile.address
+        })
+
+        return render(request,self.template_name,{self.context_object_name:form})
     
 
     @method_decorator(login_required)
@@ -255,39 +266,43 @@ class UpdateProfile(UpdateView):
         form = self.form_class(request.POST)
         cd = form.cleaned_data
         if form.is_valid():
-            new_user = get_object_or_404(User,username=request.user.username,is_active=True)
-            new_user.username = cd['username']
-            new_user.is_active = False
-            new_user.set_password(cd['password'])
-            new_user.first_name = cd['first_name']
-            new_user.last_name = cd['last_name']
-            new_user.email = cd['email']
-           
-            #email
-            subject = 'ProC0d3 Activaion\'account' 
-            message = render_to_string('email/email.html',{
-                'domain': get_current_site(request),
-                'user': new_user.username,
-                'uid64': urlsafe_base64_encode(force_bytes(new_user.pk)),
-                'token': default_token_generator.make_token(new_user)
-            })
-                
-            # email_sender
-            try:
-                sendEmail(subject,message,cd['email'],new_user.username)
-                new_user.save()
-                ProfileUser.objects.filter(user=new_user).update(phone=cd['phone'],
-                                          image=cd['image'],address=cd['address'])
-                
-                # redireccion
-                return redirect('login')
+            if form.has_changed():
+                new_user = get_object_or_404(User,username=request.user.username,is_active=True)
+                new_user.username = cd['username']
+                new_user.first_name = cd['first_name']
+                new_user.last_name = cd['last_name']
+                new_user.email = cd['email']
+            
+                #email
+                subject = 'ProC0d3 Activaion\'account' 
+                message = render_to_string('email/email.html',{
+                    'domain': get_current_site(request),
+                    'user': new_user.username,
+                    'body':"Your profile account was updated successful!"
+                })
+                    
+                # email_sender
+                try:
+                    sendEmail(subject,message,cd['email'],new_user.username)
+                    new_user.save()
+                    ProfileUser.objects.filter(user=new_user).update(phone=cd['phone'],
+                                            image=cd['image'],address=cd['address'])
+                    
+                    messages.add_message(request,level=2,message="Updating successful!")
 
-            except:
-                raise render(request,'')
+                    # redireccion
+                    return redirect('profile')
+
+                except:
+                    raise render(request,'accounts/errors/500.html')
+            
+            else:
+                messages.add_message(request,level=1,message="There are not changes in your profile")
+                return redirect('profile')
         
-       
-        
-        return render(request,self.template_name,{'form':form})
+        return render(request,self.template_name,{self.context_object_name:form})
+
+
 
     
   
