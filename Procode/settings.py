@@ -31,7 +31,8 @@ DEBUG = True
 if (DEBUG):
     SECRET_KEY = 'django-insecure-tx^m7&!dk1pdfri*+roe+2-&#^^x-cph^aknzv60l9x&dwxbkc'
 
-else: SECRET_KEY =  b'django-secure-' + os.urandom(20)
+else: 
+    SECRET_KEY =  b'django-secure-' + os.urandom(20)
 
 
 ALLOWED_HOSTS = []
@@ -140,6 +141,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 
 # Redirect Urls
 
-LOGING_REDIRECT_URL = 'profileuser'
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
+LOGING_REDIRECT_URL = 'cells:profile'
+LOGIN_URL = 'cells:login'
+LOGOUT_URL = 'cells:logout'
