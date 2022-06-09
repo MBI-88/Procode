@@ -52,7 +52,7 @@ class LoggedoutUser(LogoutView):
 
 
 # Register (Register)
-class RgisterUser(View):
+class RegisterUser(View):
     template_name = 'accounts/registration/register.html'
     form_class = UserRegistrationForm
     initial = {
@@ -148,7 +148,7 @@ class ResetUserPasswordDone(PasswordResetDoneView):
 
 # Reset Confirmation (Register)
 class ResetUserPasswordConfirm(PasswordResetConfirmView):
-    template_name = 'accounts/registration/reset_password_confirm.html'
+    template_name = 'accounts/registration/reset_password_confirm.html' # lleva formulario
 
 
 # Reset Complete (Register)
