@@ -34,11 +34,20 @@ def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> Non
 
 # Index
 def index(request:str) -> render:
+    """
+    Index view 
+    methods: request.GET
+    """
     return render(request,'base.html')
 
 
 # Login (Register)
 class LoginUser(LoginView):
+    """
+    LoginUser view
+    methods: request.GET, request.POST
+    LoginView's son
+    """
     template_name = 'accounts/registration/login.html'
     form_class = LoginForm
     next_page = 'accounts/profile/profile.html'
@@ -46,6 +55,11 @@ class LoginUser(LoginView):
   
 # Logged out (Register)
 class LoggedoutUser(LogoutView):
+    """
+    LoggedoutUser view
+    methods: request.GET
+    LogoutView's son
+    """
     template_name = 'accounts/registration/logged_out.html'
     next_page = ''
     title = 'Logged out'
@@ -53,6 +67,11 @@ class LoggedoutUser(LogoutView):
 
 # Register (Register)
 class RegisterUser(View):
+    """
+    RegisterUser view
+    methods: request.GET, request.POST
+    View's son
+    """
     template_name = 'accounts/registration/register.html'
     form_class = UserRegistrationForm
     initial = {
@@ -119,6 +138,11 @@ class RegisterUser(View):
 
 # Registration succefull  (Register)
 def registrationUserDone(request:str,uid64:bytes,token:str) -> render:
+    """
+    registrationUserDone view
+    methods: request.GET
+
+    """
     try:
         uid = urlsafe_base64_decode(uid64).decode()
         user = User.objects.get(pk=uid)
@@ -137,28 +161,53 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> render:
 
 # Reset Password (Register)
 class ResetUserPassword(PasswordResetView):
+    """
+    ResetUserPassword view
+    method: request.GET, request.POST
+    PassWordResetView's son
+    """
     template_name = 'accounts/registeration/reset_password.html'
     email_template_name = 'email/email.html'
 
 
 # Reset Done (Register)
 class ResetUserPasswordDone(PasswordResetDoneView):
+    """
+    ResetUserPasswordDone view
+    methods: request.GET
+    PasswordResetDoneView's son
+    """
     template_name = 'accounts/registration/reset_password_done.html'
 
 
 # Reset Confirmation (Register)
 class ResetUserPasswordConfirm(PasswordResetConfirmView):
+    """
+    ResetUserPasswordConfirm view
+    methods: request.GET, request.POST
+    PasswordResetConfirmView's son
+    """
     template_name = 'accounts/registration/reset_password_confirm.html' # lleva formulario
 
 
 # Reset Complete (Register)
 class ResetUserPasswordComplete(PasswordResetCompleteView):
+    """
+    ResetUserPasswordComplete view
+    method: request.GET
+    PasswordCompleteView's son
+    """
     template_name = 'accounts/registration/reset_password_complete.html'
 
 
 
 # List Items (Dashboard)
 class ShowItems(ListView):
+    """
+    ShowItems view
+    methods: request.GET, request.AJAX
+    ListView's son
+    """
     template_name = 'dashboard/cell_items.html'
     model = ShopingCell
     context_object_name = 'itemcells'
@@ -189,6 +238,11 @@ class ShowItems(ListView):
 
 # Detail Items (Dashboard)
 class DetailItem(DetailView):
+    """
+    DetailItem view
+    method: request.GET
+    DetailView's son
+    """
     template_name = 'dashboard/cell_detail.html'
     model = ShopingCell
     context_object_name = 'itemcell'
@@ -197,6 +251,11 @@ class DetailItem(DetailView):
 
 # Create Item (Profile)
 class CreateItem(CreateView):
+    """
+    CreateItem view
+    methods: request.GET, request.POST
+    CreateView's son
+    """
     template_name = 'accounts/profile/create_item.html'
     model = ShopingCell
     fields = ['model_name','slug','price','image','description']
@@ -208,6 +267,11 @@ class CreateItem(CreateView):
 
 # Update Item (Profile)
 class UpdateItem(UpdateView):
+    """
+    UpdateItem view
+    methods: request.GET, reques.POST
+    UpdateView's son
+    """
     template_name = 'accounts/profile/update_item.html'
     model = ShopingCell
     fields = ['price','image','description']
@@ -220,6 +284,11 @@ class UpdateItem(UpdateView):
 
 # Delete Item (Profile)
 class DeleteItem(DeleteView):
+    """
+    DeletItem view
+    methods: request.GET, request.POST
+    DeleteView's son
+    """
     template_name = 'accounts/profile/delete_item.html'
     model = ShopingCell
     success_url = reverse_lazy('profile')
@@ -229,6 +298,11 @@ class DeleteItem(DeleteView):
 
 # Profile (Profile)
 class ProfileUser(TemplateView):
+    """
+    ProfileUser view
+    methods: request.GET, request.POST
+    TemplateView's son
+    """
     template_name = 'accounts/profile/profile.html'
 
     @method_decorator(login_required)
@@ -241,6 +315,11 @@ class ProfileUser(TemplateView):
 
 # Profile Update (Profile)
 class UpdateProfile(UpdateView):
+    """
+    UpdateProfile view
+    methods: request.GET, request.POST
+    UpdateView's son
+    """
     template_name = 'accounts/profile/update_profile.html'
     form_class = UserRegistrationForm
     context_object_name = 'form_update'
@@ -306,9 +385,18 @@ class UpdateProfile(UpdateView):
 
 # Profile Delete (Profile)
 class DeleteProfileUser(DeleteView):
+    """
+    DeleteProfile view
+    methods: request.GET, request.POST
+    DeleteView's son
+    """
     template_name = 'accounts/profile/delete_account.html'
     model = User
     success_url = reverse_lazy('index')
+
+    @method_decorator(login_required)
+    def dispatch(self, request:str, *args, **kwargs) -> HttpResponse:
+        return super().dispatch(request, *args, **kwargs)
 
     
   
