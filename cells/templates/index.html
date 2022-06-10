@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href=" {% static 'bootstrap_css/bootstrap.min.css' %} ">
+    <link rel="stylesheet" href=" {% static 'procodestyle/main.css' %} ">
+    <title>Procode-{% block title %}Shop{% endblock title %}</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient opacity-90" id="navbar">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src=" {% static 'img/logo.jpg' %} " alt="LOGO" class="rounded-circle " width="45">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon  bg-light opacity-50"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            {% block navbar %}
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-hover">
+                <li class="nav-item">
+                    <a class="nav-link text-light font-monospace fs-5 active" aria-current="page" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light font-monospace fs-5 active" href="#">Tienda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light font-monospace fs-5 active" href="#">Contactos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light font-monospace fs-5 active" href="#">Perfil</a>
+                </li>
+                </ul>
+            {% endblock navbar %}
+          </div>
+        </div>
+      </nav>
+    
+    <script src=" {% static 'bootstrap_js/bootstrap.bundle.min.js' %} "></script> 
+</body>
+</html>
