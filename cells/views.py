@@ -38,7 +38,7 @@ def index(request:str) -> render:
     Index view 
     methods: request.GET
     """
-    return render(request,'base.html')
+    return render(request,'index.html')
 
 
 # Login (Register)
