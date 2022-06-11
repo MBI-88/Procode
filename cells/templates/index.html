@@ -5,15 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href=" {% static 'img/logo/logo.ico' %}  " type="image/x-icon">
     <link rel="stylesheet" href=" {% static 'bootstrap_css/bootstrap.min.css' %} ">
     <link rel="stylesheet" href=" {% static 'procodestyle/main.css' %} ">
     <title>Procode-{% block title %}Shop{% endblock title %}</title>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark bg-gradient" id="navbar">
-        <div class="container-fluid">
+<body class="tapis-container container-lx">
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparet opacity-40" id="navbar">
+      <div class="container-fluid">
           <a class="navbar-brand" href="#">
-            <img src=" {% static 'img/logo.jpg' %} " alt="LOGO" class="rounded-circle " width="45">
+            <img src=" {% static 'img/logo/logo.jpg' %} " alt="LOGO" class="rounded-circle " width="45">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon  bg-light opacity-50"></span>
@@ -21,80 +22,105 @@
           <div class="collapse navbar-collapse nav-hover" id="navbarTogglerDemo01">
             {% block navbar %}
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link text-light font-monospace fs-5 active" aria-current="page" href="#">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light font-monospace fs-5 active" href="#">Tienda</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light font-monospace fs-5 active" href="#">Contactos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light font-monospace fs-5 active" href="#">Perfil</a>
-                </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-dark font-monospace fs-5 active" aria-current="page" href="#">Inicio</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-dark font-monospace fs-5 active" href="#">Tienda</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-dark font-monospace fs-5 active" href="#">Contactos</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-dark font-monospace fs-5 active" href="#">Informacion</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark font-monospace fs-5 active" href="#">Quienes Somos</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-dark font-monospace fs-5 active" href="#">Perfil</a>
+                  </li>
                 </ul>
             {% endblock navbar %}
-            <a href="#" class="navbar-brand text-light font-monospace fs-5 ">Login</a>
-            <a href="#" class="navbar-brand text-light font-monospace fs-5 ">Register</a>
-            <a href="#" class="navbar-brand text-light font-monospace fs-5 ">Logged out</a>
+            <a href="#" class="navbar-brand text-dark font-monospace fs-5 ">Entrar</a>
+            <a href="#" class="navbar-brand text-dark font-monospace fs-5 ">Registrarse</a>
+            <a href="#" class="navbar-brand text-dark font-monospace fs-5 ">Salir</a>
           </div>
-        </div>
-      </nav>
-      <div class="container-lg pt-5" id="content">
-        {% block content %}
-          <div class="container-lg pt-5 pb-5">
-
-          </div>
-          
-          <div class="row">
-            <div class="col-5">
-              <div>
-                <img src=" {% static 'img/shiwa-id-F_cfF1uX7qY-unsplash.jpg' %} " alt="news1" width="80">
-                <h3>Lorem, ipsum dolor.</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                    Pariatur dolor ipsa porro quasi ipsam. 
-                    Est expedita neque recusandae vel voluptatem?</p>
-                <a href="#">ver más <i class="fas fa-angle-double-right"></i></a>
-              </div>
-            </div>
-            <div class="col-5">
-              <div>
-                <img src=" {% static 'img/pexels-anna-nekrashevich-6802049.jpg' %} " alt="news2" width="80" >
-                <h3>Lorem, ipsum dolor.</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Pariatur dolor ipsa porro quasi ipsam.
-                    Est expedita neque recusandae vel voluptatem?</p>
-                <a href="#">ver más <i class="fas fa-angle-double-right"></i></a>
-
-              </div>
-            </div>
-            <div class="col-5">
-              <div>
-                <img src=" {% static 'img/pexels-bekir-donmez-9995703.jpg' %} " alt="news3" width="80">
-                <h3>Lorem, ipsum dolor.</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                    Pariatur dolor ipsa porro quasi ipsam. 
-                    Est expedita neque recusandae vel voluptatem?</p>
-                <a href="#">ver más <i class="fas fa-angle-double-right"></i></a>
-              </div>
-            </div>
-            <div class="col-5">
-              <div>
-                <img src=" {% static 'img/pexels-bekir-donmez-9995703.jpg' %} " alt="news3" width="80">
-                <h3>Lorem, ipsum dolor.</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                    Pariatur dolor ipsa porro quasi ipsam. 
-                    Est expedita neque recusandae vel voluptatem?</p>
-                <a href="#">ver más <i class="fas fa-angle-double-right"></i></a>
-              </div>
-            </div>
-            
-          </div>
-
-        {% endblock content %}
-
       </div>
+    </nav>
+    <div class="container-lg pt-5 " id="content">
+        {% block content %}
+              <div class="container-lg pt-5 pb-5 intro text-light">
+                <div class="intro-text">
+                  <h1 class="text-center font-monospace fw-bold fs-10">ProC0d3</h1> 
+                  <h2 class="text-center font-monospace fs-5" >Celulares</h2>
+                  <h2 class="text-center font-monospace  fs-5">en</h2>
+                  <h1 class="text-center font-monospace fw-bold fs-10">Cuba</h1>
+                </div>
+              </div>
+              {% comment "blocke_1" %}Carousel{% endcomment %}
+              <div class="container-lg pt-4 pb-4 justify-content-center">
+                <div id="carouselExampleSlidesOnly" class="carousel slide pt-2 pb-5" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src=" {% static 'img/carousel/iphone.png' %} " class="d-block img-fluid rounded" width="80"  alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src=" {% static 'img/carousel/google-pixel.png' %} " class="d-block img-fluid rounded" width="80" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src=" {% static 'img/carousel/iphone-6s-plus.png' %} " class="d-block img-fluid rounded" width="80" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src=" {% static 'img/carousel/phone-1.png' %} " class="d-block img-fluid rounded" width="80"  alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src=" {% static 'img/carousel/phone-2.png' %} " class="d-block img-fluid rounded" width="80"  alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src=" {% static 'img/carousel/smartphone-1.png' %} " class="d-block img-fluid rounded" width="80"  alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src=" {% static 'img/carousel/smartphone-2.png' %} " class="d-block img-fluid rounded" width="80"  alt="...">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="row row-cols-4 pt-5">
+                {% for col in '0123456789' %}
+                  <div class="col">
+                    <div class="zoon">
+                      <img src="../static/img/intro/image-{{col}}.jpg" alt="Image" width="auto" class="img-fluid rounded">
+                      <h3>Lorem, ipsum dolor.</h3>
+                      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+                         Pariatur dolor ipsa porro quasi ipsam. 
+                         Est expedita neque recusandae vel voluptatem?</p>
+
+                    </div>
+                  </div>
+                
+                {% endfor %}
+              </div>
+        {% endblock content %}
+    </div>
+    <div class="container-lg pt-5 social text-light">
+      <p class="text-center font-monospace fw-bold fs-5">Síguenos en:</p>
+      <div class="">
+              <a href="#">
+                  <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#">
+                  <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#">
+                  <i class="fab fa-linkedin"></i>
+              </a>
+      </div>
+    </div>
+    <footer class="container-lg center ">
+          <h3 class="text-center fw-bold fs-5 ">ProC0d3 Copyright</h3>
+    </footer>
     
     <script src=" {% static 'bootstrap_js/bootstrap.bundle.min.js' %} "></script> 
 </body>

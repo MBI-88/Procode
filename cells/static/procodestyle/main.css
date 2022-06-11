@@ -2,3 +2,36 @@
      border-radius: 5px;
      border-bottom: 2px solid  red;
 }
+
+.zoon {
+     border-radius: 5px ;
+     transition: all ease-in-out 0.8s;
+}
+.zoon :hover{
+     transform: scale(1.05);
+}
+
+
+.intro {
+     background: url('../img/tapis/intro-bg.jpg') 100% ;
+     box-shadow: 5px 5px 5px #080300ff;
+     border-radius: 15px;
+}
+
+.intro-text {
+     z-index: 2;
+}
+
+.tapis-container {
+     background: #010a1744;
+     background: -moz-radial-gradient(#010a1744,rgba(24, 31, 42, 0.105));
+
+}
+
+.social {
+     background: url('../img/tapis/Instagram.png') 60%;
+     box-shadow: 5px 5px 5px #080300ff;
+     border-radius: 15px ;
+}
+
+
