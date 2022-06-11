@@ -18,9 +18,9 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon  bg-light opacity-50"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <div class="collapse navbar-collapse nav-hover" id="navbarTogglerDemo01">
             {% block navbar %}
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-hover">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link text-light font-monospace fs-5 active" aria-current="page" href="#">Inicio</a>
                 </li>
@@ -35,9 +35,66 @@
                 </li>
                 </ul>
             {% endblock navbar %}
+            <a href="#" class="navbar-brand text-light font-monospace fs-5 ">Login</a>
+            <a href="#" class="navbar-brand text-light font-monospace fs-5 ">Register</a>
+            <a href="#" class="navbar-brand text-light font-monospace fs-5 ">Logged out</a>
           </div>
         </div>
       </nav>
+      <div class="container-lg pt-5" id="content">
+        {% block content %}
+          <div class="container-lg pt-5 pb-5">
+
+          </div>
+          
+          <div class="row">
+            <div class="col-5">
+              <div>
+                <img src=" {% static 'img/shiwa-id-F_cfF1uX7qY-unsplash.jpg' %} " alt="news1" width="80">
+                <h3>Lorem, ipsum dolor.</h3>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+                    Pariatur dolor ipsa porro quasi ipsam. 
+                    Est expedita neque recusandae vel voluptatem?</p>
+                <a href="#">ver más <i class="fas fa-angle-double-right"></i></a>
+              </div>
+            </div>
+            <div class="col-5">
+              <div>
+                <img src=" {% static 'img/pexels-anna-nekrashevich-6802049.jpg' %} " alt="news2" width="80" >
+                <h3>Lorem, ipsum dolor.</h3>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Pariatur dolor ipsa porro quasi ipsam.
+                    Est expedita neque recusandae vel voluptatem?</p>
+                <a href="#">ver más <i class="fas fa-angle-double-right"></i></a>
+
+              </div>
+            </div>
+            <div class="col-5">
+              <div>
+                <img src=" {% static 'img/pexels-bekir-donmez-9995703.jpg' %} " alt="news3" width="80">
+                <h3>Lorem, ipsum dolor.</h3>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+                    Pariatur dolor ipsa porro quasi ipsam. 
+                    Est expedita neque recusandae vel voluptatem?</p>
+                <a href="#">ver más <i class="fas fa-angle-double-right"></i></a>
+              </div>
+            </div>
+            <div class="col-5">
+              <div>
+                <img src=" {% static 'img/pexels-bekir-donmez-9995703.jpg' %} " alt="news3" width="80">
+                <h3>Lorem, ipsum dolor.</h3>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+                    Pariatur dolor ipsa porro quasi ipsam. 
+                    Est expedita neque recusandae vel voluptatem?</p>
+                <a href="#">ver más <i class="fas fa-angle-double-right"></i></a>
+              </div>
+            </div>
+            
+          </div>
+
+        {% endblock content %}
+
+      </div>
     
     <script src=" {% static 'bootstrap_js/bootstrap.bundle.min.js' %} "></script> 
 </body>
