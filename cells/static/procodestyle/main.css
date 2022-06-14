@@ -2,8 +2,8 @@
      border-bottom: 2px solid rgb(25, 25, 220);
 }
 
-.zoon {
-     border-radius: 5px ;
+.zoon img  {
+     border-radius: 2px ;
      overflow: hidden;
      transition: all ease-in-out 0.2s;
 }
@@ -14,10 +14,8 @@
 
 
 .title-procode {
-     background: url('../img/tapis/intro-bg.jpg') 100%;
-     box-shadow: 10px 10px 10px 10px #080300ff;
-     border-radius: 1%;
-     z-index: 1000;
+     background: url('../img/tapis/intro-bg.jpg') 100rem;
+
 }
 
 .title-procode main {
@@ -36,46 +34,17 @@
      }
 }
 
-.tapis-container {
-     background: rgb(255, 255, 255);
-     background: -moz-radial-gradient(rgba(238, 236, 236, 0.679),rgba(9, 14, 22, 0.105));
-}
+.carousel-background {
+     background: rgba(208, 117, 99, 0.73);
 
-
-.social {
-    background-color: #080300ff;
-}
-
-.carousel-center .carousel-item {
-     z-index: 1000;
-     margin-left: 45%;
-     overflow: hidden;
 }
 
 .footer-social {
-     background-color: bisque;
-     background: radial-gradient(rgb(157, 152, 152),rgba(202, 202, 196, 0.551));
-     border-radius: 5px;
-     box-shadow: 0px 0px 0px 5px rgba(120, 119, 120, 0.818);
+     background: radial-gradient(rgb(200, 195, 195),rgba(202, 202, 196, 0.551));
      
 }
 
-.presentation-bg {
-     background-color: bisque;
-     background: radial-gradient(white,rgb(209, 203, 203));
-     box-shadow: 1px 1px 1px 1px rgba(27, 26, 25, 0.853);
-     border-radius: 2%;
-
+.items-background {
+     background: rgba(7, 3, 52, 0.567);
 }
 
-.items-bg {
-     background-color: white;
-     background: radial-gradient(rgb(255, 255, 255),rgba(237, 233, 233, 0.607));
-     
-}
-
-.nav-bg {
-     background-color: gray;
-     background: radial-gradient(white,rgb(17, 15, 15));
-     z-index: 1000;
-}
