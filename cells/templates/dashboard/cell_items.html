@@ -40,18 +40,16 @@
 
 {% block items %}
     <div class="row row-cols-4 pt-5 pb-5 text-light">
-        {% if itemcells %}
-            {% for item in itemcells %}
-                <div class="col">
-                    <a href=" {{ item.get_absolute_url }} ">
-                        <img src=" {{item.image}} " class="img-fluid rounded" alt=".."> 
-                    </a>
-                </div>
-            {% endfor %}
-        {% empty %}
-                <h2> There're articles</h2>
-        {% endif %}
-      
+        {% for item in itemcells %}
+            <div class="col">
+                <a href=" {{ item.get_absolute_url }} ">
+                    <img src=" {{item.image}} " class="img-fluid rounded" alt=".."> 
+                </a>
+                <address>
+                    Price: {{ item.price }}. <br>
+                </address>
+            </div>
+        {% endfor %}
     </div>
 
 {% endblock items %}

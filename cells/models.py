@@ -25,7 +25,7 @@ class ProfileUser(models.Model):
 
 class ShopingCell(models.Model):
     """
-    Tabla para el guardado de datos de telefonos
+    Tabla para el guardado de los articulos (telefonos)
     """
     owner_user = models.ForeignKey('auth.User',related_name='shopingcell',on_delete=models.CASCADE)
     model_name = models.CharField(max_length=100)

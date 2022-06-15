@@ -1,0 +1,16 @@
+
+<div class="items-bg">
+    <div class="container-md text-center text-light">
+        <img src=" {{ itemcell.image }} " alt="..">
+        <address>
+           Last update: {{ itemcell.updated_date }}. <br>
+           Model: {{ itemcell.model_name }}. <br>
+           Price: {{ itemcell.price }}. <br>
+           Contact: <a href="mailto:{{ itemcell.owner_user.email }}"> {{ itemcell.owner_user.email }}</a>. <br> 
+           Phone: {{ itemcell.owner_user.phone }} <br>
+           Description: <p>
+            {{ itemcell.description }}
+           </p>. <br>
+        </address>
+    </div>
+</div>
