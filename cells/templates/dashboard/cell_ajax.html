@@ -2,7 +2,8 @@
     {% for item in itemcells %}
         <div class="col">
             <a href=" {{ item.get_absolute_url }} ">
-                <img src=" {{item.image}} " class="img-fluid rounded" alt=".."> 
+                {% thumbnail 'item.image' 200x0 quality=100  crop="smart" as im %}
+                <img src=" {{ im.url }} " class="img-fluid rounded" alt=".."> 
             </a>
             <address>
                 Price: {{ item.price }}. <br>

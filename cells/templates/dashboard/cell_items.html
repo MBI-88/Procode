@@ -38,18 +38,14 @@
     </div>
 {% endblock content_carousel %}
 
+{% load thumbnail %}
 {% block items %}
-    <div class="row row-cols-4 pt-5 pb-5 text-light">
-        {% for item in itemcells %}
-            <div class="col">
-                <a href=" {{ item.get_absolute_url }} ">
-                    <img src=" {{item.image}} " class="img-fluid rounded" alt=".."> 
-                </a>
-                <address>
-                    Price: {{ item.price }}. <br>
-                </address>
-            </div>
-        {% endfor %}
-    </div>
+    {% include 'dashboard/cell_ajax.html' %}
 
 {% endblock items %}
+
+{% block scriipt %}
+    <script src=" {% static 'bootstrap_js/bootstrap.bundle.min.js' %} "></script> 
+    <script src=" {% static 'procodejs/scrollinf.js' %} "></script>
+
+{% endblock scriipt %}
