@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import ShopingCell,ProfileUser
 
-admin.site.site_header = 'ProC0d3 Control'
+admin.site.site_header = 'ProC0d3 Admin Site'
 admin.site.index_title = 'ProC0d3 admin'
 
 # Register your models here.

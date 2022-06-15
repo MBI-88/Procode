@@ -44,6 +44,6 @@ class ShopingCell(models.Model):
         return f'Item cell {self.model_name}'
     
     def get_absolute_url(self):
-        return reverse("cells:model_detail", args=[self.id,self.slug])
+        return reverse("cells:dashboar_detail", kwargs={'pk':self.pk})
     
 
