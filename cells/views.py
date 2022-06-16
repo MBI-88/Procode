@@ -226,7 +226,7 @@ class ShowItems(ListView):
             items = paginator.page(1)
         except EmptyPage:
             if is_ajax:
-                return HttpResponse('<h1>Hola</h1>')
+                return HttpResponse('')
             items = paginator.page(paginator.num_pages)
         
         if is_ajax:

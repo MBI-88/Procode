@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %}Shop{% endblock title %}
 
+
 {% block content_carousel %}
     <div id="carouselShop" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner text-center">
@@ -43,14 +44,22 @@
 
 <!--Navbar-Search-->
 
-
+{% block searchbar %}
+    <nav class="navbar navbar-light items-bg">
+        <div class="container-lg pt-2 pb-5">
+        <form class="d-flex" method="GET" action="">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+            <button class="btn btn-outline-success bg-primary text-light" type="submit">Search</button>
+        </form>
+        </div>
+    </nav>
+{% endblock searchbar %}
 {% block items %}
     {% include 'dashboard/cell_ajax.html' %}
-
 {% endblock items %}
+
 
 {% block script %}
     <script src=" {% static 'procodejs/scrollinf.js' %} "></script>
     <script src=" {% static 'bootstrap_js/bootstrap.bundle.min.js' %} "></script> 
-
 {% endblock script %}

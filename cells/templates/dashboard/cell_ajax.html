@@ -1,9 +1,7 @@
-{% load thumbnail %}
 {% for item in itemcells %}
     <div class="col">
         <a href=" {{ item.get_absolute_url }} ">
             <div class="zoom">
-                {% thumbnail 'item.image' 200x0 quality=100  crop="smart" %}
                 <img src=" {{ item.image }} " class="img-fluid rounded" alt="..">
             </div> 
         </a>

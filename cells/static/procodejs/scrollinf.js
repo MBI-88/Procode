@@ -19,15 +19,14 @@ function scrollInf(){
             cache: 'default',
             credentials: 'same-origin',
 
-        }).then(response => response.text()).then((data) =>{
-            console.log(data)
-            if (data == ''){
+        }).then(response => response.text()).then((html) =>{
+            if (html == ''){
                 empty_page = true
 
             }
             else{
                 blocke_request = false
-                document.getElementById('items').innerHTML += data
+                document.getElementById('items').innerHTML += html
             }
         })
         
