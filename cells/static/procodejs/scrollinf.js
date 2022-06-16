@@ -9,7 +9,7 @@ function scrollInf(){
     if (window.screenTop > margin && empty_page == false && blocke_request == false){
         blocke_request = true
         page += 1
-        fetch('/shoping/?page='+ page,{
+        fetch('?page='+ page,{
             method: 'GET',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
@@ -19,14 +19,15 @@ function scrollInf(){
             cache: 'default',
             credentials: 'same-origin',
 
-        }).then((response) =>{
-            if (response.text() == ''){
+        }).then(response => response.text()).then((data) =>{
+            console.log(data)
+            if (data == ''){
                 empty_page = true
 
             }
             else{
                 blocke_request = false
-                document.getElementById('items').append(response.text())
+                document.getElementById('items').innerHTML += data
             }
         })
         

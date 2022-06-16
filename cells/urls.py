@@ -6,7 +6,7 @@ app_name = 'cells'
 # urlpatterns
 
 urlpatterns = [ 
-    path('',views.index,name='index'),
+    path('index/',views.index,name='index'),
     path('login/',views.LoginUser.as_view(),name='login'),
     path('logout/',views.LoggedoutUser.as_view(),name='logout'),
     path('register/',views.RegisterUser.as_view(),name='register'),

@@ -1,50 +1,56 @@
 {% extends 'index.html' %}
 {% load static %}
+{% block title %}Shop{% endblock title %}
+
 {% block content_carousel %}
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div id="carouselShop" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner text-center">
             <div class="carousel-item active">
-                <img src=" {% static 'img/carousel_phones/google-pixel.png' %}" class="img-fluid rounded" width="40" alt="">
+                <img src=" {% static 'img/carousel_shop/google-pixel.png' %}" class="img-fluid" width="20%" alt="">
             </div>
             <div class="carousel-item">
-                <img src=" {% static 'img/carousel_phones/iphone-6s-plus.png' %} " class="img-fluid rounded" width="40" alt="">
+                <img src=" {% static 'img/carousel_shop/iphone-6s-plus.png' %} " class="img-fluid" width="20%" alt="">
             </div>
             <div class="carousel-item">
-                <img src=" {% static 'img/carousel_phones/iphone.png' %} " class="img-fluid rounded" width="40" alt="">
+                <img src=" {% static 'img/carousel_shop/iphone.png' %} " class="img-fluid" width="20%" alt="">
             </div>
             <div class="carousel-item">
-                <img src=" {% static 'img/carousel_phones/iphone-1.png' %} " class="img-fluid rounded" width="40" alt="">
+                <img src=" {% static 'img/carousel_shop/phone-1.png' %} " class="img-fluid" width="20%" alt="">
             </div>
             <div class="carousel-item">
-                <img src=" {% static 'img/carousel_phones/iphone-2.png' %} " class="img-fluid rounded" width="40" alt="">
+                <img src=" {% static 'img/carousel_shop/phone-2.png' %} " class="img-fluid" width="20%" alt="">
             </div>
             <div class="carousel-item">
-                <img src=" {% static 'img/carousel_phones/smartphone-1.png' %} " class="img-fluid rounded" width="40" alt="">
+                <img src=" {% static 'img/carousel_shop/smartphone-1.png' %} " class="img-fluid" width="20%" alt="">
             </div>
             <div class="carousel-item">
-                <img src=" {% static 'img/carousel_phones/smartphone-2.png' %} " class="img-fluid rounded" width="40" alt="">
+                <img src=" {% static 'img/carousel_shop/smartphone-2.png' %} " class="img-fluid" width="20%" alt="">
             </div>
             <div class="carousel-item">
-                <img src=" {% static 'img/carousel_phones/smartphone.png' %} " class="img-fluid rounded" width="40" alt="">
+                <img src=" {% static 'img/carousel_shop/smartphone.png' %} " class="img-fluid" width="20%" alt="">
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselShop" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
         </button>
-
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselShop" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
         </button>
     </div>
 {% endblock content_carousel %}
+
+<!--Navbar-Search-->
+
 
 {% block items %}
     {% include 'dashboard/cell_ajax.html' %}
 
 {% endblock items %}
 
-{% block scriipt %}
-    <script src=" {% static 'bootstrap_js/bootstrap.bundle.min.js' %} "></script> 
+{% block script %}
     <script src=" {% static 'procodejs/scrollinf.js' %} "></script>
+    <script src=" {% static 'bootstrap_js/bootstrap.bundle.min.js' %} "></script> 
 
-{% endblock scriipt %}
+{% endblock script %}
