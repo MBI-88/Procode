@@ -9,7 +9,7 @@ function scrollInf(){
     if (window.screenTop > margin && empty_page == false && blocke_request == false){
         blocke_request = true
         page += 1
-        fetch('http://localhost:8000/cells/shopin/?page='+ page,{
+        fetch('/shoping/?page='+ page,{
             method: 'GET',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
