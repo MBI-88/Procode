@@ -214,7 +214,7 @@ class ShowItems(ListView):
 
     def get(self, request:str, *args, **kwargs) -> render:
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-        items = self.model.object.all()
+        items = self.model.objects.all()
         count = len(items)
         orphans = count - 8 if count > 8 else 0
         paginator = Paginator(items,8,orphans=orphans)
