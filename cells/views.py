@@ -61,7 +61,6 @@ class LoggedoutUser(LogoutView):
     LogoutView's son
     """
     template_name = 'accounts/registration/logged_out.html'
-    next_page = ''
     title = 'Logged out'
 
 

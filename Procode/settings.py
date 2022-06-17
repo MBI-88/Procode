@@ -142,5 +142,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 # Redirect Urls
 
 LOGING_REDIRECT_URL = 'cells:profile'
+LOGOUT_REDIRECT_URL = 'cells:index'
 LOGIN_URL = 'cells:login'
 LOGOUT_URL = 'cells:logout'
