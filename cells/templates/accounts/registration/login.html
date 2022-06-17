@@ -1,0 +1,24 @@
+<form action=" {% url 'cells:login' %} " method="POST" class="row g-3" id="loginform">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <label for="inputUsername" class="for-label">Username</label>
+        {% if form.usrname.errors %}
+            <div>
+                {{ form.username.errors }}
+            </div>
+        {% endif %}
+        {{ form.username }}
+    </div>
+    <div class="col-md-6">
+        <label for="inputPassword" class="form-label">Password</label>
+        {% if form.password.errors %}
+            <div>
+                {{ form.password.errors }}
+            </div>
+        {% endif %}
+        {{ form.password }}
+    </div>
+    <div class="col-md-6">
+        <button type="submit" class="btn btn-primary">Log in</button>
+    </div>
+</form>

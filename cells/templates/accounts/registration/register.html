@@ -1,0 +1,83 @@
+<form class="row g-3">
+    {% csrf_token %}
+
+    <div class="col-md-6">
+      <label for="inputUsername" class="form-label">Username</label>
+      {% if form.username.errors %}
+        <div>
+            {{ form.username.errors }}
+        </div>
+      {% endif %}
+      {{ form.username }}
+    </div>
+
+    <div class="col-md-6">
+        <label for="inputFirstname" class="form-label">First Name</label>
+        {% if form.first_name.errors %}
+            <div> {{ form.first_name.errors }} </div>
+        {% endif %}
+        {{ form.first_name }}
+    </div>
+
+    <div class="col-md-6">
+        <label for="inputLastname" class="form-label">Last Name</label>
+        {% if form.last_name.errors %}
+            <div> {{ form.last_name.errors }} </div>
+        {% endif %}
+        {{ form.last_name }}
+    </div>
+
+    <div class="col-md-6">
+        <label for="inputAddress" class="form-label">Address</label>
+        {% if form.address.errors %}
+            <div> {{ form.address.errors }} </div>
+        {% endif %}
+        {{ form.address }}
+    </div>
+
+    <div class="col-md-6">
+        <label for="inputPhone" class="form-label">Phone</label>
+        {% if form.phone.errors %}
+            <div> {{ form.phone.errors }} </div>
+        {% endif %}
+        {{ form.phone }}
+    </div>
+
+    <div class="col-md-6">
+        <label for="inputEmail" class="form-label">E-mail</label>
+        {% if form.email.errors %}
+            <div> {{ form.email.errors }} </div>
+        {% endif %}
+        {{ form.email }}
+    </div>
+
+    <div class="col-md-6">
+        <label for="inputImage" class="form-label">Image</label>
+        {% if form.image.errors %}
+            <div> {{ form.image.errors }} </div>
+        {% endif %}
+        {{ form.image }}
+      </div>
+
+    <div class="col-md-6">
+      <label for="inputPassword" class="form-label">Password</label>
+      {% if form.password.errors %}
+        <div>
+            {{ form.password.errors }}
+        </div>
+      {% endif %}
+      {{ form.password }}
+    </div>
+
+    <div class="col-md-6">
+      <label for="inputConfirm" class="form-label">Confirm</label>
+      {% if form.password2.errors %}
+        <div> {{ form.password2.errors }} </div>
+      {% endif %}
+      {{ form.password2 }}
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </div>
+  </form>

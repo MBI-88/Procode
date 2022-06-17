@@ -50,7 +50,7 @@ class LoginUser(LoginView):
     """
     template_name = 'accounts/registration/login.html'
     form_class = LoginForm
-    next_page = 'accounts/profile/profile.html'
+    
     
   
 # Logged out (Register)
