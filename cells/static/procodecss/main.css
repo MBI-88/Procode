@@ -51,5 +51,15 @@
 }
 
 .navbar-bg {
-     background-color: rgba(12, 12, 12, 0.189);
+     background-color: #101010;
+}
+
+.middle-bg {
+     background-color: #e7e0dbd7;
+}
+
+.carousel-bg {
+     background: linear-gradient(white,gray);
+     
+     
 }
