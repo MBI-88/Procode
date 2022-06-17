@@ -155,7 +155,7 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> render:
         user.delete()
         return render(request,'') # El token no es valido
     
-    return redirect('login') # Respuesta correcta y redirección
+    return redirect('index') # Respuesta correcta y redirección
 
 
 # Reset Password (Register)
@@ -165,7 +165,7 @@ class ResetUserPassword(PasswordResetView):
     method: request.GET, request.POST
     PassWordResetView's son
     """
-    template_name = 'accounts/registeration/reset_password.html'
+    template_name = 'accounts/registration/reset_password.html'
     email_template_name = 'email/email.html'
 
 
