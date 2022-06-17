@@ -10,7 +10,7 @@
     <link rel="stylesheet" href=" {% static 'procodecss/main.css' %} ">
     <title>Procode-{% block title %}Home{% endblock title %}</title>
 </head>
-<body>
+<body class="body-bg">
     <!--Modal-->
     <div class="modal fade" id="LoginRegister" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable">
@@ -20,9 +20,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            {% block modal_login_register %}
+            {% block modalLogin %}
 
-            {% endblock modal_login_register %}
+            {% endblock modalLogin %}
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -32,7 +32,7 @@
     </div>
 
     <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#e3f2fd;" id="navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg"  id="navbar">
       <div class="container-fluid">
           <a class="navbar-brand" href=" {% url 'cells:index' %} " data-bs-toogle="tooltip" data-bs-html="true" title="Home">
             <img src=" {% static 'img/logo/logo.jpg' %} " alt="LOGO" class="rounded-circle " width="45">
@@ -102,7 +102,7 @@
                       <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
                     </svg>   Login
                   </button>
-                  <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#LoginRegister">
+                  <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#LoginRegister" id="register">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
                       <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                       <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
@@ -126,13 +126,12 @@
     </div>
     
     <!--Carousel-Index-->
-    <div class="carousel-bg">
-      <div class="container-md pt-5 pb-5" id="content_carousel">
+      <div class="container-sm pt-5 pb-5 carousel-bg">
         {% block content_carousel %}
           <div id="mainSlider" class="carousel slide pt-2 pb-2" data-bs-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                  <img src=" {% static 'img/carousel_index/camera-1.jpg' %} " class="img-fluid rounded-pill " alt="">
+                  <img src=" {% static 'img/carousel_index/camera-1.jpg' %} " class="img-fluid rounded-pill" alt="">
               </div>
               <div class="carousel-item">
                   <img src=" {% static 'img/carousel_index/coffee-2.jpg' %} " class="img-fluid rounded-pill" alt="">
@@ -186,30 +185,23 @@
           </div>
         {% endblock content_carousel %}
       </div>
-    </div>
    
    {% block searchbar %}{% endblock searchbar %}     
     <!--Items-->
-    <div class="items-bg">
-      <div id="items" class="container-md">
-          <div class="row row-cols-4 pt-5 pb-5 text-light">
+    
+      <div class="container-fluid items-bg ">
+          <div class="row row-cols-5 p-4 text-light">
             {% block items %}
               {% for col in '0123456789' %}
-                    <div class="col">
+                    <div class="col p-2">
                       <div class="zoon">
                         <img src="/static/img/items_index/image-{{col}}.jpg" alt="Image" width="auto" class="img-fluid rounded">
                       </div>
-                      <h3>Lorem, ipsum dolor.</h3>
-                      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                          Pariatur dolor ipsa porro quasi ipsam. 
-                          Est expedita neque recusandae vel voluptatem?</p>
                     </div>
               {% endfor %}
             {% endblock items %}
           </div>
       </div>
-    </div>
-    
     <!--Footer-->
     <div class="footer-bg">
       <div class="container-sm pt-5 pb-5  text-dark abs-center">

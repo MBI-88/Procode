@@ -34,8 +34,8 @@
      }
 }
 
-.carousel-bg {
-     background: rgba(208, 117, 99, 0.73);
+.body-bg {
+     background: rgba(236, 236, 240, 0.868);
 
 }
 
@@ -46,5 +46,10 @@
 
 
 .items-bg {
-     background: rgba(7, 3, 52, 0.567);
+     background: rgba(10, 10, 10, 0.092);
+     border-radius: 1%;
+}
+
+.navbar-bg {
+     background-color: rgba(12, 12, 12, 0.189);
 }
