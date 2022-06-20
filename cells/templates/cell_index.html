@@ -10,9 +10,9 @@
     <link rel="stylesheet" href=" {% static 'procodecss/main.css' %} ">
     <title>ProC0d3 {% block title %}Home{% endblock title %}</title>
 </head>
-<body class="body-bg">
+<body>
     <!--Modal-->
-    <div class="modal fade" id="LoginRegister" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalblock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
@@ -20,9 +20,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            {% block modalLogin %}
+            {% block modalblock %}
 
-            {% endblock modalLogin %}
+            {% endblock modalblock %}
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -35,7 +35,7 @@
     <nav class="navbar navbar-expand-lg navbar-light navbar-bg"  id="navbar">
       <div class="container-fluid">
           <a class="navbar-brand" href=" {% url 'cells:index' %} " data-bs-toogle="tooltip" data-bs-html="true" title="Home">
-            <img src=" {% static 'img/logo/logo.jpg' %} " alt="LOGO" class="rounded-circle " width="45">
+            <img src=" {% static 'img/logo/ProC0d3.png' %} " alt="LOGO" class="rounded-circle" width="40">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon  bg-primary rounded"></span>
@@ -47,7 +47,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-shop-window" viewBox="0 0 16 16">
                           <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h12V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zm2 .5a.5.5 0 0 1 .5.5V13h8V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5z"/>
                         </svg>
-                        Shop
+                        Tienda
                       </a>
                   </li>
                   <li class="nav-item">
@@ -55,7 +55,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
                           <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
                         </svg>
-                        Contact
+                        Contactos
                       </a>
                   </li>
                   <li class="nav-item">
@@ -64,7 +64,7 @@
                           <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5ZM8 8.46 1.758 5.965 8 3.052l6.242 2.913L8 8.46Z"/>
                           <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46l-3.892-1.556Z"/>
                         </svg>
-                        Info
+                        Información
                       </a>
                   </li>
                   <li class="nav-item">
@@ -73,14 +73,14 @@
                         <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z"/>
                         <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
                       </svg>
-                      Who we are</a>
+                      Quienes somos</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link text-light  active" data-bs-toogle="tooltip" data-bs-html="true" title="Profile" href="#">
                       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                         <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                       </svg>
-                      Profile</a>
+                      Vendedores</a>
                   </li>
                 </ul>
 
@@ -96,13 +96,13 @@
 
               {% else %}
 
-                  <button class="btn btn-outline-light " data-bs-toggle="modal" data-bs-target="#LoginRegister" id="login">
+                  <button class="btn btn-outline-light " data-bs-toggle="modal" data-bs-target="#modalblock" id="login">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
                       <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
                     </svg>   Login
                   </button>
-                  <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#LoginRegister" id="register">
+                  <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalblock" id="register">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
                       <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                       <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
@@ -116,127 +116,76 @@
       </div>
     </nav>
 
-    <!--Presentation-->
-    <div class="container-md-0 pt-3 pb-3 title-procode text-light">
-      <main>
-        <h1 class="text-center font-monospace fw-bold fs-10">ProC0d3</h1> 
-        <h2 class="text-center font-monospace fs-5" >Celulares</h2>
-        <h1 class="text-center font-monospace fw-bold fs-10">Cuba</h1>
-      </main>
-    </div>
     
-    <!--Carousel-Index-->
-    <div class="carousel-bg">
-      <div class="container-sm pt-5 pb-5 text-center">
-        {% block content_carousel %}
-          <div id="mainSlider" class="carousel slide pt-2 pb-2" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                  <img src=" {% static 'img/carousel_index/camera-1.jpg' %} " class="img-fluid rounded-pill w-50" alt="">
-              </div>
-              <div class="carousel-item">
-                  <img src=" {% static 'img/carousel_index/coffee-2.jpg' %} " class="img-fluid rounded-pill w-50" alt="">
-              </div>
-              <div class="carousel-item">
-                  <img src=" {% static 'img/carousel_index/desk-3.jpg' %} " class="img-fluid rounded-pill w-50" alt="">
-              </div>
-              <div class="carousel-item">
-                  <img src=" {% static 'img/carousel_index/girl-4.jpg' %} " class="img-fluid rounded-pill w-50" alt="">
-              </div>
-              <div class="carousel-item">
-                  <img src=" {% static 'img/carousel_index/miniature-5.jpg' %} " class="img-fluid rounded-pill w-50" alt="">
-              </div>
-              <div class="carousel-item">
-                <img src=" {% static 'img/carousel_index/mobile-6.jpg' %} " class="img-fluid rounded-pill w-50" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src=" {% static 'img/carousel_index/mobile-7.jpg' %} " class="img-fluid rounded-pill w-50" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src=" {% static 'img/carousel_index/mobile-phone-8.jpg' %} " class="img-fluid rounded-pill w-50" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src=" {% static 'img/carousel_index/mobile-phone-9.jpg' %} " class="img-fluid rounded-pill w-50" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src=" {% static 'img/carousel_index/office-10.jpg' %} " class="img-fluid rounded-pill w-50" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src=" {% static 'img/carousel_index/office-11.jpg' %} " class="img-fluid rounded-pill w-50" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src=" {% static 'img/carousel_index/phone-13.jpg' %} " class="img-fluid rounded-pill w-50" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src=" {% static 'img/carousel_index/smartphone-14.jpg' %} " class="img-fluid rounded-pill w-50" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src=" {% static 'img/carousel_index/telephone-15.jpg' %} " class="img-fluid rounded-pill w-50" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src=" {% static 'img/carousel_index/train-track-16.jpg' %} " class="img-fluid rounded-pill w-50" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src=" {% static 'img/carousel_index/woman-17.jpg' %} " class="img-fluid rounded-pill w-50" alt="...">
-              </div>
-            </div>
-          </div>
-        {% endblock content_carousel %}
+
+    <!--Presentation ProC0d3-->
+    {% block presentation %}
+      <div class="container-md-0 pt-3 pb-3  text-light d-flex justify-content-center pl-2">
+        <div class="justify-content-md-start">
+          <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <image width="40%" height="40%" class="w-25"  xlink:href="data:image/png;charset=utf-8;base64,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"/>
+          </svg>
+        </div>
+        <div class="images-bg justify-content-md-end">
+          <h1>Hola </h1>
+        </div>
       </div>
-    </div>
+    {% endblock presentation %}
+    
+    <!--Blockque carousel-->
+    {% block carousel %}{% endblock carousel %}
+    
+    
       
-   
+   <!--Bloque de busqueda-->
    {% block searchbar %}{% endblock searchbar %}     
     
-    <!--Middle Bar-->
-    {% block middle_bar %}
-     <div class="middle-bg">
-        <div class="row row-cols-2 container-fluid text-center">
-          <div class="col text-end pt-5">
+
+    <!--Bloque de imagenes intermedias-->
+    {% block middle %}
+      <div class="middle-bg">
+          <div class="row row-cols-2 container-fluid text-center">
+            <div class="col text-end pt-5">
+              <span>
+                <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit.<br> 
+                    Recusandae, sequi cupiditate accusantium adipisci pariatur <br>
+                itaque eveniet possimus vitae nemo nostrum libero sit tenetur <br>
+                inventore quam iure repellendus quas distinctio dolorem. <br></h5>
+              </span>
+            </div>
+
+            <div class="col pb-2 pt-2 pb-2  text-end">
+              <img src=" {% static 'img/items_index/image-0.jpg' %} " class="img-fluid rounded-pill w-50" alt="">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row row-cols-2 container-md text-center">
+          <div class="col pb-2 pt-2 pb-2">
+            <img src=" {% static 'img/items_index/image-1.jpg' %} " class="img-fluid rounded-pill w-50"  alt="">
+          </div>
+
+          <div class="col text-start pt-5">
             <span>
               <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit.<br> 
                   Recusandae, sequi cupiditate accusantium adipisci pariatur <br>
-              itaque eveniet possimus vitae nemo nostrum libero sit tenetur <br>
-              inventore quam iure repellendus quas distinctio dolorem. <br></h5>
+                  itaque eveniet possimus vitae nemo nostrum libero sit tenetur <br>
+                  inventore quam iure repellendus quas distinctio dolorem. <br>
+              </h5>
             </span>
           </div>
 
-          <div class="col pb-2 pt-2 pb-2  text-end">
-            <img src=" {% static 'img/items_index/image-0.jpg' %} " class="img-fluid rounded-pill w-50" alt="">
-          </div>
-
         </div>
-      </div>
-
-      <div class="row row-cols-2 container-md text-center">
-        <div class="col pb-2 pt-2 pb-2">
-          <img src=" {% static 'img/items_index/image-1.jpg' %} " class="img-fluid rounded-pill w-50"  alt="">
-        </div>
-
-        <div class="col text-start pt-5">
-          <span>
-            <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit.<br> 
-                Recusandae, sequi cupiditate accusantium adipisci pariatur <br>
-                itaque eveniet possimus vitae nemo nostrum libero sit tenetur <br>
-                inventore quam iure repellendus quas distinctio dolorem. <br>
-            </h5>
-          </span>
-        </div>
-
-      </div>
-    
-    {% endblock middle_bar %}
+    {% endblock middle %}
     
 
-    <!--Items-->
-    <div class="container-fluid items-bg ">
-      <div class="row row-cols-5 p-4 text-light">
-        {% block items %}{% endblock items %}
-      </div>
-    </div>
+    <!--Bloque muestra articulos de bd-->
+    {% block items %}{% endblock items %}
+   
     
     <!--Footer-->
-    <div class="footer-bg">
+  <div class="footer-bg">
       <div class="container-sm pt-5 pb-5  text-dark abs-center">
         <div class="row row-cols-3 pb-5 text-center">
           <div class="col"><h6 class="h6 font-monospace">URLS</h6>
@@ -295,14 +244,14 @@
         </div>
       </div>
      
-    </div>
+  </div>
     
     <!--Scripts-->
-    <div>
+  <div>
       <script src=" {% static 'bootstrap_js/bootstrap.bundle.min.js' %} "></script>
       {% block script %} 
       {% endblock script %}
-    </div>
+  </div>
     
 </body>
 </html>
