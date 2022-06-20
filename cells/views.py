@@ -38,7 +38,7 @@ def index(request:str) -> render:
     Index view 
     methods: request.GET
     """
-    return render(request,'index.html')
+    return render(request,'cell_index.html')
 
 
 # Login (Register)
@@ -229,7 +229,7 @@ class ShowItems(ListView):
             items = paginator.page(paginator.num_pages)
         
         if is_ajax:
-            return render(request,'dashboard/cell_ajax.html',{self.context_object_name:items})
+            return render(request,'dashboard/items_ajax.html',{self.context_object_name:items})
 
         return render(request,self.template_name,{self.context_object_name:items})
     
@@ -242,7 +242,7 @@ class DetailItem(DetailView):
     method: request.GET
     DetailView's son
     """
-    template_name = 'dashboard/cell_detail.html'
+    template_name = 'dashboard/item_detail.html'
     model = ShopingCell
     context_object_name = 'itemcell'
 
@@ -306,7 +306,7 @@ class ProfileUser(TemplateView):
     methods: request.GET, request.POST
     TemplateView's son
     """
-    template_name = 'accounts/profile/profile.html'
+    template_name = 'accounts/profile/cell_profile.html'
 
     @method_decorator(login_required)
     def get(self,request:str,*args, **kwargs) -> HttpResponse:

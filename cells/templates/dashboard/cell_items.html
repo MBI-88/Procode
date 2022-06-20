@@ -1,25 +1,67 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
+{% load static %}
 {% block title %}Shop{% endblock title %}
 
 
-<!--Modal-->
-{% include 'modal.html' %}
-
-<!--Navbar-->
-{% include 'navbar.html' %}
-
-<!--Carousel-->
-{% include 'dashboard/carousel.html' %}
+{% block content_carousel %}
+    <div id="carouselShop" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner text-center">
+            <div class="carousel-item active">
+                <img src=" {% static 'img/carousel_shop/google-pixel.png' %}" class="img-fluid" width="20%" alt="">
+            </div>
+            <div class="carousel-item">
+                <img src=" {% static 'img/carousel_shop/iphone-6s-plus.png' %} " class="img-fluid" width="20%" alt="">
+            </div>
+            <div class="carousel-item">
+                <img src=" {% static 'img/carousel_shop/iphone.png' %} " class="img-fluid" width="20%" alt="">
+            </div>
+            <div class="carousel-item">
+                <img src=" {% static 'img/carousel_shop/phone-1.png' %} " class="img-fluid" width="20%" alt="">
+            </div>
+            <div class="carousel-item">
+                <img src=" {% static 'img/carousel_shop/phone-2.png' %} " class="img-fluid" width="20%" alt="">
+            </div>
+            <div class="carousel-item">
+                <img src=" {% static 'img/carousel_shop/smartphone-1.png' %} " class="img-fluid" width="20%" alt="">
+            </div>
+            <div class="carousel-item">
+                <img src=" {% static 'img/carousel_shop/smartphone-2.png' %} " class="img-fluid" width="20%" alt="">
+            </div>
+            <div class="carousel-item">
+                <img src=" {% static 'img/carousel_shop/smartphone.png' %} " class="img-fluid" width="20%" alt="">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselShop" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselShop" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+{% endblock content_carousel %}
 
 <!--Navbar-Search-->
-{% include 'dashboard/search.html' %}
 
+{% block searchbar %}
+    <nav class="navbar navbar-light">
+        <div class="container-md pt-2 pb-5">
+        <form class="d-flex" method="GET" action="">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+            <button class="btn btn-outline-success bg-primary text-light" type="submit">Search</button>
+        </form>
+        </div>
+    </nav>
+{% endblock searchbar %}
 
-<!--Items-->
-{% include 'dashboard/items_shop.html' %}
+{% block middle_bar %}{% endblock middle_bar %}
+
 {% block items %}
     {% include 'dashboard/cell_ajax.html' %}
 {% endblock items %}
 
 
-
+{% block script %}
+    <script src=" {% static 'procodejs/scrollinf.js' %} "></script> 
+{% endblock script %}
