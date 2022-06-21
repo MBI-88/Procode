@@ -1,5 +1,5 @@
 .nav-hover a:hover{
-     border-bottom: 2px solid rgb(25, 25, 220);
+     border-bottom: 2px solid rgba(255, 166, 0, 0.876);
 }
 
 .zoon img  {
@@ -13,13 +13,34 @@
 }
 
 
-.presentation-logo {
-     background: white;
+.body-bg {
+     background: rgba(236, 236, 240, 0.868);
 
 }
 
-.title-procode main {
-     margin-top: 2rem;
+.footer-bg {
+     background-color: #101010;
+     
+}
+
+.navbar-bg {
+     background-color: #101010;
+}
+
+.middle-bg-1 {
+     background-color: rgba(229, 147, 46, 0.941);
+}
+
+.middle-bg-2 {
+     background: url('../img/img_presentation/havana-2774928_1920.jpg') 100rem no-repeat center center;
+     height: 200px;
+     
+     
+}
+
+
+.logo-trans {
+     margin-top: 0rem;
      animation: 1.5s cubic-bezier(0.42, 0.0, 0.58, 1.0) slidein;
 }
 
@@ -30,36 +51,7 @@
      }
      to {
           
-          margin-top: 2rem;
+          margin-top: 0rem;
      }
 }
 
-.body-bg {
-     background: rgba(236, 236, 240, 0.868);
-
-}
-
-.footer-bg {
-     background: radial-gradient(rgb(200, 195, 195),rgba(202, 202, 196, 0.551));
-     
-}
-
-
-.items-bg {
-     background: rgba(10, 10, 10, 0.092);
-     border-radius: 1%;
-}
-
-.navbar-bg {
-     background-color: #101010;
-}
-
-.middle-bg {
-     background-color: #e7e0dbd7;
-}
-
-.carousel-bg {
-     background: linear-gradient(white,gray);
-     
-     
-}

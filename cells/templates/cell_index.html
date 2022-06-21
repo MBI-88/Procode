@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href=" {% static 'img/logo/logo.ico' %}  " type="image/x-icon">
+    <link rel="shortcut icon" href=" {% static 'img/logo/logoproc0d3.ico' %}  " type="image/x-icon">
     <link rel="stylesheet" href=" {% static 'bootstrap_css/bootstrap.min.css' %} ">
     <link rel="stylesheet" href=" {% static 'procodecss/main.css' %} ">
     <title>ProC0d3 {% block title %}Home{% endblock title %}</title>
@@ -35,10 +35,10 @@
     <nav class="navbar navbar-expand-lg navbar-light navbar-bg"  id="navbar">
       <div class="container-fluid">
           <a class="navbar-brand" href=" {% url 'cells:index' %} " data-bs-toogle="tooltip" data-bs-html="true" title="Home">
-            <img src=" {% static 'img/logo/ProC0d3.png' %} " alt="LOGO" class="rounded-circle" width="40">
+            <img src=" {% static 'img/logo/logoIco.png' %} " alt="LOGO" class="rounded-circle" width="40">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon  bg-primary rounded"></span>
+            <span class="navbar-toggler-icon  bg-warning rounded"></span>
           </button>
           <div class="collapse navbar-collapse nav-hover" id="navbarTogglerDemo01">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -87,7 +87,7 @@
             <div class="d-flex pl-5 d-md-block">
               {% if user.is_authenticated %}
 
-                  <a href="#" class="btn btn-outline-light" data-bs-toogle="tooltip" data-bs-html="true" title="Logged out">
+                  <a href="#" class="btn btn-warning" data-bs-toogle="tooltip" data-bs-html="true" title="Logged out">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-up" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"/>
                       <path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708l3-3z"/>
@@ -96,13 +96,13 @@
 
               {% else %}
 
-                  <button class="btn btn-outline-light " data-bs-toggle="modal" data-bs-target="#modalblock" id="login">
+                  <button class="btn btn-warning  " data-bs-toggle="modal" data-bs-target="#modalblock" id="login">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                       <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
                       <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
                     </svg>   Login
                   </button>
-                  <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalblock" id="register">
+                  <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalblock" id="register">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
                       <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                       <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
@@ -120,63 +120,72 @@
 
     <!--Presentation ProC0d3-->
     {% block presentation %}
-      <div class="container-md-0 pt-3 pb-3  text-light d-flex justify-content-center pl-2">
-        <div class="justify-content-md-start">
-          <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <image width="40%" height="40%" class="w-25"  xlink:href="data:image/png;charset=utf-8;base64,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"/>
-          </svg>
+      <div class="row row-cols-2 container-fluid logo-trans">
+        <div class="col text-start ">
+            <svg viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg" class="img-fluid rounded w-75" fill="currentColor" width="350" height="350" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <image width="350" height="350" xlink:href="data:image/png;charset=utf-8;base64,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"/>
+            </svg>
         </div>
-        <div class="images-bg justify-content-md-end">
-          <h1>Hola </h1>
+        <div class="col pt-5">
+          <img src=" {% static 'img/img_presentation/habana-1.jpg' %} " alt="" class="img-fluid rounded-pill w-100">
         </div>
       </div>
     {% endblock presentation %}
     
+
     <!--Blockque carousel-->
     {% block carousel %}{% endblock carousel %}
-    
-    
-      
+
+
    <!--Bloque de busqueda-->
    {% block searchbar %}{% endblock searchbar %}     
     
 
     <!--Bloque de imagenes intermedias-->
     {% block middle %}
-      <div class="middle-bg">
-          <div class="row row-cols-2 container-fluid text-center">
-            <div class="col text-end pt-5">
-              <span>
-                <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit.<br> 
-                    Recusandae, sequi cupiditate accusantium adipisci pariatur <br>
-                itaque eveniet possimus vitae nemo nostrum libero sit tenetur <br>
-                inventore quam iure repellendus quas distinctio dolorem. <br></h5>
-              </span>
-            </div>
+      <div class="middle-bg-1">
+        <div class="row row-cols-2 ">
+          <div class="col text-center pt-5">
+            <h5 class="h6 text-light">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+                 Debitis consectetur reprehenderit quam quis dolore consequatur, <br>
+                 labore ducimus voluptatum quae tempora eligendi illo sit aperiam <br>
+                 assumenda nisi incidunt doloremque vitae odio. <br>
+              </p>
+            </h5>
 
-            <div class="col pb-2 pt-2 pb-2  text-end">
-              <img src=" {% static 'img/items_index/image-0.jpg' %} " class="img-fluid rounded-pill w-50" alt="">
-            </div>
-
+          </div>
+          <div class="col text-center pt-3 pb-3">
+            <img src=" {% static 'img/img_presentation/image-0.jpg' %} " alt="" class="img-fluid rounded-circle w-50">
           </div>
         </div>
+      </div>
 
-        <div class="row row-cols-2 container-md text-center">
-          <div class="col pb-2 pt-2 pb-2">
-            <img src=" {% static 'img/items_index/image-1.jpg' %} " class="img-fluid rounded-pill w-50"  alt="">
-          </div>
+      <div class="middle-bg-2 w-100 container-lg-0 pt-5">
+          <p class="h6 text-center text-light">
+            Lorem ipsum dolor sit amet consectetur, <br>
+            adipisicing elit. Earum beatae sint velit <br>
+            asperiores debitis reprehenderit consectetur facilis. <br>
+            Facere laudantium maiores debitis repudiandae similique <br>
+            quisquam nisi praesentium labore iure, quo tempora. <br>
+          </p>
+      </div>
 
-          <div class="col text-start pt-5">
-            <span>
-              <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit.<br> 
-                  Recusandae, sequi cupiditate accusantium adipisci pariatur <br>
-                  itaque eveniet possimus vitae nemo nostrum libero sit tenetur <br>
-                  inventore quam iure repellendus quas distinctio dolorem. <br>
-              </h5>
-            </span>
-          </div>
-
+      <div class="row row-cols-2 ">
+        <div class="col text-center pt-5">
+          <p class="h6 text-center text-black pt-5">
+            Lorem ipsum dolor sit amet consectetur, <br>
+            adipisicing elit. Earum beatae sint velit <br>
+            asperiores debitis reprehenderit consectetur facilis. <br>
+            Facere laudantium maiores debitis repudiandae similique <br>
+            quisquam nisi praesentium labore iure, quo tempora. <br>
+          </p>
         </div>
+        <div class="col text-center pt-5 pb-5">
+          <img src=" {% static 'img/img_presentation/image-4.jpg' %} " alt="" class="img-fluid rounded-circle w-50">
+        </div>
+
+      </div>
     {% endblock middle %}
     
 
@@ -184,74 +193,74 @@
     {% block items %}{% endblock items %}
    
     
-    <!--Footer-->
+  <!--Scripts-->
+  <script src=" {% static 'bootstrap_js/bootstrap.bundle.min.js' %} "></script>
+  {% block script %} 
+  {% endblock script %}
+
+
+  <!--Footer-->
   <div class="footer-bg">
-      <div class="container-sm pt-5 pb-5  text-dark abs-center">
-        <div class="row row-cols-3 pb-5 text-center">
-          <div class="col"><h6 class="h6 font-monospace">URLS</h6>
-            <ul class="d-block list-unstyled ">
-              <li>1</li>
-              <li>2</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-            </ul>
+        <div class="container-sm text-light abs-center pb-4 ">
+          <div class="row row-cols-3 pb-3 pt-5 text-center">
+            <div class="col"><h6 class="h6 font-monospace">URLS</h6>
+              <ul class="d-block list-unstyled ">
+                <li>1</li>
+                <li>2</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+              </ul>
+            </div>
+            <div class="col"><h6 class="h6 font-monospace">Contact</h6>
+              <ul class="d-block list-unstyled ">
+                <li>1</li>
+                <li>2</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+              </ul>
+            </div>
+            <div class="col"><h6 class="h6 font-monospace">Info</h6>
+              <ul class="d-block list-unstyled ">
+                <li>1</li>
+                <li>2</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+              </ul>
+            </div>
           </div>
-          <div class="col"><h6 class="h6 font-monospace">Contact</h6>
-            <ul class="d-block list-unstyled ">
-              <li>1</li>
-              <li>2</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-            </ul>
-          </div>
-          <div class="col"><h6 class="h6 font-monospace">Info</h6>
-            <ul class="d-block list-unstyled ">
-              <li>1</li>
-              <li>2</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-            </ul>
+          <p class="text-center font-monospace fw-bold fs-5">Copyright © 2022 ProC0d3
+            <img src=" {% static 'img/img_presentation/flag-1040573.png' %} " alt="" class="img-fluid rounded-circle" width="10%">
+            |Team
+          </p>
+          <div class="container-sm text-center">
+            <div class="row  d-inline-flex">
+              <div class="col">
+                <a href="#">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                  </svg>
+                </a>
+              </div>
+              <div class="col">
+                <a href="#">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                    <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                  </svg>
+                </a>
+              </div>
+              <div class="col">
+                <a href="#">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                    <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                  </svg>
+                </a>
+              <div>
+            </div>
           </div>
         </div>
-        <p class="text-center font-monospace fw-bold fs-5">Copyright © 2022 ProC0d3|Team</p>
-        <div class="container-sm text-center">
-          <div class="row  d-inline-flex">
-            <div class="col">
-              <a href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
-                  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
-                </svg>
-              </a>
-            </div>
-            <div class="col">
-              <a href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
-                  <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-                </svg>
-              </a>
-            </div>
-            <div class="col">
-              <a href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
-                  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                </svg>
-              </a>
-            <div>
-          </div>
-        </div>
-      </div>
-     
   </div>
-    
-    <!--Scripts-->
-  <div>
-      <script src=" {% static 'bootstrap_js/bootstrap.bundle.min.js' %} "></script>
-      {% block script %} 
-      {% endblock script %}
-  </div>
-    
 </body>
 </html>
