@@ -15,11 +15,10 @@ class UserRegistrationForm(forms.Form):
     last_name = forms.CharField(max_length=100,required=True)
     password = forms.CharField(widget=forms.PasswordInput,required=True)
     password2 = forms.CharField(widget=forms.PasswordInput,required=True)
-    email = forms.CharField(widget=forms.EmailField,required=True,help_text='example@example.com')
-    phone = forms.CharField(max_length=8,required=True,help_text='53482459')
-    image = forms.CharField(widget=forms.ImageField)
-    address = forms.CharField(max_length=100,required=True,
-                              help_text='Lucia street betwen 42 and 44, Bultding 120,City...')
+    email = forms.EmailField()
+    phone = forms.CharField(max_length=8,required=True)
+    image = forms.ImageField()
+    address = forms.CharField(max_length=100,required=True)
 
 
     def clean_password2(self) -> str:

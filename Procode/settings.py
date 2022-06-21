@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cells.apps.CellsConfig',
-    'easy_thumbnails'
+    'easy_thumbnails',
+    'widget_tweaks',
     
 ]
 

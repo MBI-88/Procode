@@ -1,15 +1,16 @@
-<form action="{% url 'cells:register' %}" method="POST" id="registerform">
+{% load widget_tweaks %}
+<form action="{% url 'cells:register' %}" method="POST" id="registerform" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row row-cols-1  container">
       <div class="col pb-2">
         <li class="list-unstyled">
-          <label for="inputUsername" class="form-label">Username</label>
+          <label for="inputUsername" class="form-label">Nombre de Usuario</label>
         </li>
         <li class="list-unstyled">
           {% if form.username.errors %}
-            <div>{{ form.username.errors }}</div>
+            <div class="alert alert-danger">{{ form.username.errors }}</div>
           {% endif %}
-          {{ form.username }}
+          {% render_field form.username placeholder="ej. Paco" class+="form-control" %}
         </li>
       </div>
     </div>
@@ -17,13 +18,13 @@
     <div class="row row-cols-1  container">
       <div class="col pb-2">
         <li class="list-unstyled">
-          <label for="inputFirstname" class="form-label">FirstName</label>
+          <label for="inputFirstname" class="form-label">Nombre</label>
         </li>
         <li class="list-unstyled">
           {% if form.first_name.errors %}
-              <div> {{ form.first_name.errors }} </div>
+              <div class="alert alert-danger"> {{ form.first_name.errors }} </div>
           {% endif %}
-          {{ form.first_name }}
+          {% render_field form.first_name placeholder="ej. Pedro" class+="form-control" %}
         </li>
       </div>
     </div>
@@ -31,13 +32,13 @@
     <div class="row row-cols-1 container">
       <div class="col pb-2">
         <li class="list-unstyled">
-          <label for="inputLastname" class="form-label">LastName</label>
+          <label for="inputLastname" class="form-label">Apellidos</label>
         </li>
         <li class="list-unstyled">
           {% if form.last_name.errors %}
-              <div> {{ form.last_name.errors }} </div>
+              <div class="alert alert-danger"> {{ form.last_name.errors }} </div>
           {% endif %}
-          {{ form.last_name }}
+          {% render_field form.last_name placeholder="ej. Fuentes Albares" class+="form-control" %}
         </li>
       </div>
     </div>
@@ -45,13 +46,13 @@
     <div class="row row-cols-1 container">
       <div class="col pb-2">
         <li class="list-unstyled">
-          <label for="inputAddress" class="form-label">Address</label>
+          <label for="inputAddress" class="form-label">Dirección</label>
         </li>
         <li class="list-unstyled">
           {% if form.address.errors %}
-              <div> {{ form.address.errors }} </div>
+              <div class="alert alert-danger"> {{ form.address.errors }} </div>
           {% endif %}
-          {{ form.address }}
+          {% render_field form.address placeholder="ej. Vedado calle g e/ 23 y 25 edif 17 apto 28" class+="form-control" %}
         </li>
       </div>
     </div>
@@ -59,13 +60,13 @@
     <div class="row row-cols-1 container">
       <div class="col pb-2">
         <li class="list-unstyled">
-          <label for="inputPhone" class="form-label">Phone</label>
+          <label for="inputPhone" class="form-label">Movil</label>
         </li>
         <li class="list-unstyled">
           {% if form.phone.errors %}
-              <div> {{ form.phone.errors }} </div>
+              <div class="alert alert-danger"> {{ form.phone.errors }} </div>
           {% endif %}
-          {{ form.phone }}
+          {% render_field form.phone placeholder="ej. 52895479" class+="form-control" %}
         </li>
       </div>
     </div>
@@ -77,9 +78,9 @@
         </li>
         <li class="list-unstyled">
           {% if form.email.errors %}
-              <div> {{ form.email.errors }} </div>
+              <div class="alert alert-danger"> {{ form.email.errors }} </div>
           {% endif %}
-          
+          {% render_field form.email placeholder="ej. email@example.com" class+="form-control" %}
         </li>  
       </div>
     </div>
@@ -87,13 +88,13 @@
     <div class="row row-cols-1 container">
       <div class="col pb-2">
         <li class="list-unstyled">
-          <label for="inputImage" class="form-label">Image</label>
+          <label for="inputImage" class="form-label">Imagen de perfil</label>
         </li>
         <li class="list-unstyled">
           {% if form.image.errors %}
-              <div> {{ form.image.errors }} </div>
+              <div class="alert alert-danger"> {{ form.image.errors }} </div>
           {% endif %}
-
+          {% render_field form.image class+="form-control" %}
         </li>
       </div>
     </div>
@@ -101,13 +102,13 @@
     <div class="row row-cols-1 container">
       <div class="col pb-2">
         <li class="list-unstyled">
-          <label for="inputPassword" class="form-label">Password</label>
+          <label for="inputPassword" class="form-label">Clave</label>
         </li>
         <li class="list-unstyled">
           {% if form.password.errors %}
-          <div> {{ form.password.errors }} </div>
+          <div class="alert alert-danger"> {{ form.password.errors }} </div>
         {% endif %}
-        {{ form.password }}
+        {% render_field form.password class+="form-control" %}
         </li>
       </div>
     </div>
@@ -115,18 +116,18 @@
     <div class="row row-cols-1 container">
       <div class="col pb-2">
         <li class="list-unstyled">
-          <label for="inputConfirm" class="form-label">Confirm</label>
+          <label for="inputConfirm" class="form-label">Confirmación</label>
         </li>
         <li class="list-unstyled">
           {% if form.password2.errors %}
-          <div> {{ form.password2.errors }} </div>
+          <div class="alert alert-danger"> {{ form.password2.errors }} </div>
         {% endif %}
-        {{ form.password2 }}
+        {% render_field form.password2 class+="form-control" %}
         </li>
       </div>
     </div>
 
     <div class="container text-end">
-      <button type="submit" class="btn btn-primary">Sign in</button>
+      <button type="submit" class="btn btn-primary">Registrarse</button>
     </div>
 </form>

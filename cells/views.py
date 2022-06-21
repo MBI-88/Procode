@@ -1,3 +1,4 @@
+import email
 from django.shortcuts import redirect, render,get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -5,6 +6,7 @@ from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login,authenticate
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DetailView,View,TemplateView
@@ -54,6 +56,22 @@ class LoginUser(LoginView):
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
         return render(request,self.template_name,{'form':self.form_class})
     
+    def post(self, request:str, *args, **kwargs) -> HttpResponse:
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request,username=cd['username'],password=cd['password'])
+            if user is not None:
+                if (user.is_active):
+                    login(request,user=user)
+                    return redirect('cells:profile')
+                else:
+                    messages.info(request,message="El usuario no esta activo")
+                    return render(request,self.template_name,{'form':form})
+
+
+        return render(request,self.template_name,{'form':form})
+    
     
     
     
@@ -86,9 +104,9 @@ class RegisterUser(View):
     
     def post(self,request:str, *args, **kwargs) -> render:
         form = self.form_class(request.POST)
-        cd = form.cleaned_data
         if form.is_valid():
-            user = User.objects.filter(username=cd['username'])
+            cd = form.cleaned_data
+            user = User.objects.filter(username=cd['username'],email=cd['email'])
             if (user is None):
                 new_user = User()
                 new_user.username = cd['username']
@@ -117,7 +135,7 @@ class RegisterUser(View):
                                         address=cd['address'])
                     
                     # redireccion
-                    return redirect('index')
+                    return redirect('cells:index')
 
                 except:
                     return HttpResponseServerError('errors/500.html')
@@ -149,7 +167,7 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> render:
         user.delete()
         return render(request,'') # El token no es valido
     
-    return redirect('index') # Respuesta correcta y redirección
+    return redirect('cells:index') # Respuesta correcta y redirección
 
 
 # Reset Password (Register)

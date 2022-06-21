@@ -43,5 +43,29 @@ function registerform(event){
 }
 
 
+/*Evento para enviar formulario */
+function loginPost(event){
+    event.preventDefault()
+    let form  = document.querySelector('#loginForm')
+    form = new FormData(form)
+
+    console.log(form)
+    //onst form = new FormData(event.target)
+
+    /*fetch('../login/',{
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'multipart/form-data',
+        },
+        mode: 'same-origin',
+        cache: 'default',
+        credentials: 'same-origin',
+        body: form,
+    })
+    */
+}
+window.addEventListener('submit',loginPost)
+
 
 
