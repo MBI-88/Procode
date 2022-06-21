@@ -26,7 +26,7 @@ function scrollInf(){
             }
             else{
                 blocke_request = false
-                document.getElementById('items').innerHTML += html
+                document.getElementById('items').insertAdjacentHTML('afterend',html)
             }
         })
         
