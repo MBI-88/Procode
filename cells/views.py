@@ -50,6 +50,11 @@ class LoginUser(LoginView):
     """
     template_name = 'accounts/registration/login.html'
     form_class = LoginForm
+
+    def get(self, request:str, *args, **kwargs) -> HttpResponse:
+        return render(request,self.template_name,{'form':self.form_class})
+    
+    
     
     
   
@@ -73,20 +78,9 @@ class RegisterUser(View):
     """
     template_name = 'accounts/registration/register.html'
     form_class = UserRegistrationForm
-    initial = {
-        'username':'Name of the user in the system',
-        'first_name': 'Name of the real user',
-        'last_name': 'Last name of real user',
-        'password': 'Password',
-        'password2': 'Confirm',
-        'email': 'Email',
-        'phone':'Phone',
-        'image': 'User\'picture',
-        'address': 'Address'
-    }
 
     def get(self,request:str, *args, **kwargs) -> render:
-        form = self.form_class(initial=self.initial)
+        form = self.form_class()
         return render(request,self.template_name,{'form':form})
 
     

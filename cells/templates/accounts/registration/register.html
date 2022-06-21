@@ -1,83 +1,132 @@
-<form class="row g-3" action="{% url 'cells:register' %}" method="POST">
+<form action="{% url 'cells:register' %}" method="POST" id="registerform">
     {% csrf_token %}
-
-    <div class="col-md-6">
-      <label for="inputUsername" class="form-label">Username</label>
-      {% if form.username.errors %}
-        <div>
-            {{ form.username.errors }}
-        </div>
-      {% endif %}
-      {{ form.username }}
-    </div>
-
-    <div class="col-md-6">
-        <label for="inputFirstname" class="form-label">First Name</label>
-        {% if form.first_name.errors %}
-            <div> {{ form.first_name.errors }} </div>
-        {% endif %}
-        {{ form.first_name }}
-    </div>
-
-    <div class="col-md-6">
-        <label for="inputLastname" class="form-label">Last Name</label>
-        {% if form.last_name.errors %}
-            <div> {{ form.last_name.errors }} </div>
-        {% endif %}
-        {{ form.last_name }}
-    </div>
-
-    <div class="col-md-6">
-        <label for="inputAddress" class="form-label">Address</label>
-        {% if form.address.errors %}
-            <div> {{ form.address.errors }} </div>
-        {% endif %}
-        {{ form.address }}
-    </div>
-
-    <div class="col-md-6">
-        <label for="inputPhone" class="form-label">Phone</label>
-        {% if form.phone.errors %}
-            <div> {{ form.phone.errors }} </div>
-        {% endif %}
-        {{ form.phone }}
-    </div>
-
-    <div class="col-md-6">
-        <label for="inputEmail" class="form-label">E-mail</label>
-        {% if form.email.errors %}
-            <div> {{ form.email.errors }} </div>
-        {% endif %}
-        {{ form.email }}
-    </div>
-
-    <div class="col-md-6">
-        <label for="inputImage" class="form-label">Image</label>
-        {% if form.image.errors %}
-            <div> {{ form.image.errors }} </div>
-        {% endif %}
-        {{ form.image }}
+    <div class="row row-cols-1  container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputUsername" class="form-label">Username</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.username.errors %}
+            <div>{{ form.username.errors }}</div>
+          {% endif %}
+          {{ form.username }}
+        </li>
       </div>
-
-    <div class="col-md-6">
-      <label for="inputPassword" class="form-label">Password</label>
-      {% if form.password.errors %}
-        <div>
-            {{ form.password.errors }}
-        </div>
-      {% endif %}
-      {{ form.password }}
     </div>
 
-    <div class="col-md-6">
-      <label for="inputConfirm" class="form-label">Confirm</label>
-      {% if form.password2.errors %}
-        <div> {{ form.password2.errors }} </div>
-      {% endif %}
-      {{ form.password2 }}
+    <div class="row row-cols-1  container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputFirstname" class="form-label">FirstName</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.first_name.errors %}
+              <div> {{ form.first_name.errors }} </div>
+          {% endif %}
+          {{ form.first_name }}
+        </li>
+      </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="row row-cols-1 container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputLastname" class="form-label">LastName</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.last_name.errors %}
+              <div> {{ form.last_name.errors }} </div>
+          {% endif %}
+          {{ form.last_name }}
+        </li>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputAddress" class="form-label">Address</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.address.errors %}
+              <div> {{ form.address.errors }} </div>
+          {% endif %}
+          {{ form.address }}
+        </li>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputPhone" class="form-label">Phone</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.phone.errors %}
+              <div> {{ form.phone.errors }} </div>
+          {% endif %}
+          {{ form.phone }}
+        </li>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputEmail" class="form-label">E-mail</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.email.errors %}
+              <div> {{ form.email.errors }} </div>
+          {% endif %}
+          
+        </li>  
+      </div>
+    </div>
+
+    <div class="row row-cols-1 container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputImage" class="form-label">Image</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.image.errors %}
+              <div> {{ form.image.errors }} </div>
+          {% endif %}
+
+        </li>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputPassword" class="form-label">Password</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.password.errors %}
+          <div> {{ form.password.errors }} </div>
+        {% endif %}
+        {{ form.password }}
+        </li>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputConfirm" class="form-label">Confirm</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.password2.errors %}
+          <div> {{ form.password2.errors }} </div>
+        {% endif %}
+        {{ form.password2 }}
+        </li>
+      </div>
+    </div>
+
+    <div class="container text-end">
       <button type="submit" class="btn btn-primary">Sign in</button>
     </div>
-  </form>
+</form>

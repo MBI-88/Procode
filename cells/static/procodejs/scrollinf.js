@@ -1,5 +1,4 @@
-'use strict'
-
+/*Evento scroll en la tienda */
 let page = 1
 let empty_page = false
 let blocke_request = false

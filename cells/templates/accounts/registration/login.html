@@ -1,24 +1,32 @@
-<form action=" {% url 'cells:login' %} " method="POST" class="row g-3" id="loginform">
+<form action=" {% url 'cells:login' %} " method="POST"  id="loginform">
     {% csrf_token %}
-    <div class="col-md-6">
-        <label for="inputUsername" class="for-label">Username</label>
-        {% if form.usrname.errors %}
-            <div>
-                {{ form.username.errors }}
-            </div>
-        {% endif %}
-        {{ form.username }}
+    <div class="row row-cols-1 container">
+        <div class="col p-3">
+            <li class="list-unstyled">
+                <label for="inputUsername" class="for-label">Username</label> 
+            </li>
+            <li class="list-unstyled">
+                {% if form.usrname.errors %}
+                    <div>{{ form.username.errors }}</div>
+            {% endif %}
+            {{ form.username }}
+            </li>
+        </div>
     </div>
-    <div class="col-md-6">
-        <label for="inputPassword" class="form-label">Password</label>
-        {% if form.password.errors %}
-            <div>
-                {{ form.password.errors }}
-            </div>
-        {% endif %}
-        {{ form.password }}
+    <div class="row row-cols-1 container">
+        <div class="col pb-3">
+            <li class="list-unstyled">
+                <label for="inputPassword" class="form-label">Password</label>
+            </li>
+            <li class="list-unstyled">
+                {% if form.password.errors %}
+                    <div>{{ form.password.errors }}</div>
+            {% endif %}
+            {{ form.password }}
+            </li>
+        </div>
     </div>
-    <div class="col-md-6">
+    <div class="container text-end">
         <button type="submit" class="btn btn-primary">Log in</button>
     </div>
 </form>
