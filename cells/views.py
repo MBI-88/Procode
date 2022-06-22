@@ -64,9 +64,9 @@ class LoginUser(LoginView):
             if user is not None:
                 if (user.is_active):
                     login(request,user=user)
-                    return redirect('cells:profile')
+                    return HttpResponse('redirec')
                 else:
-                    messages.info(request,message="El usuario no esta activo")
+                    messages.add_message(request,level=messages.WARNING,message='El usuario no esta activo')
                     return render(request,self.template_name,{'form':form})
 
 
@@ -83,8 +83,8 @@ class LoggedoutUser(LogoutView):
     methods: request.GET
     LogoutView's son
     """
-    template_name = 'accounts/registration/logged_out.html'
-    title = 'Logged out'
+    template_name = None
+   
 
 
 # Register (Register)
@@ -135,13 +135,13 @@ class RegisterUser(View):
                                         address=cd['address'])
                     
                     # redireccion
-                    return redirect('cells:index')
+                    return HttpResponse('redirec')
 
                 except:
                     return HttpResponseServerError('errors/500.html')
         
             else:
-                messages.add_message(request,level=messages.WARNING,message='This user olready exist!')
+                messages.add_message(request,level=messages.WARNING,message='Este usuario ya existe')
         
         return render(request,self.template_name,{'form':form})
     
@@ -179,6 +179,7 @@ class ResetUserPassword(PasswordResetView):
     """
     template_name = 'accounts/registration/reset_password.html'
     email_template_name = 'email/email.html'
+
 
 
 # Reset Done (Register)
@@ -324,7 +325,7 @@ class ProfileUser(TemplateView):
     def get(self,request:str,*args, **kwargs) -> HttpResponse:
         context = super().get_context_data(**kwargs)
         context["user"] = get_object_or_404(User,username=request.user.username,is_active=True)
-        return context
+        return render(request,self.template_name,context)
 
 
 

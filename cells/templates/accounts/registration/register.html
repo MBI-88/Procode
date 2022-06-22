@@ -1,5 +1,13 @@
 {% load widget_tweaks %}
-<form action="{% url 'cells:register' %}" method="POST" id="registerform" enctype="multipart/form-data">
+{% if messages %}
+    {% for mess in messages %}
+        <div class="alert alert-danger" role="alert">{{ mess }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="POST" id="registerForm" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row row-cols-1  container">
       <div class="col pb-2">

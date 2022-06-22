@@ -42,30 +42,45 @@ function registerform(event){
     }).catch(reject => console.log(reject))
 }
 
+// goPost hace la peticion post por medio de fetch
+function goPost(form,urlpost,urlredic){
+    const formdata = new URLSearchParams(new FormData(form))
+
+    fetch(urlpost,{
+        method: 'POST',
+        body: formdata,
+        
+    }).then(response => response.text())
+    .then(html => {
+        if (html == 'redirec'){
+            window.location.href = urlredic
+        }
+        document.querySelector('.modal-body').innerHTML = html
+    })
+    
+    
+}
 
 /*Evento para enviar formulario */
-function loginPost(event){
+function postSelector(event){
     event.preventDefault()
-    let form  = document.querySelector('#loginForm')
-    form = new FormData(form)
 
-    console.log(form)
-    //onst form = new FormData(event.target)
+    // Selector de post
+    const postselect = document.getElementsByTagName('form')[0]
+    switch (postselect.id){
+        case 'loginForm':
+            goPost(postselect,'../login/','../profile/');
+            break;
+        case 'registerForm':
+            goPost(postselect,'../register/','../index/');
+            break;
+            
+    }
 
-    /*fetch('../login/',{
-        method: 'POST',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'multipart/form-data',
-        },
-        mode: 'same-origin',
-        cache: 'default',
-        credentials: 'same-origin',
-        body: form,
-    })
-    */
 }
-window.addEventListener('submit',loginPost)
+
+
+window.addEventListener('submit',postSelector)
 
 
 
