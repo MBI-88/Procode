@@ -1,6 +1,7 @@
+{% load thumbnail %}
 <div class="container-md text-center text-light">
-    {% thumbnail 'item.image' 300x0 quality=100 crop="smart"%}
-    <img src=" {{ item.image }} " alt="..">
+    {% thumbnail 'item.image' 300x0 quality=100 crop="smart" %}
+    <img src=" {{ item.image }} " alt="No existe imagen">
     <address>
         Last update: {{ itemcell.updated_date }}. <br>
         Model: {{ itemcell.model_name }}. <br>

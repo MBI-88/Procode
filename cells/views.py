@@ -1,4 +1,3 @@
-import email
 from django.shortcuts import redirect, render,get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -11,7 +10,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DetailView,View,TemplateView
 from django.http import HttpResponse,HttpResponseServerError
-from .forms import LoginForm,UserRegistrationForm
+from .forms import LoginForm,UserRegistrationForm,DeleteForm
 from .models import ShopingCell
 from django.contrib.auth.views import (LoginView,LogoutView,PasswordResetDoneView,
                                         PasswordResetView,PasswordResetCompleteView,PasswordResetConfirmView)
@@ -64,7 +63,7 @@ class LoginUser(LoginView):
             if user is not None:
                 if (user.is_active):
                     login(request,user=user)
-                    return HttpResponse('redirec')
+                    return HttpResponse('302')
                 else:
                     messages.add_message(request,level=messages.WARNING,message='El usuario no esta activo')
                     return render(request,self.template_name,{'form':form})
@@ -135,7 +134,7 @@ class RegisterUser(View):
                                         address=cd['address'])
                     
                     # redireccion
-                    return HttpResponse('redirec')
+                    return HttpResponse('302')
 
                 except:
                     return HttpResponseServerError('errors/500.html')
@@ -224,7 +223,7 @@ class ShowItems(ListView):
     model = ShopingCell
     context_object_name = 'itemcells'
 
-    def get(self, request:str, *args, **kwargs) -> render:
+    def get(self, request:str, *args, **kwargs) -> HttpResponse:
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         items = self.model.objects.all()
         count = len(items)
@@ -287,15 +286,27 @@ class UpdateItem(UpdateView):
     template_name = 'accounts/profile/update_item.html'
     model = ShopingCell
     fields = ['price','image','description']
+    success_url = '302'
 
     @method_decorator(login_required)
-    def dispatch(self, request:str, *args, **kwargs) -> HttpResponse:
-        return super().dispatch(request, *args, **kwargs)
+    def get(self, request:str, *args, **kwargs) -> HttpResponse:
+        form = super().get_form_class()
+        return render(request,self.template_name,{'form':form})
+    
+    @method_decorator(login_required)
+    def post(self, request:str, *args, **kwargs) -> HttpResponse:
+        form = super().post(request, *args,**kwargs)    
+        
+        if (form != self.success_url):
+            return form
 
+        return HttpResponse('302')
+    
+    
 
 
 # Delete Item (Profile)
-class DeleteItem(DeleteView):
+class DeleteItem(DeleteView):  # Me quede aqui
     """
     DeletItem view
     methods: request.GET, request.POST
@@ -303,11 +314,21 @@ class DeleteItem(DeleteView):
     """
     template_name = 'accounts/profile/delete_item.html'
     model = ShopingCell
-    success_url = reverse_lazy('profile')
-
+    form_class = DeleteForm
+    
     @method_decorator(login_required)
-    def dispatch(self, request:str, *args, **kwargs) -> HttpResponse:
-        return super().dispatch(request, *args, **kwargs)
+    def get(self, request:str, *args, **kwargs) -> HttpResponse:
+        form = self.form_class()
+        return render(request,self.template_name,{'form':form})
+    
+    @method_decorator(login_required)
+    def post(self, request:str, *args, **kwargs) -> HttpResponse:
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            self.model.objects.filter(slug=request.slug).delete()
+        return HttpResponse('302')
+
+    
 
 
 
@@ -324,17 +345,17 @@ class ProfileUser(TemplateView):
     @method_decorator(login_required)
     def get(self,request:str,*args, **kwargs) -> HttpResponse:
         context = super().get_context_data(**kwargs)
-        context["user"] = get_object_or_404(User,username=request.user.username,is_active=True)
+        context["user"] = get_object_or_404(User,username=request.user.username)
         return render(request,self.template_name,context)
 
 
 
 # Profile Update (Profile)
-class UpdateProfile(UpdateView):
+class UpdateProfile(TemplateView):
     """
     UpdateProfile view
     methods: request.GET, request.POST
-    UpdateView's son
+    TemplateView's son
     """
     template_name = 'accounts/profile/update_profile.html'
     form_class = UserRegistrationForm
@@ -359,10 +380,10 @@ class UpdateProfile(UpdateView):
     @method_decorator(login_required)
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
-        cd = form.cleaned_data
         if form.is_valid():
             if form.has_changed():
-                new_user = get_object_or_404(User,username=request.user.username,is_active=True)
+                cd = form.cleaned_data
+                new_user = get_object_or_404(User,username=request.user.username)
                 new_user.username = cd['username']
                 new_user.first_name = cd['first_name']
                 new_user.last_name = cd['last_name']
@@ -383,17 +404,17 @@ class UpdateProfile(UpdateView):
                     ProfileUser.objects.filter(user=new_user).update(phone=cd['phone'],
                                             image=cd['image'],address=cd['address'])
                     
-                    messages.add_message(request,level=messages.SUCCESS,message="Updating successful!")
+                    messages.add_message(request,level=messages.SUCCESS,message="Perfil actualizado!")
 
                     # redireccion
-                    return redirect('profile')
+                    return HttpResponse('302')
 
                 except:
                     return HttpResponseServerError('errors/500.html')
             
             else:
-                messages.add_message(request,level=messages.INFO,message="There are not changes in your profile")
-                return redirect('profile')
+                messages.add_message(request,level=messages.INFO,message="No se realizaron cambios")
+                return HttpResponse('302')
         
         return render(request,self.template_name,{self.context_object_name:form})
 
@@ -415,4 +436,30 @@ class DeleteProfileUser(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
     
-  
+# Profile items list (Profile)
+class UserItemsList(ListView):
+    template_name = 'profile/user_items_list.html'
+    model = ShopingCell
+    context_object_name = 'useritems'
+
+    @method_decorator(login_required)
+    def get(self, request:str, *args, **kwargs) -> HttpResponse:
+        items = self.model.objects.filter(user=request.user)
+        count = len(items)
+        orphans = count - 8 if count > 8 else 0
+        paginator = Paginator(items,8,orphans=orphans)
+        page = request.GET.get('page')
+
+        try:
+            items = paginator.page(page)
+        except PageNotAnInteger:
+            items = paginator.page(1)
+        except EmptyPage:
+            return HttpResponse('')
+
+        items = paginator.page(paginator.num_pages)
+
+        return render(request,self.template_name,{self.context_object_name:items})
+
+
+

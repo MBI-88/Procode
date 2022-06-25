@@ -42,6 +42,7 @@ function registerform(event){
     }).catch(reject => console.log(reject))
 }
 
+
 // goPost hace la peticion post por medio de fetch
 function goPost(form,urlpost,urlredic){
     const formdata = new URLSearchParams(new FormData(form))
@@ -52,7 +53,7 @@ function goPost(form,urlpost,urlredic){
         
     }).then(response => response.text())
     .then(html => {
-        if (html == 'redirec'){
+        if (html == '302'){
             window.location.href = urlredic
         }
         document.querySelector('.modal-body').innerHTML = html

@@ -71,7 +71,7 @@
         <div class="container-md pt-2 pb-5">
             <form class="d-flex" method="GET" action="">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-                <button class="btn btn-outline-success bg-primary text-light" type="submit">Search</button>
+                <button class="btn btn-outline-success bg-primary text-light" type="submit">Buscar articulo</button>
             </form>
         </div>
     </nav>
@@ -81,7 +81,7 @@
 
 {% block items %}
     <div class="container-fluid items-bg ">
-        <div class="row row-cols-5 p-4 text-light">
+        <div class="row row-cols-5 p-4 text-light" id="items-ajax">
             {% include 'dashboard/items_ajax.html' %}
         </div>
     </div>
@@ -90,5 +90,5 @@
 
 
 {% block script %}
-    <script src=" {% static 'procodejs/scrollinf.js' %} "></script> 
+    <script src=" {% static 'procodejs/scrolldashboarditems.js' %} "></script> 
 {% endblock script %}

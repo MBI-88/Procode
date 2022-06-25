@@ -1,3 +1,68 @@
 {% extends 'cell_index.html' %}
-
 {% block title %}Perfil{% endblock title %}
+{% block presentation %}{% endblock presentation %}
+{% block carousel %}{% endblock carousel %}
+{% block middle %}{% endblock middle %}
+
+{% load thumbnail %}
+<div class="container container-md d-flex">
+    <div class="container d-block">
+        <!--Informacion de usuario-->
+        <div class="card mb-3" style="max-width: 100px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                {% thumbnail 'user.profile.image' 50x0 quality=100 crop="smart" %}
+                <img src=" {{ user.profile.image }} " class="img-fluid rounded-start" alt="No existe imagen">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title"> {{ user.username }} </h5>
+                    <p class="card-text">Nombre: {{ user.first_name }} </p>
+                    <p class="card-text">Apellidos: {{ user.last_name }} </p>
+                    <p class="card-text">Dirección: {{ user.profile.address }} </p>
+                    <p class="card-text">Telefono: {{ user.profile.phone }} </p>
+                    <p class="card-text">E-mail: {{ user.email }} </p>
+                    <p class="card-text"><small class="text-muted">
+                        Miembro de: {{ user.profile.created_date }} <br> 
+                        Ultima visita: {{ user.profile.updated_date }} <br>
+                    </small></p>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!--Navbar vertical opciones-->
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                {% block search %}
+                    <div class="container-md pt-2 pb-5">
+                        <form class="d-flex" method="GET" action="">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                            <button class="btn btn-outline-success bg-primary text-light" type="submit">Buscar articulo</button>
+                        </form>
+                    </div>
+                {% endblock search %}
+            </li>
+            <li class="nav-item">
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=createitemform(event)>
+                    Articulo
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=updateprofileform(event)>
+                    Profile
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=deleteprofileform(event)>
+                    Profile
+                </button>
+            </li>
+        </ul>
+    </div>
+    <!--Bloque para articulos del usuario-->
+    <div class="container-fluid">
+        <div class="row row-cols-5 p-4 text-light" id="items-ajax">
+            {% include 'profile/user_items.html' %}
+        </div>
+    </div>
+</div>

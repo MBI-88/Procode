@@ -21,6 +21,14 @@ class ProfileUser(models.Model):
     
     def __str__(self) -> str:
         return f'Profile for user {self.user.username}'
+    
+    def get_absolute_url(self):
+        return reverse("cells:update_profile", kwargs={"pk": self.pk})
+    
+    def get_absolute_url_delete(self):
+        return reverse("cells:delete_profile", kwargs={"pk": self.pk})
+    
+    
 
 
 
@@ -30,9 +38,9 @@ class ShopingCell(models.Model):
     """
     owner_user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='shopingcell',on_delete=models.CASCADE)
     model_name = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100,db_index=True,blank=True)
+    slug = models.SlugField(max_length=100,blank=True,unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
+    updated_date = models.DateTimeField(auto_now=True,db_index=True)
     price = models.DecimalField(max_digits=10,decimal_places=2)
     image = models.ImageField(upload_to='cells/%Y/%m/%d',blank=True)
     desciption = models.TextField(max_length=1000,blank=True)
@@ -49,6 +57,6 @@ class ShopingCell(models.Model):
     
     def save(self,*args, **kwargs) -> None:
         if not self.slug:
-            self.slug = slugify(self.model_name)
+            self.slug = slugify(self.model_name+"-"+self.id)
         super().save(*args,**kwargs)
 

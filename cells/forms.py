@@ -1,6 +1,5 @@
 from django import forms
 import re
-from django.contrib.auth.models import User
 
 # Forms
 
@@ -30,7 +29,7 @@ class UserRegistrationForm(forms.Form):
     
     def clean_phone(self) -> str:
         cd = self.cleaned_data
-        pattern = re.compile("^5[2-8]")   
+        pattern = re.compile("^5[1-8]")   
         if (len(cd['phone']) == 8):
             if (pattern.search(cd['phone'])):
                 return cd['phone']
@@ -38,8 +37,10 @@ class UserRegistrationForm(forms.Form):
         raise forms.ValidationError('Error phone')
     
 
-class SearchForm(forms.Form):
-    search = forms.CharField(max_length=100)
+
+class DeleteForm(forms.Form):
+    delete = forms.CharField(widget=forms.CheckboxInput)
+
     
 
 

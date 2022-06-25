@@ -1,0 +1,21 @@
+{% for item in useritems %}
+    <div class="col">
+        <div class="card" style="width: 10rem;">
+            <img src=" {{ item.image }} " class="card-img-top img-fluid rounded" alt="No existe imagen">
+            <div class="card-body">
+              <h5 class="card-title"> {{ item.model_name }} </h5>
+              <p class="card-text">Actualizado: {{ item.updated_date }}</p>
+              <p class="card-text">Descripción: {{ item.description }} </p>
+              <p class="card-text">Precio: {{ item.price }} $</p>
+
+              <button class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#modalblock" onclick=updateitemform(event)>
+                Actualizar
+              </button>
+              <button class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#modalblock" onclick=deleteitemform(event)>
+                Eliminar
+              </button>
+
+            </div>
+          </div>
+    </div>
+{% endfor %}

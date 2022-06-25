@@ -13,6 +13,7 @@ class ShopingCellAdmin(admin.ModelAdmin):
     ordering = ['-updated_date']
     fields = ['model_name','price']
     search_fields = ['model_name','price']
+    prepopulated_fields = {'slug':('model_name','id')}
 
 @admin.register(ProfileUser)
 class ProfileUserAdmin(admin.ModelAdmin):
