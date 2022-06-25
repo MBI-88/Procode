@@ -3,16 +3,15 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.utils.encoding import force_bytes
-from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,authenticate
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView,DetailView,View,TemplateView
+from django.views.generic import View
 from django.http import HttpResponse,HttpResponseServerError
-from .forms import LoginForm,UserRegistrationForm,DeleteForm
+from .forms import (LoginForm,UserRegistrationForm,DeleteItemForm,UpdateItemForm)
 from .models import ShopingCell
-from django.contrib.auth.views import (LoginView,LogoutView,PasswordResetDoneView,
+from django.contrib.auth.views import (LogoutView,PasswordResetDoneView,
                                         PasswordResetView,PasswordResetCompleteView,PasswordResetConfirmView)
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
@@ -34,7 +33,7 @@ def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> Non
 # Create your views here.
 
 # Index
-def index(request:str) -> render:
+def index(request:str) -> HttpResponse:
     """
     Index view 
     methods: request.GET
@@ -43,7 +42,7 @@ def index(request:str) -> render:
 
 
 # Login (Register)
-class LoginUser(LoginView):
+class LoginUser(View):
     """
     LoginUser view
     methods: request.GET, request.POST
@@ -51,6 +50,7 @@ class LoginUser(LoginView):
     """
     template_name = 'accounts/registration/login.html'
     form_class = LoginForm
+    
 
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
         return render(request,self.template_name,{'form':self.form_class})
@@ -96,12 +96,12 @@ class RegisterUser(View):
     template_name = 'accounts/registration/register.html'
     form_class = UserRegistrationForm
 
-    def get(self,request:str, *args, **kwargs) -> render:
+    def get(self,request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class()
         return render(request,self.template_name,{'form':form})
 
     
-    def post(self,request:str, *args, **kwargs) -> render:
+    def post(self,request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
@@ -147,7 +147,7 @@ class RegisterUser(View):
 
 
 # Registration succefull  (Register)
-def registrationUserDone(request:str,uid64:bytes,token:str) -> render:
+def registrationUserDone(request:str,uid64:bytes,token:str) -> HttpResponse:
     """
     registrationUserDone view
     methods: request.GET
@@ -213,7 +213,7 @@ class ResetUserPasswordComplete(PasswordResetCompleteView):
 
 
 # List Items (Dashboard)
-class ShowItems(ListView):
+class ShowItems(View):
     """
     ShowItems view
     methods: request.GET, request.AJAX
@@ -248,7 +248,7 @@ class ShowItems(ListView):
 
 
 # Detail Items (Dashboard)
-class DetailItem(DetailView):
+class DetailItem(View):
     """
     DetailItem view
     method: request.GET
@@ -261,7 +261,7 @@ class DetailItem(DetailView):
 
 
 # Create Item (Profile)
-class CreateItem(CreateView):
+class CreateItem(View):
     """
     CreateItem view
     methods: request.GET, request.POST
@@ -269,15 +269,13 @@ class CreateItem(CreateView):
     """
     template_name = 'accounts/profile/create_item.html'
     model = ShopingCell
-    fields = ['model_name','slug','price','image','description']
+    
 
-    @method_decorator(login_required)
-    def dispatch(self, request:str, *args, **kwargs) -> HttpResponse:
-        return super().dispatch(request, *args, **kwargs)
+   
 
 
 # Update Item (Profile)
-class UpdateItem(UpdateView):
+class UpdateItem(View):
     """
     UpdateItem view
     methods: request.GET, reques.POST
@@ -285,28 +283,34 @@ class UpdateItem(UpdateView):
     """
     template_name = 'accounts/profile/update_item.html'
     model = ShopingCell
-    fields = ['price','image','description']
-    success_url = '302'
+    form_class = UpdateItemForm
+
 
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
-        form = super().get_form_class()
+        form = self.form_class()
         return render(request,self.template_name,{'form':form})
     
     @method_decorator(login_required)
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
-        form = super().post(request, *args,**kwargs)    
+          form = self.form_class(request.POST)
+          if (form.is_valid()):
+            cd = form.cleaned_data
+            ShopingCell.objects.filter(pk=request.pk).update(
+                model_name=cd['model_name'],
+                price=cd['price'],
+                image=cd['image'],
+                description=cd['description'],
+            )
+            return HttpResponse('302')
         
-        if (form != self.success_url):
-            return form
-
-        return HttpResponse('302')
+        return render(request,self.template_name,{'form':self.form_class})
     
     
 
 
 # Delete Item (Profile)
-class DeleteItem(DeleteView):  # Me quede aqui
+class DeleteItem(View):  
     """
     DeletItem view
     methods: request.GET, request.POST
@@ -325,7 +329,7 @@ class DeleteItem(DeleteView):  # Me quede aqui
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
         if form.is_valid():
-            self.model.objects.filter(slug=request.slug).delete()
+            self.model.objects.filter(pk=request.pk).delete()
         return HttpResponse('302')
 
     
@@ -334,11 +338,11 @@ class DeleteItem(DeleteView):  # Me quede aqui
 
 
 # Profile (Profile)
-class ProfileUser(TemplateView):
+class ProfileUser(View):
     """
     ProfileUser view
     methods: request.GET, request.POST
-    TemplateView's son
+    View's son
     """
     template_name = 'accounts/profile/cell_profile.html'
 
@@ -351,11 +355,11 @@ class ProfileUser(TemplateView):
 
 
 # Profile Update (Profile)
-class UpdateProfile(TemplateView):
+class UpdateProfile(View):
     """
     UpdateProfile view
     methods: request.GET, request.POST
-    TemplateView's son
+    View's son
     """
     template_name = 'accounts/profile/update_profile.html'
     form_class = UserRegistrationForm
@@ -421,23 +425,26 @@ class UpdateProfile(TemplateView):
 
 
 # Profile Delete (Profile)
-class DeleteProfileUser(DeleteView):
+class DeleteProfileUser(View):
     """
     DeleteProfile view
     methods: request.GET, request.POST
-    DeleteView's son
+    View's son
     """
     template_name = 'accounts/profile/delete_account.html'
     model = User
     success_url = reverse_lazy('index')
 
-    @method_decorator(login_required)
-    def dispatch(self, request:str, *args, **kwargs) -> HttpResponse:
-        return super().dispatch(request, *args, **kwargs)
+    
 
     
 # Profile items list (Profile)
-class UserItemsList(ListView):
+class UserItemsList(View):
+    """
+    UserItemList view
+    methods: reques.GET
+    View's son
+    """
     template_name = 'profile/user_items_list.html'
     model = ShopingCell
     context_object_name = 'useritems'

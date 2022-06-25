@@ -1,8 +1,8 @@
 from django import forms
 import re
+from cells.models import ShopingCell
 
-# Forms
-
+# Register Users
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=25,required=True)
     password = forms.CharField(widget=forms.PasswordInput,required=True)
@@ -37,9 +37,15 @@ class UserRegistrationForm(forms.Form):
         raise forms.ValidationError('Error phone')
     
 
-
-class DeleteForm(forms.Form):
+# Update, delete Items
+class DeleteItemForm(forms.Form):
     delete = forms.CharField(widget=forms.CheckboxInput)
+
+
+class UpdateItemForm(forms.ModelForm):
+    
+    class Meta:
+        model = ShopingCell
 
     
 

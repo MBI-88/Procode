@@ -57,6 +57,6 @@ class ShopingCell(models.Model):
     
     def save(self,*args, **kwargs) -> None:
         if not self.slug:
-            self.slug = slugify(self.model_name+"-"+self.id)
+            self.slug = slugify(self.model_name+"-"+self.created_date)
         super().save(*args,**kwargs)
 
