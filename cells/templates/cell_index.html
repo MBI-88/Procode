@@ -1,7 +1,7 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,6 @@
     <title>ProC0d3 {% block title %}Home{% endblock title %}</title>
 </head>
 <body>
-  
     <!--Modal-->
     <div class="modal fade" id="modalblock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable">
@@ -37,9 +36,9 @@
             <img src=" {% static 'img/logo/logoIco.png' %} " alt="LOGO" class="rounded-circle" width="40">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon  bg-warning rounded"></span>
+            <span class="navbar-toggler-icon  middle-bg-1 rounded"></span>
           </button>
-          <div class="collapse navbar-collapse nav-hover" id="navbarTogglerDemo01">
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
                       <a class="nav-link text-light  active" data-bs-toogle="tooltip" data-bs-html="true" title="Shop" href=" {% url 'cells:dashboar_list' %} ">
@@ -93,30 +92,33 @@
                   </li>
                 </ul>
 
-            <div class="d-flex pl-5 d-md-block">
+            <div class="navbar-nav">
               {% if user.is_authenticated %}
-
-                  <a href=" {% url 'cells:logout' %} " class="btn btn-warning" data-bs-toogle="tooltip" data-bs-html="true" title="Salir">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                      <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                    </svg> Salir
-                  </a>
-
+                  <li class="nav-link">
+                    <a href=" {% url 'cells:logout' %} " class="btn middle-bg-1" data-bs-toogle="tooltip" data-bs-html="true" title="Salir">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                      </svg> Salir
+                    </a>
+                  </li>
               {% else %}
-                  <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=loginform(event)>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
-                      <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                    </svg> Entrar
-                  </button>
-                  <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=registerform(event)>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
-                      <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                      <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                    </svg> Registrarse
-                  </button>
-        
+                  <li class="nav-link">
+                    <button class="btn middle-bg-1" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=loginform(event)>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                        <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                      </svg> Entrar
+                    </button>
+                  </li>
+                  <li class="nav-link">
+                    <button class="btn middle-bg-1" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=registerform(event)>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
+                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                        <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                      </svg> Registrarse
+                    </button>
+                  </li>
               {% endif %}
             </div>
           </div>
@@ -126,13 +128,13 @@
     
     <!--Presentation ProC0d3-->
     {% block presentation %}
-      <div class="row row-cols-2 container-fluid logo-trans">
-        <div class="col text-start ">
+      <div class="row row-cols-2 logo-trans">
+        <div class="col text-start">
             <svg viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg" class="img-fluid rounded w-75" fill="currentColor" width="350" height="350" xmlns:xlink="http://www.w3.org/1999/xlink">
               <image width="350" height="350" xlink:href="data:image/png;charset=utf-8;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAMn0lEQVR4nO3de4xU1R3A8aPFdnkopmmiUUOb0hhfiDVaNS4xaVhshEoiWOOSiqZYkVaN2sLSFP4QWhFbqVhZ1G1BG5b4gIjFpi6mibKmmppWwGLTFgJEmtoYeT9UHv39Zj1wdube37135t5ZBr6fBDizzMze2T3fuc+Fkw4LByASgQAGAgEMBAIYCAQwEAhgIBDAQCCAgUAAA4EABgIBDAQCGAgEMBAIYCAQwEAggIFAAAOBAAYCAQwEAhgIBDAQCGAgEMBAIICBQAADgQAGAgEMBAIYCAQwEAhgIBDAQCCAgUAAA4EABgIBDAQCGAgEMBAIYCAQwEAggIFAAAOBAAYCAQwEAhgIBDAQCGAgEMBAIICBQAADgQAGAgEMBAIYCAQwEAhgIBDAQCCAgUAAA4EABgIBDAQCGAgEMBAIYCAQwEAggIFA6uTQR5vcoW1b3ElNg93nzh4uH8lmWferbv2WjW7X3t3u/CFD3W2jxspHUTQCKZiGsf+5293BDa/JrR4nnzXcNX2nI1UoOyWIyfNnuzf/sVZuHXXBkK+6uZPulT+Hyi0UhUAKdHDrGrf3iRbn9m2XW2X6n+76T3ze9Rt6jdyIpnG0zmkrrTminDZgkOtse5BICkQgBTHjCOia5JTLb5FRb0lxeERSLAIpwGGJYs+8b7jD2za5NMojSRuHRyTFIZCcaRx7F7a4Q/9ZI7fS6z95VWlzK2scHpEUg0BylBTHyWddLH/Xe2db9bvsu67/Tb9JjKPl0itLIegRrSj6d0SSLwLJSVIcn2+Z4b4wakbPvsnCkc7t3yEfPRqH0jjKj1Z545pHuocn3Scj517oXuWmdsyTUSUiyReB5CApjjAC5SPpd9H1Rz4+teMRmfjRa4YwDs+KROkh4PHNcpAANSGQGmWNw9PzIyd/8StOZY3DI5LiEUgNqo0jZMWh+xxP3D1TRvGIpFgEUgONIzxDHqo1jvPlTPnStjmlfYokRFIcAqnSvmcnuQNvPyOjSnnG8elfnnEHNr4uz9chfxNPd+7vmD/L7dq7R25VIpLqEEgV6hnH/ucmyUf1eW+R5+2QUbz1Wza4m+VIGJHkh0AyMuO4UI5K3fqCjOLN6nzCLepaIaNKveJ4d4Xb//SN8tGjiKT+CCQDKw49CThg8qvupP6ny61o1r5CGEfpMHDMdVx5RDJejozNjTkyht4IJKV6xaF6jo6NlKNja+VWJSKpHwJJoZ5xeEmR6M+UDJi8ylmfl0hqRyAJ9q+4333a/ZiMKtUax6kDBpbiiLsspB6R6E8mzmi9Q0aIQiCG8ChSuTRxdP31z26yHHqNkhSHlxTJKc13uaaxv5RRvPc//KB0CPi9mIsgF949w4269CoZoRyBxCjtKP/qchlVShOHXpk7ZuZdpclZLm0cXlIkA6f/88hlK3F0eXRNEhVJmjP2JyoCibFv8Xh34O8vyai3NHEoPXGnV+dGWfnAY6nj8DSSPfMud4e3bZZbvZX/wFWcuDXaFecNk2AfkhHKEUiM3T8/VybjJleuaeLz7pSLxsrI9tuuF93szidl1Jv+YwsrH/i1jLLRQHY/eK6Uu11u9ZZ2mTQOjaQcgcQjkBh720e6gxtfl1Fv/S4cKycDn5eRzVqDZD1Zp3HodV9xF0Wm2cSyzt5nXZ4TCYHE+LhrlvtkVeXmiEpzHkKNnvnDyG1+pUeO9AhSkqQ4/A9iWaw4WHvYCMSwZ95lMjHXyqhSmkiSDrGmOQ+xb/GNsi+0QkaV8rzuC9EIxNDz7h1/9Eg3t5puespZO+y1RGKdoCSO+iCQBEmR5HGyLioS4jg2EEgKeUWiJ+u2fvg/uVUp3FG24tDDzAPvfVtG8eKOoCniyIZAUsojkriTdeHPnSfFkXQOxrq0hTiyI5AMNBI9gRh1+FdVEwlxHNsIpAr7nv2eTOTfyahSlkj0pGE94tBLW1b/YhFxVIFAqpRHJH7CfrJ6vvv4pR/JqFIeceiaI+ulLehBIDVIikSvkUr6P0BqvWKYOIpFIDWyItH/A2TAHatiIyGOYx+B5KCaSKw4XNNgN+gn/yrFoREs7lrhOmWy+00yZV3rRRz5IZCcZIkkKQ5dc+h9NQ6/htAdeh+JnlNpnTO9tB9TjjjyRSA5sn48VyNpuqnDHf5os+yQ3y8fiBATh3fOl85wLZdeVfrvD4ijPggkZ+bawRLEoWsI/WnErKr5QSzYCKQAmSMJ4vB+3PFIaU2RVnipCvJDIAVJHUlEHF7aSIijOARSoMRIjDi8pEiIo1gEUrDYSFLE4T364pLSr3LEUTwCqQP936T0UpID+n+J7N/h9B+51h+VTROHp/98kK5J9E89mqUXOeqfKBaBAAYCAQwEAhgIBDAQCGAgEMBAIICBQAADgSDRad/suUK4efgV7g/zOmV04mjIQLbv3umWvrLcrXxjldyKN+SMs92IS65wrdeOk1t9b2V3l+vsWu527N4lt5JdNPQ899APZsioN//6V695M/a5Bg861Y0YfqW77uqR7stnniMfqV5UIGv/vd5NX/AzGSWbcO0Nx8z3IKuGC2Tzf993I77/7dIkSevir13gVj6yxJ0+6DS51TemPT7LtS9b7LIIJ6S35I/LZGLOzvT6p0+8R37dLaPqRAWy+p033ej7JsgoHf0edD/5exk1loYL5OYZk93LCWuOKCMuudK9LJH0BX23bZaoswonpFrwwiLXJnFUY4K8g7dPmyuj7PIIRM2Z8lM3ZfxtMmocDReI/2YNHniqe1m+WfrOFEXXNN3vvOXa5J17x55d8hFXCkRDqbcHn35Ufs2XkXN3jrtV3s3vybw2K5+Qo69ucVPkuYbJ6496Lr3/kleWuc5XlsutHp0PtLsxzaNklI3/moeBpKVrvDvnTpVRdY/vaw0bSNovdjg5dTNDJ6enk6h9+eLY7XilUXlp7j9s6PmuTT5POGnDZdDnqybScM2pkUXtm3i6nLp/MOTMs0vL4z+3vpmUb+bofeNek98Hyvo1L1fr4/vScR+ITgD/zqvvuktnLZRR73c2y84/bZDf099f6UQM93nyCMS/bl1zrlv6+pHnDul+yRz5PAuWLZJbPfTztUpcfi265aW/HXls0mvyX2P/uf3trGp9fF86oQLxj9GJdHHrNaU/k/hAhlz/9VT398K1VZ6B+NdQTl/nlLnTSpuWnq49dDNUA+le85Z85Ojn19eS9DXwnyvqc+vj3t3wnoySXXdvq/ze+/GN4rgPRA+tts68U0ZHN010MvlowrVKnPD+1ucNd8bD+xUZiE7U8rWGCgPVCVoeSPiakr4GUZ87fHxa4eMbxXEdiE6eMfJN1Imr/FGU8JsbTqQ4We4ftXxFBaLLFbXW0KNVupnnJQVSzWsKH59W+PhG0fCBWN+kdRKGRqLCbffwm5s0OVSW+5cvnyoikLbHZ5trjVARgWiUnXKULA3/2sPHN4qGD8TfThIe4swyOVSW+/vl8cun8gxEz4ovmPrQkeVRUWuNkG72+bXous7XSs9R62vKotbH96XjPhDdvtYJEE6eLJNDZbm/Xx6/fCqPQK6+fYxb99lOsS6DHoHa8sHW0thannDZ9dKbd2UtqsKPJz1H1GvKotbH96WGD0S/0VGGyLukvlNG0ceknRwqvP+Y5hZZGy2UUSXd7BgmR4aUXz4VBtI+da6b8K1xMspGg/CHZHUzUZf55mtvKI3j6CaQbor5zczwtYavqVWeZ+G0h2VUSdc8ugZS4WtKK+5r0igaPpBqhJMjnDRxdILpYV5Pw9MAy+nzeuGkCye30rXZYGNie/5EnReeLPSinmuHLK9O7JBuhr3x1EoZ9ajmNfmjgEqfX09GJol7fKMgkBSBqHAtkEQPCHTLZNRJ54WbSGmVv0ad1HrpTHj5SBr6PJ1yGLd8bZP1NfmDHCr8GqZR/vhGQSAT0wWi9JyKTqi4ia6TYLRsgunzhXEondztctRJ1ya675BG3GvU5V+wbLHrlj/9GfJyuizNsq8zRvbBrE06vQBSj4bFLZM+T9Rr0mXwX0NL3OMbRcMFAtQTgQAGAgEMBAIYCAQwEAhgIBDAQCCAgUAAA4EABgIBDAQCGAgEMBAIYCAQwEAggIFAAAOBAAYCAQwEAhgIBDAQCGAgEMBAIICBQAADgQAGAgEMBAIYCAQwEAhgIBDAQCCAgUAAA4EABgIBDAQCGAgEMBAIYCAQwEAggIFAAAOBAAYCAQwEAhgIBDAQCGAgEMBAIICBQAADgQAGAgEMBAIYCAQwEAhgIBDAQCCAgUAAA4EABgIBDAQCGAgEMBAIYCAQwEAggIFAAAOBAAYCAQz/BzjofT8lzA80AAAAAElFTkSuQmCC"/>
             </svg>
         </div>
-        <div class="col pt-5">
+        <div class="col text-center p-lg-5 p-3">
           <img src=" {% static 'img/img_presentation/habana-1.jpg' %} " alt="" class="img-fluid rounded-pill w-100">
         </div>
       </div>
@@ -142,6 +144,8 @@
     <!--Blockque carousel-->
     {% block carousel %}{% endblock carousel %}
 
+    <!--Profile User-->
+    {% block profileuser %}{% endblock profileuser %}
 
    <!--Bloque de busqueda-->
    {% block searchbar %}{% endblock searchbar %}     
@@ -150,9 +154,9 @@
     <!--Bloque de imagenes intermedias-->
     {% block middle %}
       <div class="middle-bg-1">
-        <div class="row row-cols-2 ">
-          <div class="col text-center pt-5">
-            <h5 class="h6 text-light">
+        <div class="row row-cols-2">
+          <div class="col text-center">
+            <h5 class="h6 text-light p-lg-5 p-3">
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
                  Debitis consectetur reprehenderit quam quis dolore consequatur, <br>
                  labore ducimus voluptatum quae tempora eligendi illo sit aperiam <br>
@@ -161,14 +165,14 @@
             </h5>
 
           </div>
-          <div class="col text-center pt-3 pb-3">
+          <div class="col text-center p-lg-5 pt-5">
             <img src=" {% static 'img/img_presentation/image-0.jpg' %} " alt="" class="img-fluid rounded-circle w-50">
           </div>
         </div>
       </div>
 
-      <div class="middle-bg-2 w-100 container-lg-0 pt-5">
-          <p class="h6 text-center text-light">
+      <div class="middle-bg-2 w-100">
+          <p class="h6 text-center text-light p-lg-5 p-3">
             Lorem ipsum dolor sit amet consectetur, <br>
             adipisicing elit. Earum beatae sint velit <br>
             asperiores debitis reprehenderit consectetur facilis. <br>
@@ -177,9 +181,9 @@
           </p>
       </div>
 
-      <div class="row row-cols-2 ">
-        <div class="col text-center pt-5">
-          <p class="h6 text-center text-black pt-5">
+      <div class="row row-cols-2">
+        <div class="col text-center">
+          <p class="h6 text-center text-black p-lg-5 p-3">
             Lorem ipsum dolor sit amet consectetur, <br>
             adipisicing elit. Earum beatae sint velit <br>
             asperiores debitis reprehenderit consectetur facilis. <br>
@@ -187,7 +191,7 @@
             quisquam nisi praesentium labore iure, quo tempora. <br>
           </p>
         </div>
-        <div class="col text-center pt-5 pb-5">
+        <div class="col text-center p-lg-5 pt-5">
           <img src=" {% static 'img/img_presentation/image-4.jpg' %} " alt="" class="img-fluid rounded-circle w-50">
         </div>
 

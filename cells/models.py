@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 # Create your models here.
 
-class ProfileUser(models.Model):
+class ProfileUserModel(models.Model):
     """
     Tabla de Registro de usuarios
     """
@@ -19,20 +19,13 @@ class ProfileUser(models.Model):
     class Meta:
         ordering = ['-created_date']
     
+    
     def __str__(self) -> str:
         return f'Profile for user {self.user.username}'
     
-    def get_absolute_url(self):
-        return reverse("cells:update_profile", kwargs={"pk": self.pk})
-    
-    def get_absolute_url_delete(self):
-        return reverse("cells:delete_profile", kwargs={"pk": self.pk})
-    
-    
 
 
-
-class ShopingCell(models.Model):
+class ShopingCellModel(models.Model):
     """
     Tabla para el guardado de los articulos de venta
     """
@@ -52,9 +45,11 @@ class ShopingCell(models.Model):
     def __str__(self) -> str:
         return f'Item cell {self.model_name}'
     
+
     def get_absolute_url(self):
         return reverse("cells:dashboar_detail", kwargs={'pk':self.pk})
     
+
     def save(self,*args, **kwargs) -> None:
         if not self.slug:
             self.slug = slugify(self.model_name+"-"+self.created_date)

@@ -1,23 +1,21 @@
-from django.shortcuts import redirect, render,get_object_or_404
+from django.shortcuts import redirect,render
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login,authenticate
+from django.contrib.auth import login,authenticate,logout
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.http import HttpResponse,HttpResponseServerError
-from .forms import (LoginForm,UserRegistrationForm,DeleteItemForm,UpdateItemForm)
-from .models import ShopingCell
+from .forms import (LoginForm,UserRegistrationForm,DeleteItemForm,UpdateItemForm,DeleteUserForm)
+from .models import ShopingCellModel,ProfileUserModel
 from django.contrib.auth.views import (LogoutView,PasswordResetDoneView,
                                         PasswordResetView,PasswordResetCompleteView,PasswordResetConfirmView)
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import ProfileUser
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from threading import Thread
 
@@ -46,14 +44,16 @@ class LoginUser(View):
     """
     LoginUser view
     methods: request.GET, request.POST
-    LoginView's son
+    View's son
     """
     template_name = 'accounts/registration/login.html'
     form_class = LoginForm
+    context_object_name = 'form'
     
 
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
-        return render(request,self.template_name,{'form':self.form_class})
+        form = self.form_class()
+        return render(request,self.template_name,{self.context_object_name:form})
     
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
@@ -66,10 +66,10 @@ class LoginUser(View):
                     return HttpResponse('302')
                 else:
                     messages.add_message(request,level=messages.WARNING,message='El usuario no esta activo')
-                    return render(request,self.template_name,{'form':form})
+                    return render(request,self.template_name,{self.context_object_name:form})
 
 
-        return render(request,self.template_name,{'form':form})
+        return render(request,self.template_name,{self.context_object_name:form})
     
     
     
@@ -95,26 +95,27 @@ class RegisterUser(View):
     """
     template_name = 'accounts/registration/register.html'
     form_class = UserRegistrationForm
+    context_object_name = 'form'
+    model = User
 
     def get(self,request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class()
-        return render(request,self.template_name,{'form':form})
+        return render(request,self.template_name,{self.context_object_name:form})
 
     
     def post(self,request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            user = User.objects.filter(username=cd['username'],email=cd['email'])
+            user = self.model.objects.filter(username=cd['username'],email=cd['email'])
             if (user is None):
-                new_user = User()
+                new_user = self.model()
                 new_user.username = cd['username']
                 new_user.is_active = False
                 new_user.set_password(cd['password'])
                 new_user.first_name = cd['first_name']
                 new_user.last_name = cd['last_name']
                 new_user.email = cd['email']
-
 
                 #email
                 subject = 'ProC0d3 Activaion\'account' 
@@ -129,20 +130,17 @@ class RegisterUser(View):
                 try:
                     sendEmail(subject,message,cd['email'],new_user.username)
                     new_user.save()
-                    ProfileUser.objects.create(user=new_user,phone=cd['phone'],
+                    ProfileUserModel.objects.create(user=new_user,phone=cd['phone'],
                                         image=cd['image'],
                                         address=cd['address'])
                     
                     # redireccion
                     return HttpResponse('302')
-
                 except:
                     return HttpResponseServerError('errors/500.html')
-        
             else:
                 messages.add_message(request,level=messages.WARNING,message='Este usuario ya existe')
-        
-        return render(request,self.template_name,{'form':form})
+        return render(request,self.template_name,{self.context_object_name:form})
     
 
 
@@ -165,7 +163,6 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> HttpResponse:
     else:
         user.delete()
         return render(request,'') # El token no es valido
-    
     return redirect('cells:index') # Respuesta correcta y redirección
 
 
@@ -217,10 +214,10 @@ class ShowItems(View):
     """
     ShowItems view
     methods: request.GET, request.AJAX
-    ListView's son
+    View's son
     """
     template_name = 'dashboard/cell_items.html'
-    model = ShopingCell
+    model = ShopingCellModel
     context_object_name = 'itemcells'
 
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
@@ -248,15 +245,20 @@ class ShowItems(View):
 
 
 # Detail Items (Dashboard)
-class DetailItem(View):
+class DetailItem(View): 
     """
     DetailItem view
     method: request.GET
     DetailView's son
     """
     template_name = 'dashboard/item_detail.html'
-    model = ShopingCell
+    model = ShopingCellModel
     context_object_name = 'itemcell'
+
+    def get(self,request:str,*args, **kwargs) -> HttpResponse:
+        pk = request.GET.get('pk')
+        item = self.model.objects.get(pk=pk)
+        return render(request,self.template_name,{self.context_object_name:item})
 
 
 
@@ -268,8 +270,27 @@ class CreateItem(View):
     CreateView's son
     """
     template_name = 'accounts/profile/create_item.html'
-    model = ShopingCell
+    model = ShopingCellModel
+    form_class = UpdateItemForm
+    context_object_name = 'form'
+
+    @method_decorator(login_required)
+    def get(self,request:str,*args, **kwargs) -> HttpResponse:
+        form = self.form_class()
+        return render(request,self.template_name,{self.context_object_name:form})
     
+    @method_decorator(login_required)
+    def post(self,request:str,*args, **kwargs) -> HttpResponse:
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            self.model.objects.filter(user=request.user).create(
+                model_name=cd['model_name'],image=cd['image'],
+                description=cd['description'],price=cd['price']
+            )
+            return HttpResponse('302')
+        return render(request,self.template_name,{self.context_object_name:form})
+
 
    
 
@@ -279,63 +300,68 @@ class UpdateItem(View):
     """
     UpdateItem view
     methods: request.GET, reques.POST
-    UpdateView's son
+    View's son
     """
     template_name = 'accounts/profile/update_item.html'
-    model = ShopingCell
+    model = ShopingCellModel
     form_class = UpdateItemForm
-
+    context_object_name = 'form'
+    pk = None
 
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
-        form = self.form_class()
-        return render(request,self.template_name,{'form':form})
+        form = self.form_class(initial={
+            'model_name':request.user.shopingcell.model_name,
+            'image':request.user.shopingcell.image,
+            'price':request.user.shopingcell.price,
+            'description':request.user.shopingcell.description,
+        })
+
+        self.pk = request.GET.get('pk')
+        return render(request,self.template_name,{self.context_object_name:form})
     
     @method_decorator(login_required)
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
-          form = self.form_class(request.POST)
-          if (form.is_valid()):
+        form = self.form_class(request.POST)
+        if form.is_valid():
             cd = form.cleaned_data
-            ShopingCell.objects.filter(pk=request.pk).update(
-                model_name=cd['model_name'],
-                price=cd['price'],
-                image=cd['image'],
-                description=cd['description'],
-            )
+            if form.has_changed():
+                self.model.objects.filter(pk=self.pk).update(
+                    model_name=cd['model_name'],price=cd['price'],
+                    image=cd['image'],description=cd['description'])
+                    
             return HttpResponse('302')
+        return render(request,self.template_name,{self.context_object_name:self.form_class})
         
-        return render(request,self.template_name,{'form':self.form_class})
-    
-    
-
 
 # Delete Item (Profile)
 class DeleteItem(View):  
     """
     DeletItem view
     methods: request.GET, request.POST
-    DeleteView's son
+    View's son
     """
     template_name = 'accounts/profile/delete_item.html'
-    model = ShopingCell
-    form_class = DeleteForm
+    model = ShopingCellModel
+    form_class = DeleteItemForm
+    context_object_name = 'form'
+    pk = None
     
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class()
-        return render(request,self.template_name,{'form':form})
+        self.pk = request.GET.get('pk')
+        return render(request,self.template_name,{self.context_object_name:form})
     
+
     @method_decorator(login_required)
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
         if form.is_valid():
-            self.model.objects.filter(pk=request.pk).delete()
+            self.model.objects.filter(pk=self.pk).delete()
         return HttpResponse('302')
 
     
-
-
-
 
 # Profile (Profile)
 class ProfileUser(View):
@@ -348,9 +374,7 @@ class ProfileUser(View):
 
     @method_decorator(login_required)
     def get(self,request:str,*args, **kwargs) -> HttpResponse:
-        context = super().get_context_data(**kwargs)
-        context["user"] = get_object_or_404(User,username=request.user.username)
-        return render(request,self.template_name,context)
+        return render(request,self.template_name)
 
 
 
@@ -363,9 +387,10 @@ class UpdateProfile(View):
     """
     template_name = 'accounts/profile/update_profile.html'
     form_class = UserRegistrationForm
-    context_object_name = 'form_update'
+    model = User
+    context_object_name = 'form'
+    pk = None
     
-
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(initial={
@@ -377,7 +402,7 @@ class UpdateProfile(View):
                 'image': request.user.profile.image,
                 'address': request.user.profile.address
         })
-
+        self.pk = request.GET.get('pk')
         return render(request,self.template_name,{self.context_object_name:form})
     
 
@@ -387,25 +412,25 @@ class UpdateProfile(View):
         if form.is_valid():
             if form.has_changed():
                 cd = form.cleaned_data
-                new_user = get_object_or_404(User,username=request.user.username)
-                new_user.username = cd['username']
-                new_user.first_name = cd['first_name']
-                new_user.last_name = cd['last_name']
-                new_user.email = cd['email']
+                update_user = self.model.objects.get(pk=self.pk)
+                update_user.username = cd['username']
+                update_user.first_name = cd['first_name']
+                update_user.last_name = cd['last_name']
+                update_user.email = cd['email']
             
                 #email
                 subject = 'ProC0d3 Activaion\'account' 
                 message = render_to_string('email/email.html',{
                     'domain': get_current_site(request),
-                    'user': new_user.username,
-                    'body':"Your profile account was updated successful!"
+                    'user': update_user.username,
+                    'body':"Su perfil se actualizó con exito!"
                 })
                     
                 # email_sender
                 try:
-                    sendEmail(subject,message,cd['email'],new_user.username)
-                    new_user.save()
-                    ProfileUser.objects.filter(user=new_user).update(phone=cd['phone'],
+                    sendEmail(subject,message,cd['email'],update_user.username)
+                    update_user.save()
+                    ProfileUserModel.objects.filter(user=update_user).update(phone=cd['phone'],
                                             image=cd['image'],address=cd['address'])
                     
                     messages.add_message(request,level=messages.SUCCESS,message="Perfil actualizado!")
@@ -414,7 +439,7 @@ class UpdateProfile(View):
                     return HttpResponse('302')
 
                 except:
-                    return HttpResponseServerError('errors/500.html')
+                    return HttpResponseServerError('errors/500.html') # pendiente
             
             else:
                 messages.add_message(request,level=messages.INFO,message="No se realizaron cambios")
@@ -433,7 +458,25 @@ class DeleteProfileUser(View):
     """
     template_name = 'accounts/profile/delete_account.html'
     model = User
-    success_url = reverse_lazy('index')
+    form_class = DeleteUserForm
+    context_object_name = 'form'
+    pk = None
+
+    @method_decorator(login_required)
+    def get(self,request:str, *args, **kwargs) -> HttpResponse:
+        form = self.form_class()
+        self.pk = request.GET.get('pk')
+        return render(request,self.template_name,{self.context_object_name:form})
+    
+
+    @method_decorator(login_required)
+    def post(self,request:str,*args, **kwargs) -> HttpResponse:
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            self.model.objects.filter(pk=self.pk).delete()
+            logout(request)
+            return HttpResponse('302')
+        return render(request,self.template_name,{self.context_object_name:form})
 
     
 
@@ -446,7 +489,7 @@ class UserItemsList(View):
     View's son
     """
     template_name = 'profile/user_items_list.html'
-    model = ShopingCell
+    model = ShopingCellModel
     context_object_name = 'useritems'
 
     @method_decorator(login_required)

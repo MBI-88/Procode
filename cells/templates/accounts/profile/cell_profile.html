@@ -5,6 +5,7 @@
 {% block middle %}{% endblock middle %}
 
 {% load thumbnail %}
+{% block profileuser %}
 <div class="container container-md d-flex">
     <div class="container d-block">
         <!--Informacion de usuario-->
@@ -33,14 +34,12 @@
         <!--Navbar vertical opciones-->
         <ul class="nav flex-column">
             <li class="nav-item">
-                {% block search %}
                     <div class="container-md pt-2 pb-5">
                         <form class="d-flex" method="GET" action="">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
                             <button class="btn btn-outline-success bg-primary text-light" type="submit">Buscar articulo</button>
                         </form>
                     </div>
-                {% endblock search %}
             </li>
             <li class="nav-item">
                 <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=createitemform(event)>
@@ -62,7 +61,8 @@
     <!--Bloque para articulos del usuario-->
     <div class="container-fluid">
         <div class="row row-cols-5 p-4 text-light" id="items-ajax">
-            {% include 'profile/user_items.html' %}
+            {% include 'accounts/profile/user_items_list.html' %}
         </div>
     </div>
 </div>
+{% endblock profileuser %}

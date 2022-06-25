@@ -1,7 +1,3 @@
-.nav-hover a:hover{
-     border-bottom: 2px solid rgba(255, 166, 0, 0.876);
-}
-
 .zoon img  {
      border-radius: 2px ;
      overflow: hidden;
@@ -28,7 +24,7 @@
 }
 
 .middle-bg-1 {
-     background-color: rgba(229, 147, 46, 0.941);
+     background-color: rgba(247, 121, 58, 0.989);
 }
 
 .middle-bg-2 {
