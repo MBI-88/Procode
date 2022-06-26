@@ -108,7 +108,7 @@ class RegisterUser(View):
         if form.is_valid():
             cd = form.cleaned_data
             user = self.model.objects.filter(username=cd['username'],email=cd['email'])
-            if (user is None):
+            if user is None:
                 new_user = self.model()
                 new_user.username = cd['username']
                 new_user.is_active = False
@@ -222,11 +222,17 @@ class ShowItems(View):
 
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-        items = self.model.objects.all()
+        search = request.GET.get('search')
+        page = request.GET.get('page')
+        if search is not None:
+            # Sanetizar search
+            items = self.model.objects.filter(model_name__icontains=search)
+        else:
+            items = self.model.objects.all()
+
         count = len(items)
         orphans = count - 8 if count > 8 else 0
         paginator = Paginator(items,8,orphans=orphans)
-        page = request.GET.get('page')
 
         try:
             items = paginator.page(page)
@@ -267,7 +273,7 @@ class CreateItem(View):
     """
     CreateItem view
     methods: request.GET, request.POST
-    CreateView's son
+    View's son
     """
     template_name = 'accounts/profile/create_item.html'
     model = ShopingCellModel
@@ -412,35 +418,40 @@ class UpdateProfile(View):
         if form.is_valid():
             if form.has_changed():
                 cd = form.cleaned_data
-                update_user = self.model.objects.get(pk=self.pk)
-                update_user.username = cd['username']
-                update_user.first_name = cd['first_name']
-                update_user.last_name = cd['last_name']
-                update_user.email = cd['email']
-            
-                #email
-                subject = 'ProC0d3 Activaion\'account' 
-                message = render_to_string('email/email.html',{
-                    'domain': get_current_site(request),
-                    'user': update_user.username,
-                    'body':"Su perfil se actualizó con exito!"
-                })
-                    
-                # email_sender
-                try:
-                    sendEmail(subject,message,cd['email'],update_user.username)
-                    update_user.save()
-                    ProfileUserModel.objects.filter(user=update_user).update(phone=cd['phone'],
-                                            image=cd['image'],address=cd['address'])
-                    
-                    messages.add_message(request,level=messages.SUCCESS,message="Perfil actualizado!")
+                user = self.model.objects.filter(username=cd['username'],email=cd['email'])
+                if (user is None):
+                    self.model.objects.filter(pk=self.pk).update(
+                        username=cd['username'],first_name=cd['first_name'],
+                        last_name=cd['last_name'],email=cd['email']
+                    )
+                    self.model.objects.filter(profileusermodel__pk=self.pk).update(
+                        phone=cd['phone'],image=cd['image'],address=cd['address']
+                    )
 
-                    # redireccion
-                    return HttpResponse('302')
 
-                except:
-                    return HttpResponseServerError('errors/500.html') # pendiente
-            
+                    #email
+                    subject = 'ProC0d3 Activaion\'account' 
+                    message = render_to_string('email/email.html',{
+                        'domain': get_current_site(request),
+                        'user': cd['username'],
+                        'body':"Su perfil se actualizó con exito!"
+                    })
+                        
+                    # email_sender
+                    try:
+                        sendEmail(subject,message,cd['email'],cd['username'])
+                        messages.add_message(request,level=messages.SUCCESS,message="Perfil actualizado!")
+
+                        # redireccion
+                        return HttpResponse('302')
+
+                    except:
+                        return HttpResponseServerError('errors/500.html') # pendiente
+                
+                else:
+                    messages.add_message(request,level=messages.WARNING,message="El nombre de usuario o email ya existen\
+                         en el sistema")
+
             else:
                 messages.add_message(request,level=messages.INFO,message="No se realizaron cambios")
                 return HttpResponse('302')
@@ -494,12 +505,18 @@ class UserItemsList(View):
 
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
-        items = self.model.objects.filter(user=request.user)
+        search = request.GET.get('search')
+        page = request.GET.get('page')
+        if search is not None:
+            # Sanetizar search
+            items = self.model.objects.filter(user=request.user).filter(model_name__icontains=search)
+        else:
+            items = self.model.objects.filter(user=request.user)
+
         count = len(items)
         orphans = count - 8 if count > 8 else 0
         paginator = Paginator(items,8,orphans=orphans)
-        page = request.GET.get('page')
-
+        
         try:
             items = paginator.page(page)
         except PageNotAnInteger:

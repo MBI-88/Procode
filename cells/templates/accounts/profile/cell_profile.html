@@ -12,8 +12,7 @@
         <div class="card mb-3" style="max-width: 100px;">
             <div class="row g-0">
               <div class="col-md-4">
-                {% thumbnail 'user.profile.image' 50x0 quality=100 crop="smart" %}
-                <img src=" {{ user.profile.image }} " class="img-fluid rounded-start" alt="No existe imagen">
+                <img src=" {% thumbnail user.profile.image 150X0 quality=100  %} " class="img-fluid rounded-start" alt="No existe imagen">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
