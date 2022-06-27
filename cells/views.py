@@ -454,6 +454,7 @@ class UpdateProfile(View):
                         username=cd['username'],first_name=cd['first_name'],
                         last_name=cd['last_name'],email=cd['email']
                     )
+                    # Verificar
                     self.model.objects.filter(profileusermodel__pk=self.pk).update(
                         phone=cd['phone'],image=cd['image'],address=cd['address']
                     )
