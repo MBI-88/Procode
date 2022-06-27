@@ -224,6 +224,7 @@ class ShowItems(View):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         search = request.GET.get('search')
         page = request.GET.get('page')
+    
         if search is not None:
             # Sanetizar search
             items = self.model.objects.filter(model_name__icontains=search)
@@ -290,7 +291,7 @@ class CreateItem(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            self.model.objects.filter(user=request.user).create(
+            self.model.objects.create(owner_user=request.user,
                 model_name=cd['model_name'],image=cd['image'],
                 description=cd['description'],price=cd['price']
             )
@@ -316,11 +317,12 @@ class UpdateItem(View):
 
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
+        item = self.model.objects.get(pk=request.GET.get('pk'))
         form = self.form_class(initial={
-            'model_name':request.user.shopingcell.model_name,
-            'image':request.user.shopingcell.image,
-            'price':request.user.shopingcell.price,
-            'description':request.user.shopingcell.description,
+            'model_name':item.model_name,
+            'image':item.image,
+            'price':item.price,
+            'description':item.description,
         })
 
         self.pk = request.GET.get('pk')
@@ -377,10 +379,38 @@ class ProfileUser(View):
     View's son
     """
     template_name = 'accounts/profile/cell_profile.html'
+    model = ShopingCellModel
+    context_object_name = 'items'
 
     @method_decorator(login_required)
     def get(self,request:str,*args, **kwargs) -> HttpResponse:
-        return render(request,self.template_name)
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        search = request.GET.get('search')
+        page = request.GET.get('page')
+    
+        if search is not None:
+            # Sanetizar search
+            items = self.model.objects.filter(owner_user=request.user).filter(model_name__icontains=search)
+        else:
+            items = self.model.objects.filter(owner_user=request.user)
+        
+        count = len(items)
+        orphans = count - 8 if count > 8 else 0
+        paginator = Paginator(items,8,orphans=orphans)
+
+        try:
+            items = paginator.page(page)
+        except PageNotAnInteger:
+            items = paginator.page(1)
+        except EmptyPage:
+            if is_ajax:
+                return HttpResponse('')
+            items = paginator.page(paginator.num_pages)
+        
+        if is_ajax:
+            return render(request,'accounts/profile/user_items_list.html',{self.context_object_name:items})
+
+        return render(request,self.template_name,{self.context_object_name:items})
 
 
 
@@ -427,7 +457,6 @@ class UpdateProfile(View):
                     self.model.objects.filter(profileusermodel__pk=self.pk).update(
                         phone=cd['phone'],image=cd['image'],address=cd['address']
                     )
-
 
                     #email
                     subject = 'ProC0d3 Activaion\'account' 
@@ -489,44 +518,6 @@ class DeleteProfileUser(View):
             return HttpResponse('302')
         return render(request,self.template_name,{self.context_object_name:form})
 
-    
-
-    
-# Profile items list (Profile)
-class UserItemsList(View):
-    """
-    UserItemList view
-    methods: reques.GET
-    View's son
-    """
-    template_name = 'profile/user_items_list.html'
-    model = ShopingCellModel
-    context_object_name = 'useritems'
-
-    @method_decorator(login_required)
-    def get(self, request:str, *args, **kwargs) -> HttpResponse:
-        search = request.GET.get('search')
-        page = request.GET.get('page')
-        if search is not None:
-            # Sanetizar search
-            items = self.model.objects.filter(user=request.user).filter(model_name__icontains=search)
-        else:
-            items = self.model.objects.filter(user=request.user)
-
-        count = len(items)
-        orphans = count - 8 if count > 8 else 0
-        paginator = Paginator(items,8,orphans=orphans)
-        
-        try:
-            items = paginator.page(page)
-        except PageNotAnInteger:
-            items = paginator.page(1)
-        except EmptyPage:
-            return HttpResponse('')
-
-        items = paginator.page(paginator.num_pages)
-
-        return render(request,self.template_name,{self.context_object_name:items})
 
 
 

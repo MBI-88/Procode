@@ -70,8 +70,7 @@
     <nav class="navbar navbar-light">
         <div class="container-md pt-2 pb-5">
             <form class="d-flex" method="GET" action="">
-                <input id="id-search" class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search" name="search" value="">
-                <button class="btn btn-outline-success bg-primary text-light" type="submit">Buscar articulo</button>
+                <input id="id-search" class="form-control me-2" onkeydown=takeKeypress(event) type="search" placeholder="Buscar..." aria-label="Search" name="search" value="">
             </form>
         </div>
     </nav>
@@ -90,5 +89,5 @@
 
 
 {% block script %}
-    <script src=" {% static 'procodejs/scrolldashboarditems.js' %} "></script> 
+    <script src=" {% static 'procodejs/scrollitems.js' %} "></script> 
 {% endblock script %}

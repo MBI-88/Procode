@@ -4,7 +4,7 @@ let empty_page = false
 let blocke_request = false
 
 function GetFetch(page,search){
-    fetch('?page='+page+'&'+'search='+search,{
+    fetch('?page='+page+'&search='+search,{
         method: 'GET',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -26,10 +26,10 @@ function GetFetch(page,search){
 }
 
 function scrollInf(){
-    const search = document.getElementById('id-search').value
+    const search = new String(document.getElementById('id-search').value)
     const margin = document.body.clientHeight - window.innerHeight - 200
     let search_valid = ''
-    if (search.lehgth > 4) {search_valid = search}
+    if (search.length > 4) {search_valid = search.toString()}
     
     if (window.screenTop > margin && empty_page == false && blocke_request == false){
         blocke_request = true
@@ -41,9 +41,9 @@ function scrollInf(){
 window.addEventListener('scroll',scrollInf)
 
 function takeKeypress(event){
-    const search = event.target.value
-    if (search.lehgth > 4){
+    const search =  new String(event.target.value)
+    if (search.length > 4){
         document.getElementById('items-ajax').innerHTML = ''
-        GetFetch(1,search)
+        GetFetch(1,search.toString())
     }
 }

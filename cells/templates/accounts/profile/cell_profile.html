@@ -3,13 +3,14 @@
 {% block presentation %}{% endblock presentation %}
 {% block carousel %}{% endblock carousel %}
 {% block middle %}{% endblock middle %}
+{% load static %}
 
 {% load thumbnail %}
 {% block profileuser %}
 <div class="container container-md d-flex">
     <div class="container d-block">
         <!--Informacion de usuario-->
-        <div class="card mb-3" style="max-width: 100px;">
+        <div class="card mb-3" style="max-width: 540px;">
             <div class="row g-0">
               <div class="col-md-4">
                 <img src=" {% thumbnail user.profile.image 150X0 quality=100  %} " class="img-fluid rounded-start" alt="No existe imagen">
@@ -35,8 +36,7 @@
             <li class="nav-item">
                     <div class="container-md pt-2 pb-5">
                         <form class="d-flex" method="GET" action="">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-                            <button class="btn btn-outline-success bg-primary text-light" type="submit">Buscar articulo</button>
+                            <input class="form-control me-2" id="id-search" onkeydown=takeKeypress(event) type="search" placeholder="Buscar..." aria-label="Search" name="search">
                         </form>
                     </div>
             </li>
@@ -65,3 +65,6 @@
     </div>
 </div>
 {% endblock profileuser %}
+{% block script %}
+    <script src=" {% static 'procodejs/scrollitems.js' %} "></script> 
+{% endblock script %}
