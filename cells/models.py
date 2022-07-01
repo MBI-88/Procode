@@ -36,7 +36,7 @@ class ShopingCellModel(models.Model):
     updated_date = models.DateTimeField(auto_now=True,db_index=True)
     price = models.DecimalField(max_digits=10,decimal_places=2)
     image = models.ImageField(upload_to='cells/%Y/%m/%d',blank=True)
-    desciption = models.TextField(max_length=1000,blank=True)
+    description = models.TextField(max_length=1000,blank=True)
 
     class Meta:
         ordering = ['-updated_date']

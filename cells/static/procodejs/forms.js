@@ -65,7 +65,7 @@ function goPost(form,urlpost,urlredic){
 /*Evento para enviar formulario */
 function postSelector(event){
     event.preventDefault()
-
+    // crear identificador pra pk en update y delete
     // Selector de post
     const postselect = document.getElementsByTagName('form')[0]
     switch (postselect.id){
@@ -74,6 +74,21 @@ function postSelector(event){
             break;
         case 'registerForm':
             goPost(postselect,'../register/','../index/');
+            break;
+        case 'updateproForm':
+            goPost(postselect,'../update/profile/<pk>/','../profile/');
+            break;
+        case 'deleteproForm':
+            goPost(postselect,'../delete/profile/<pk>/','../index/');
+            break;
+        case 'createitemForm':
+            goPost(postselect,'../create/item/','../profile/');
+            break;
+        case 'deleteitemForm':
+            goPost(postselect,'../delete/item/<pk>/','../profile/');
+            break;
+        case 'updateitemForm':
+            goPost(postselect,'../update/item/<pk>/','../profile/');
             break;
             
     }

@@ -1,6 +1,7 @@
 from django import forms
 import re
 from cells.models import ShopingCellModel
+from django.contrib.auth.models import User
 
 #  Users
 class LoginForm(forms.Form):
@@ -33,8 +34,23 @@ class UserRegistrationForm(forms.Form):
         if (len(cd['phone']) == 8):
             if (pattern.search(cd['phone'])):
                 return cd['phone']
-        
-        raise forms.ValidationError('Error phone')
+        raise forms.ValidationError('El numero no coincide con el prefijo del sistema')
+
+    
+    def clean_username(self) -> str:
+        cd = self.cleaned_data
+        user = User.objects.filter(username=cd['username'])
+        if user is None:
+            return cd['username']
+        raise forms.ValidationError('Este nombre de usuario ya existe')
+
+
+    def clean_email(self) -> str:
+        cd = self.cleaned_data
+        user = User.objects.filter(email=cd['email'])
+        if user is None:
+            return cd['email']
+        raise forms.ValidationError('Este email ya existe')
     
 class DeleteUserForm(forms.Form):
     delete = forms.CharField(widget=forms.CheckboxInput)
@@ -51,7 +67,7 @@ class UpdateItemForm(forms.ModelForm):
     
     class Meta:
         model = ShopingCellModel
-        fields = ['model_name','price','image','desciption']
+        fields = ['model_name','price','image','description']
 
     
 
