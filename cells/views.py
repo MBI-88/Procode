@@ -8,7 +8,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.http import HttpResponse,HttpResponseServerError
-from .forms import (LoginForm,UserRegistrationForm,DeleteItemForm,UpdateItemForm,DeleteUserForm)
+from .forms import (LoginForm,UserRegistrationForm,DeleteItemForm,UpdateItemForm,DeleteUserForm,UpdateUserForm)
 from .models import ShopingCellModel,ProfileUserModel
 from django.contrib.auth.views import (LogoutView,PasswordResetDoneView,
                                         PasswordResetView,PasswordResetCompleteView,PasswordResetConfirmView)
@@ -160,7 +160,7 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> HttpResponse:
         user.save()
     else:
         user.delete()
-        return render(request,'') # El token no es valido/ pendiente
+        return render(request,'') # El token no es valido/ pendiente (404)
     return redirect('cells:index') # Respuesta correcta y redirección
 
 
@@ -417,7 +417,7 @@ class UpdateProfile(View):
     View's son
     """
     template_name = 'accounts/profile/update_profile.html'
-    form_class = UserRegistrationForm
+    form_class = UpdateUserForm
     model = User
     context_object_name = 'form'
     pk = None

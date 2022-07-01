@@ -1,0 +1,45 @@
+{% load widget_tweaks %}
+
+{% if messages %}
+    {% for mess in messages %}
+        <div class="alert alert-danger" role="alert">{{ mess }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+<form method="POST" id="loginForm">
+    {% csrf_token %}
+    <div class="row row-cols-1 container">
+        <div class="col p-3">
+            <li class="list-unstyled">
+                <label for="inputUsername" class="for-label">Nombre de Usuario</label> 
+            </li>
+            <li class="list-unstyled">
+                {% if form.username.errors %}
+                    <div class="alert alert-danger" role="alert">{{ form.username.errors }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+            {% render_field form.username class+="form-control" %}
+            </li>
+        </div>
+    </div>
+    <div class="row row-cols-1 container">
+        <div class="col pb-3">
+            <li class="list-unstyled">
+                <label for="inputPassword" class="form-label">Clave</label>
+            </li>
+            <li class="list-unstyled">
+                {% if form.password.errors %}
+                    <div class="alert alert-danger" role="alert">{{ form.password.errors }}
+                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+            {% endif %}
+            {% render_field form.password class+="form-control" %}
+            </li>
+        </div>
+    </div>
+    <div class="container text-end">
+        <button type="submit" class="btn btn-primary">Entrar</button>
+    </div>
+</form>

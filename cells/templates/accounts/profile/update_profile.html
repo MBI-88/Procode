@@ -1,0 +1,112 @@
+{% load widget_tweaks %}
+{% if messages %}
+    {% for mess in messages %}
+        <div class="alert alert-danger" role="alert">{{ mess }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="POST" id="updateproForm" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row row-cols-1  container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputUsername" class="form-label">Nombre de Usuario</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.username.errors %}
+            <div class="alert alert-danger">{{ form.username.errors }}</div>
+          {% endif %}
+          {% render_field form.username placeholder="ej. Paco" class+="form-control" %}
+        </li>
+      </div>
+    </div>
+
+    <div class="row row-cols-1  container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputFirstname" class="form-label">Nombre</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.first_name.errors %}
+              <div class="alert alert-danger"> {{ form.first_name.errors }} </div>
+          {% endif %}
+          {% render_field form.first_name placeholder="ej. Pedro" class+="form-control" %}
+        </li>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputLastname" class="form-label">Apellidos</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.last_name.errors %}
+              <div class="alert alert-danger"> {{ form.last_name.errors }} </div>
+          {% endif %}
+          {% render_field form.last_name placeholder="ej. Fuentes Albares" class+="form-control" %}
+        </li>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputAddress" class="form-label">Dirección</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.address.errors %}
+              <div class="alert alert-danger"> {{ form.address.errors }} </div>
+          {% endif %}
+          {% render_field form.address placeholder="ej. Vedado calle g e/ 23 y 25 edif 17 apto 28" class+="form-control" %}
+        </li>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputPhone" class="form-label">Movil</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.phone.errors %}
+              <div class="alert alert-danger"> {{ form.phone.errors }} </div>
+          {% endif %}
+          {% render_field form.phone placeholder="ej. 52895479" class+="form-control" %}
+        </li>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputEmail" class="form-label">E-mail</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.email.errors %}
+              <div class="alert alert-danger"> {{ form.email.errors }} </div>
+          {% endif %}
+          {% render_field form.email placeholder="ej. email@example.com" class+="form-control" %}
+        </li>  
+      </div>
+    </div>
+
+    <div class="row row-cols-1 container">
+      <div class="col pb-2">
+        <li class="list-unstyled">
+          <label for="inputImage" class="form-label">Imagen de perfil</label>
+        </li>
+        <li class="list-unstyled">
+          {% if form.image.errors %}
+              <div class="alert alert-danger"> {{ form.image.errors }} </div>
+          {% endif %}
+          {% render_field form.image class+="form-control" %}
+        </li>
+      </div>
+    </div>
+    <div class="container text-end">
+      <button type="submit" class="btn btn-primary">Registrarse</button>
+    </div>
+</form>

@@ -1,8 +1,7 @@
 'use strict'
 
-/*Evento para peticion de login */
-function loginform(event){
-    fetch('../login/',{
+function goGet(urlget){
+    fetch(urlget,{
         method: 'GET',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -18,29 +17,25 @@ function loginform(event){
     
         
     }).catch(reject => console.log(reject))
-
-    
 }
 
-/* Evento para peticion de registro */
-function registerform(event){
-    fetch('../register/',{
-        method: 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'text/html; char set=UTF-8',
-        },
-        mode: 'same-origin',
-        cache: 'default',
-        credentials: 'same-origin',
-    
-    }).then(response => response.text())
-    .then(html => {
-        document.querySelector('.modal-body').innerHTML = html
-       
-        
-    }).catch(reject => console.log(reject))
+function getSelector(event){
+    const id = event.target.id
+    switch (id){
+        case 'login':
+            goGet('../login/');
+            break;
+        case 'register':
+            goGet('../register/');
+            break;
+        case 'perfil':
+            goGet('../login/');
+            break;
+    }
+
 }
+
+
 
 
 // goPost hace la peticion post por medio de fetch
@@ -76,19 +71,19 @@ function postSelector(event){
             goPost(postselect,'../register/','../index/');
             break;
         case 'updateproForm':
-            goPost(postselect,'../update/profile/<pk>/','../profile/');
+            goPost(postselect,'../update/profile/<'+postselect.dataset.updatepro+'>/','../profile/');
             break;
         case 'deleteproForm':
-            goPost(postselect,'../delete/profile/<pk>/','../index/');
+            goPost(postselect,'../delete/profile/<'+postselect.dataset.deletepro+'>/','../index/');
             break;
         case 'createitemForm':
             goPost(postselect,'../create/item/','../profile/');
             break;
         case 'deleteitemForm':
-            goPost(postselect,'../delete/item/<pk>/','../profile/');
+            goPost(postselect,'../delete/item/<'+postselect.dataset.deleteitem+'>/','../profile/');
             break;
         case 'updateitemForm':
-            goPost(postselect,'../update/item/<pk>/','../profile/');
+            goPost(postselect,'../update/item/<'+postselect.dataset.updateitem+'>/','../profile/');
             break;
             
     }
