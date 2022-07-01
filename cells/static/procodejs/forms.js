@@ -28,7 +28,7 @@ function getSelector(event){
         case 'register':
             goGet('../register/');
             break;
-        case 'perfil':
+        case 'profile':
             goGet('../login/');
             break;
     }
