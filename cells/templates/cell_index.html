@@ -11,8 +11,8 @@
     <title>ProC0d3 {% block title %}Home{% endblock title %}</title>
 </head>
 <body>
-    <!--Modal-->
-    <div class="modal fade" id="modalblock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!--Modal-->
+  <div class="modal fade" id="modalblock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
@@ -27,10 +27,10 @@
           </div>
         </div>
       </div>
-    </div>
+  </div>
 
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-light navbar-bg"  id="navbar">
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-light navbar-bg"  id="navbar">
       <div class="container-fluid">
           <a class="navbar-brand" href=" {% url 'cells:index' %} " data-bs-toogle="tooltip" data-bs-html="true" title="Home">
             <img src=" {% static 'img/logo/logoIco.png' %} " alt="LOGO" class="rounded-circle" width="40">
@@ -123,11 +123,10 @@
             </div>
           </div>
       </div>
-    </nav>
+  </nav>
 
-    
-    <!--Presentation ProC0d3-->
-    {% block presentation %}
+  {% block content %}
+      <!--Presentation ProC0d3-->
       <div class="row row-cols-2 logo-trans">
         <div class="col text-start">
             <svg viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg" class="img-fluid rounded w-75" fill="currentColor" width="350" height="350" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -138,21 +137,8 @@
           <img src=" {% static 'img/img_presentation/habana-1.jpg' %} " alt="" class="img-fluid rounded-pill w-100">
         </div>
       </div>
-    {% endblock presentation %}
-    
 
-    <!--Blockque carousel-->
-    {% block carousel %}{% endblock carousel %}
-
-    <!--Profile User-->
-    {% block profileuser %}{% endblock profileuser %}
-
-   <!--Bloque de busqueda-->
-   {% block searchbar %}{% endblock searchbar %}     
-    
-
-    <!--Bloque de imagenes intermedias-->
-    {% block middle %}
+      <!--Imagenes intermedias-->
       <div class="middle-bg-1">
         <div class="row row-cols-2">
           <div class="col text-center">
@@ -196,13 +182,8 @@
         </div>
 
       </div>
-    {% endblock middle %}
-    
-
-    <!--Bloque muestra articulos de bd-->
-    {% block items %}{% endblock items %}
-   
-    
+  {% endblock content %}
+     
   <!--Scripts-->
   <script src=" {% static 'bootstrap_js/bootstrap.bundle.min.js' %} "></script>
   <script src=" {% static 'procodejs/forms.js' %} "></script>
@@ -243,7 +224,7 @@
             </div>
           </div>
           <p class="text-center font-monospace fw-bold fs-5">Copyright © 2022 ProC0d3
-            <img src=" {% static 'img/img_presentation/flag-1040573.png' %} " alt="" class="img-fluid rounded-circle" width="10%">
+            <img src=" {% static 'img/img_presentation/flag-1040573.png' %} " alt="" class="img-fluid rounded-circle" width="50rem">
             |Team
           </p>
           <div class="container-sm text-center">

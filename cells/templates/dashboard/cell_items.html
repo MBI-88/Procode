@@ -2,11 +2,9 @@
 {% load static %}
 {% block title %}Shop{% endblock title %}
 
-
-{% block presentation %}{% endblock presentation %}
-
 <!--Carousel-Shop-->
-{% block carousel %}
+{% block content %}
+    <!--Carousel-Shop-->
     <div class="carousel-bg">
         <div class="container-sm pt-5 pb-5 text-center">
             <div id="mainSlider" class="carousel slide pt-2 pb-2" data-bs-ride="carousel">
@@ -63,10 +61,8 @@
             </div>
         </div>
     </div>
-{% endblock carousel %}
 
-<!--Navbar-Search-->
-{% block searchbar %}
+    <!--Navbar-Search-->
     <nav class="navbar navbar-light">
         <div class="container-md pt-2 pb-5">
             <form class="d-flex" method="GET" action="">
@@ -74,18 +70,14 @@
             </form>
         </div>
     </nav>
-{% endblock searchbar %}
 
-{% block middle %}{% endblock middle %}
-
-{% block items %}
+    <!--Muestra articulos de la bd-->
     <div class="container-fluid items-bg ">
         <div class="row row-cols-5 p-4 text-light" id="items-ajax">
             {% include 'dashboard/items_ajax.html' %}
         </div>
     </div>
-{% endblock items %}
-
+{% endblock content %}
 
 
 {% block script %}

@@ -7,38 +7,70 @@
         </div>
     {% endfor %}
 {% endif %}
-<form method="POST" id="loginForm">
+
+<form method="POST" id="createitem">
     {% csrf_token %}
     <div class="row row-cols-1 container">
         <div class="col p-3">
             <li class="list-unstyled">
-                <label for="inputUsername" class="for-label">Nombre de Usuario</label> 
+                <label for="inputModelName" class="for-label">Nombre del modelo</label> 
             </li>
             <li class="list-unstyled">
-                {% if form.username.errors %}
-                    <div class="alert alert-danger" role="alert">{{ form.username.errors }}
+                {% if form.model_name.errors %}
+                    <div class="alert alert-danger" role="alert">{{ form.model_name.errors }}
                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endif %}
-            {% render_field form.username class+="form-control" %}
+            {% render_field form.model_name class+="form-control" %}
             </li>
         </div>
     </div>
     <div class="row row-cols-1 container">
         <div class="col pb-3">
             <li class="list-unstyled">
-                <label for="inputPassword" class="form-label">Clave</label>
+                <label for="inputPrice" class="form-label">Precio</label>
             </li>
             <li class="list-unstyled">
-                {% if form.password.errors %}
-                    <div class="alert alert-danger" role="alert">{{ form.password.errors }}
+                {% if form.price.errors %}
+                    <div class="alert alert-danger" role="alert">{{ form.price.errors }}
                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
             {% endif %}
-            {% render_field form.password class+="form-control" %}
+            {% render_field form.price class+="form-control" %}
             </li>
         </div>
     </div>
+    <div class="row row-cols-1 container">
+        <div class="col pb-3">
+            <li class="list-unstyled">
+                <label for="inputImage" class="form-label">Imagen</label>
+            </li>
+            <li class="list-unstyled">
+                {% if form.image.errors %}
+                    <div class="alert alert-danger" role="alert">{{ form.image.errors }}
+                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+            {% endif %}
+            {% render_field form.image class+="form-control" %}
+            </li>
+        </div>
+    </div>
+    <div class="row row-cols-1 container">
+        <div class="col pb-3">
+            <li class="list-unstyled">
+                <label for="inputDescription" class="form-label">Descripción</label>
+            </li>
+            <li class="list-unstyled">
+                {% if form.description.errors %}
+                    <div class="alert alert-danger" role="alert">{{ form.description.errors }}
+                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+            {% endif %}
+            {% render_field form.description class+="form-control" %}
+            </li>
+        </div>
+    </div>
+
     <div class="container text-end">
         <button type="submit" class="btn btn-primary">Entrar</button>
     </div>

@@ -21,6 +21,7 @@ function goGet(urlget){
 
 function getSelector(event){
     const id = event.target.id
+    const pk = event.target.dataset.pk
     switch (id){
         case 'login':
             goGet('../login/');
@@ -31,6 +32,22 @@ function getSelector(event){
         case 'profile':
             goGet('../login/');
             break;
+        case 'createitem':
+            goGet('../create/item/');
+            break;
+        case 'updateitem-'+pk:
+            goGet('../update/item/<'+pk+'>/');
+            break;
+        case 'deleteitem-'+pk:
+            goGet('../delete/item/<'+pk+'>/');
+            break;
+        case 'updateprofile':
+            goGet('../update/profile/<'+pk+'>/');
+            break;
+        case 'deleteprofile':
+            goGet('../delete/profile/<'+pk+'>/');
+            break;
+
     }
 
 }
@@ -60,30 +77,29 @@ function goPost(form,urlpost,urlredic){
 /*Evento para enviar formulario */
 function postSelector(event){
     event.preventDefault()
-    // crear identificador pra pk en update y delete
     // Selector de post
     const postselect = document.getElementsByTagName('form')[0]
     switch (postselect.id){
-        case 'loginForm':
+        case 'login':
             goPost(postselect,'../login/','../profile/');
             break;
-        case 'registerForm':
+        case 'register':
             goPost(postselect,'../register/','../index/');
             break;
-        case 'updateproForm':
-            goPost(postselect,'../update/profile/<'+postselect.dataset.updatepro+'>/','../profile/');
+        case 'updateprofile':
+            goPost(postselect,'../update/profile/<'+postselect.dataset.pk+'>/','../profile/');
             break;
-        case 'deleteproForm':
-            goPost(postselect,'../delete/profile/<'+postselect.dataset.deletepro+'>/','../index/');
+        case 'deleteprofile':
+            goPost(postselect,'../delete/profile/<'+postselect.dataset.pk+'>/','../index/');
             break;
-        case 'createitemForm':
+        case 'createitem':
             goPost(postselect,'../create/item/','../profile/');
             break;
-        case 'deleteitemForm':
-            goPost(postselect,'../delete/item/<'+postselect.dataset.deleteitem+'>/','../profile/');
+        case 'deleteitem':
+            goPost(postselect,'../delete/item/<'+postselect.dataset.pk+'>/','../profile/');
             break;
-        case 'updateitemForm':
-            goPost(postselect,'../update/item/<'+postselect.dataset.updateitem+'>/','../profile/');
+        case 'updateitem':
+            goPost(postselect,'../update/item/<'+postselect.dataset.pk+'>/','../profile/');
             break;
             
     }

@@ -87,7 +87,7 @@ class LoggedoutUser(LogoutView):
 
 
 # Register (Register)
-class RegisterUser(View):
+class Register(View):
     """
     RegisterUser view
     methods: request.GET, request.POST
@@ -295,6 +295,7 @@ class CreateItem(View):
             image=cd['image'],description=cd['description']
             )
             return HttpResponse('302')
+        messages.add_message(request,level=messages.WARNING,message='Errores en la creacion del articulo')
         return render(request,self.template_name,{self.context_object_name:form})
 
 
@@ -312,28 +313,29 @@ class UpdateItem(View):
     model = ShopingCellModel
     form_class = UpdateItemForm
     context_object_name = 'form'
-    pk = None
 
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
-        item = self.model.objects.get(pk=request.GET.get('pk'))
+        pk = request.GET.get('pk')
+        item = self.model.objects.get(pk=pk)
         form = self.form_class(initial={
             'model_name':item.model_name,
             'image':item.image,
             'price':item.price,
             'description':item.description,
         })
-        self.pk = request.GET.get('pk')
-        return render(request,self.template_name,{self.context_object_name:form})
+        return render(request,self.template_name,{self.context_object_name:form,'pk':pk})
     
+
     @method_decorator(login_required)
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
-        item = self.model.objects.get(pk=self.pk)
+        item = self.model.objects.get(pk=request.POST.get('pk'))
         form = self.form_class(request.POST,instance=item)
         if form.is_valid():
             if form.has_changed():
                 form.save()
             return HttpResponse('302')
+        messages.add_message(request,level=messages.WARNING,message='Errores en la modificación del articulo')
         return render(request,self.template_name,{self.context_object_name:self.form_class})
         
 
@@ -348,26 +350,25 @@ class DeleteItem(View):
     model = ShopingCellModel
     form_class = DeleteItemForm
     context_object_name = 'form'
-    pk = None
     
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class()
-        self.pk = request.GET.get('pk')
-        return render(request,self.template_name,{self.context_object_name:form})
+        pk = request.GET.get('pk')
+        return render(request,self.template_name,{self.context_object_name:form,'pk':pk})
     
 
     @method_decorator(login_required)
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
         if form.is_valid():
-            self.model.objects.filter(pk=self.pk).delete()
+            self.model.objects.filter(pk=request.POST.get('pk')).delete()
         return HttpResponse('302')
 
     
 
 # Profile (Profile)
-class ProfileUser(View):
+class Profile(View):
     """
     ProfileUser view
     methods: request.GET, request.POST
@@ -479,7 +480,7 @@ class UpdateProfile(View):
 
 
 # Profile Delete (Profile)
-class DeleteProfileUser(View):
+class DeleteProfile(View):
     """
     DeleteProfile view
     methods: request.GET, request.POST
@@ -489,20 +490,20 @@ class DeleteProfileUser(View):
     model = User
     form_class = DeleteUserForm
     context_object_name = 'form'
-    pk = None
+    
 
     @method_decorator(login_required)
     def get(self,request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class()
-        self.pk = request.GET.get('pk')
-        return render(request,self.template_name,{self.context_object_name:form})
+        pk = request.GET.get('pk')
+        return render(request,self.template_name,{self.context_object_name:form,'pk':pk})
     
 
     @method_decorator(login_required)
     def post(self,request:str,*args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
         if form.is_valid():
-            self.model.objects.filter(pk=self.pk).delete()
+            self.model.objects.filter(pk=request.POST.get('pk')).delete()
             logout(request)
             return HttpResponse('302')
         return render(request,self.template_name,{self.context_object_name:form})

@@ -7,7 +7,7 @@
     {% endfor %}
 {% endif %}
 
-<form method="POST" id="updateproForm" enctype="multipart/form-data">
+<form method="POST" id="updateprofile" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row row-cols-1  container">
       <div class="col pb-2">
@@ -18,7 +18,7 @@
           {% if form.username.errors %}
             <div class="alert alert-danger">{{ form.username.errors }}</div>
           {% endif %}
-          {% render_field form.username placeholder="ej. Paco" class+="form-control" %}
+          {% render_field form.username class+="form-control" %}
         </li>
       </div>
     </div>
@@ -32,7 +32,7 @@
           {% if form.first_name.errors %}
               <div class="alert alert-danger"> {{ form.first_name.errors }} </div>
           {% endif %}
-          {% render_field form.first_name placeholder="ej. Pedro" class+="form-control" %}
+          {% render_field form.first_name class+="form-control" %}
         </li>
       </div>
     </div>
@@ -46,7 +46,7 @@
           {% if form.last_name.errors %}
               <div class="alert alert-danger"> {{ form.last_name.errors }} </div>
           {% endif %}
-          {% render_field form.last_name placeholder="ej. Fuentes Albares" class+="form-control" %}
+          {% render_field form.last_name class+="form-control" %}
         </li>
       </div>
     </div>
@@ -60,7 +60,7 @@
           {% if form.address.errors %}
               <div class="alert alert-danger"> {{ form.address.errors }} </div>
           {% endif %}
-          {% render_field form.address placeholder="ej. Vedado calle g e/ 23 y 25 edif 17 apto 28" class+="form-control" %}
+          {% render_field form.address class+="form-control" %}
         </li>
       </div>
     </div>
@@ -74,7 +74,7 @@
           {% if form.phone.errors %}
               <div class="alert alert-danger"> {{ form.phone.errors }} </div>
           {% endif %}
-          {% render_field form.phone placeholder="ej. 52895479" class+="form-control" %}
+          {% render_field form.phone class+="form-control" %}
         </li>
       </div>
     </div>
@@ -88,7 +88,7 @@
           {% if form.email.errors %}
               <div class="alert alert-danger"> {{ form.email.errors }} </div>
           {% endif %}
-          {% render_field form.email placeholder="ej. email@example.com" class+="form-control" %}
+          {% render_field form.email class+="form-control" %}
         </li>  
       </div>
     </div>
