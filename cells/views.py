@@ -290,7 +290,8 @@ class CreateItem(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            self.model.objects.create(owner_user=request.user,
+            profile = ProfileUserModel.objects.get(user=request.user)
+            self.model.objects.create(owner_user=request.user,profile=profile,
             model_name=cd['model_name'],price=cd['price'],
             image=cd['image'],description=cd['description']
             )

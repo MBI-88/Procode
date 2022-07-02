@@ -6,6 +6,6 @@
         Price: {{ itemcell.price }}. <br>
         Description: <p>{{ itemcell.description|linebreaks }}</p>. <br>
         Contact: <a href="mailto:{{ itemcell.owner_user.email }}">{{ itemcell.owner_user.email }}</a>. <br> 
-        Phone: <a href="what:{{ itemcell.owner_user.phone }}">{{ itemcell.owner_user.phone }}</a>. <br>
+        Phone: <a href="https://api.whatsapp.com/send?phone=53{{ itemcell.profile.phone }}">{{ itemcell.profile.phone }}</a>. <br>
     </address>
 </div>

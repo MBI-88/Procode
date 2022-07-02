@@ -10,11 +10,11 @@ class ProfileUserModel(models.Model):
     Tabla de Registro de usuarios
     """
     user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="profile")
-    phone = models.CharField(max_length=20)
+    phone = models.CharField(max_length=10)
     created_date = models.DateTimeField(auto_now_add=True,db_index=True)
     updated_date = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='user/%Y/%m/%d',blank=True)
-    address = models.CharField(max_length=100,null=True)
+    address = models.CharField(max_length=50,null=True)
 
     class Meta:
         ordering = ['-created_date']
@@ -30,13 +30,14 @@ class ShopingCellModel(models.Model):
     Tabla para el guardado de los articulos de venta
     """
     owner_user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='shopingcell',on_delete=models.CASCADE)
-    model_name = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100,blank=True,unique=True)
+    profile = models.ForeignKey(ProfileUserModel,on_delete=models.CASCADE,null=True)
+    model_name = models.CharField(max_length=20)
+    slug = models.SlugField(max_length=20,blank=True,unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True,db_index=True)
     price = models.DecimalField(max_digits=10,decimal_places=2)
     image = models.ImageField(upload_to='cells/%Y/%m/%d',blank=True)
-    description = models.TextField(max_length=1000,blank=True)
+    description = models.TextField(max_length=100,blank=True)
 
     class Meta:
         ordering = ['-updated_date']
