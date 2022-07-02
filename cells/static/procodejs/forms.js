@@ -47,6 +47,9 @@ function getSelector(event){
         case 'deleteprofile':
             goGet('../delete/profile/<'+pk+'>/');
             break;
+        case 'itemdetail-'+pk:
+            goGet('../shoping/<'+pk+'>/');
+            break;
 
     }
 
