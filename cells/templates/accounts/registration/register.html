@@ -7,7 +7,7 @@
     {% endfor %}
 {% endif %}
 
-<form method="POST" id="register" enctype="multipart/form-data">
+<form method="POST" id="register">
     {% csrf_token %}
     <div class="row row-cols-1  container">
       <div class="col pb-2">
@@ -54,20 +54,6 @@
     <div class="row row-cols-1 container">
       <div class="col pb-2">
         <li class="list-unstyled">
-          <label for="inputAddress" class="form-label">Dirección</label>
-        </li>
-        <li class="list-unstyled">
-          {% if form.address.errors %}
-              <div class="alert alert-danger"> {{ form.address.errors }} </div>
-          {% endif %}
-          {% render_field form.address placeholder="ej. Vedado calle g e/ 23 y 25 edif 17 apto 28" class+="form-control" %}
-        </li>
-      </div>
-    </div>
-
-    <div class="row row-cols-1 container">
-      <div class="col pb-2">
-        <li class="list-unstyled">
           <label for="inputPhone" class="form-label">Movil</label>
         </li>
         <li class="list-unstyled">
@@ -90,20 +76,6 @@
           {% endif %}
           {% render_field form.email placeholder="ej. email@example.com" class+="form-control" %}
         </li>  
-      </div>
-    </div>
-
-    <div class="row row-cols-1 container">
-      <div class="col pb-2">
-        <li class="list-unstyled">
-          <label for="inputImage" class="form-label">Imagen de perfil</label>
-        </li>
-        <li class="list-unstyled">
-          {% if form.image.errors %}
-              <div class="alert alert-danger"> {{ form.image.errors }} </div>
-          {% endif %}
-          {% render_field form.image class+="form-control" %}
-        </li>
       </div>
     </div>
 

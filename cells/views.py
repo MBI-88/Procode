@@ -94,7 +94,7 @@ class Register(View):
             cd = form.cleaned_data
             new_user = self.model()
             new_user.username = cd['username']
-            new_user.is_active = False
+            new_user.is_active = True
             new_user.set_password(cd['password'])
             new_user.first_name = cd['first_name']
             new_user.last_name = cd['last_name']
@@ -114,16 +114,14 @@ class Register(View):
             try:
                 sendEmail(subject,message,cd['email'],new_user.username)
                 new_user.save()
-                ProfileUserModel.objects.create(user=new_user,phone=cd['phone'],
-                                        image=cd['image'],
-                                        address=cd['address'])
+                ProfileUserModel.objects.create(user=new_user,phone=cd['phone'])
                     
                 # redireccion
                 return HttpResponse('302')
             except:
                 return HttpResponseServerError('errors/500.html')
         else:
-            messages.add_message(request,level=messages.WARNING,message='Este usuario ya existe')
+            messages.add_message(request,level=messages.WARNING,message='Este nombre de usuario ya existe')
         return render(request,self.template_name,{self.context_object_name:form})
     
 
@@ -229,15 +227,14 @@ class CreateItem(View):
     
     @method_decorator(login_required)
     def post(self,request:str,*args, **kwargs) -> HttpResponse:
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST,files=request.FILES)
         if form.is_valid():
             cd = form.cleaned_data
-            profile = ProfileUserModel.objects.get(user=request.user)
-            self.model.objects.create(owner_user=request.user,profile=profile,
+            self.model.objects.create(owner_user=request.user,profile=request.user.profile,
             model_name=cd['model_name'],price=cd['price'],
             image=cd['image'],description=cd['description']
             )
-            return HttpResponse('302')
+            return redirect('cells:profile')
         messages.add_message(request,level=messages.WARNING,message='Errores en la creacion del articulo')
         return render(request,self.template_name,{self.context_object_name:form})
 
@@ -259,15 +256,14 @@ class UpdateItem(View):
 
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
-        pk = request.GET.get('pk')
-        item = self.model.objects.get(pk=pk)
+        item = self.model.objects.get(pk=request.GET.get('pk'))
         form = self.form_class(initial={
             'model_name':item.model_name,
             'image':item.image,
             'price':item.price,
             'description':item.description,
         })
-        return render(request,self.template_name,{self.context_object_name:form,'pk':pk})
+        return render(request,self.template_name,{self.context_object_name:form})
     
 
     @method_decorator(login_required)
@@ -277,7 +273,7 @@ class UpdateItem(View):
         if form.is_valid():
             if form.has_changed():
                 form.save()
-            return HttpResponse('302')
+            return redirect('cells:profile')
         messages.add_message(request,level=messages.WARNING,message='Errores en la modificación del articulo')
         return render(request,self.template_name,{self.context_object_name:self.form_class})
         
@@ -364,7 +360,6 @@ class UpdateProfile(View):
     form_class = UpdateUserForm
     model = User
     context_object_name = 'form'
-    pk = None
     
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
@@ -377,28 +372,28 @@ class UpdateProfile(View):
                 'image': request.user.profile.image,
                 'address': request.user.profile.address
         })
-        self.pk = request.GET.get('pk')
         return render(request,self.template_name,{self.context_object_name:form})
     
 
     @method_decorator(login_required)
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST,files=request.FILES)
         if form.is_valid():
             if form.has_changed():
                 cd = form.cleaned_data
-                self.model.objects.filter(pk=self.pk).update(
-                    username=cd['username'],first_name=cd['first_name'],
-                    last_name=cd['last_name'],email=cd['email']
-                )
-                # Verificar
-                self.model.objects.filter(profileusermodel__pk=self.pk).update(
-                    phone=cd['phone'],image=cd['image'],address=cd['address']
-                )
+                request.user.username = cd['username']
+                request.user.first_name = cd['first_name']
+                request.user.last_name = cd['last_name']
+                request.user.email = cd['email']
+                request.user.save()
+                
+                ProfileUserModel.objects.filter(user=request.user).update(
+                    phone=cd['phone'],image=cd['image'],address=cd['address'])
+                
 
                 #email
                 subject = 'ProC0d3 Activaion\'account' 
-                message = render_to_string('email/email.html',{
+                message = render_to_string('email/email_profile.html',{
                     'domain': get_current_site(request),
                     'user': cd['username'],
                     'body':"Su perfil se actualizó con exito!"
@@ -410,13 +405,13 @@ class UpdateProfile(View):
                     messages.add_message(request,level=messages.SUCCESS,message="Perfil actualizado!")
 
                     # redireccion
-                    return HttpResponse('302')
+                    return redirect('cells:profile')
                 except:
-                    return HttpResponseServerError('errors/500.html') # pendiente
+                    return HttpResponseServerError('errors/500.html') 
                 
             else:
                 messages.add_message(request,level=messages.INFO,message="No se realizaron cambios")
-                return HttpResponse('302')
+                return redirect('cells:profile')
        
         return render(request,self.template_name,{self.context_object_name:form})
 

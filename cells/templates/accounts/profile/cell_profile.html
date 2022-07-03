@@ -2,52 +2,52 @@
 {% block title %}Perfil{% endblock title %}
 {% load static %}
 
-{% load thumbnail %}
 {% block content %}
-    <div class="container container-md d-flex">
-        <div class="container d-block">
-            <!--Informacion de usuario-->
-            <div class="card mb-3 middle-bg-1 text-white-50" style="max-width: 540px;">
-                <div class="row g-0">
-                <div class="col-md-4">
-                    <img src=" {% thumbnail user.profile.image 150X0 quality=100  %} " class="img-fluid rounded-start" alt="No existe imagen">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title"> {{ user.username }} </h5>
-                        <p class="card-text">Nombre: {{ user.first_name }} </p>
-                        <p class="card-text">Apellidos: {{ user.last_name }} </p>
-                        <p class="card-text">Dirección: {{ user.profile.address }} </p>
-                        <p class="card-text">Telefono: {{ user.profile.phone }} </p>
-                        <p class="card-text">E-mail: {{ user.email }} </p>
-                        <p class="card-text"><small class="text-muted">
-                            Miembro de: {{ user.profile.created_date }} <br> 
-                            Ultima visita: {{ user.profile.updated_date }} <br>
-                        </small></p>
+    <div class="container  d-flex p-5 w-auto">
+        <div class="container d-block ">
+            {% if messages %}
+                {% for mess in messages %}
+                    <div class="alert alert-danger" role="alert">{{ mess }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                </div>
+                {% endfor %}
+            {% endif %}
+            <!--Informacion de usuario-->
+            <div class="card mb-3 middle-bg-1 text-white-100" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src=" {{ user.profile.image.url }}" class="img-fluid rounded-start" alt="No existe imagen">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body rounded-pill">
+                            <h5 class="card-title"> {{ user.username }} </h5>
+                            <p class="card-text">Nombre: {{ user.first_name }} </p>
+                            <p class="card-text">Apellidos: {{ user.last_name }} </p>
+                            <p class="card-text">Dirección: {{ user.profile.address }} </p>
+                            <p class="card-text">Telefono: {{ user.profile.phone }} </p>
+                            <p class="card-text">E-mail: {{ user.email }} </p>
+                            <p class="card-text"><small class="text-muted">
+                                Miembro de: {{ user.profile.created_date|timesince }} <br> 
+                                Ultima visita: {{ user.profile.updated_date|timesince }} <br>
+                            </small></p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!--Navbar vertical opciones-->
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                        <div class="container-md pt-2 pb-5">
-                            <form class="d-flex" method="GET" action="">
-                                <input class="form-control me-2" id="id-search" onkeydown=takeKeypress(event) type="search" placeholder="Buscar..." aria-label="Search" name="search">
-                            </form>
-                        </div>
+            <ul class="nav flex-column pt-2">
+                <li class="nav-item pt-2">  
+                    <form class="d-flex" method="GET" action="">
+                        <input class="form-control me-2" id="id-search" onkeydown=takeKeypress(event) type="search" placeholder="Buscar..." aria-label="Search" name="search">
+                    </form> 
                 </li>
-                <li class="nav-item">
-                    <button class="btn btn-warning" id="createitem" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=getSelector(event)>
-                        Nuevo articulo
-                    </button>
+                <li class="nav-item pt-2">
+                    <a href=" {% url 'cells:create_item' %} " class="btn btn-warning">Crear articulo</a>
                 </li>
-                <li class="nav-item">
-                    <button class="btn btn-warning" id="updateprofile" data-pk="{{ user.pk }}" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=getSelector(event)>
-                        Editar perfil
-                    </button>
+                <li class="nav-item pt-2">
+                    <a href=" {% url 'cells:update_profile' user.pk %} " class="btn btn-warning">Editar perfil</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item pt-2">
                     <button class="btn btn-warning" id="deleteprofile" data-pk="{{ user.pk }}" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=getSelector(event)>
                         Eliminar perfil
                     </button>
@@ -55,7 +55,7 @@
             </ul>
         </div>
         <!--Bloque para articulos del usuario-->
-        <div class="container-fluid">
+        <div class="container w-100">
             <div class="row row-cols-5 p-4 text-light" id="items-ajax">
                 {% include 'accounts/profile/user_items_list.html' %}
             </div>
@@ -65,4 +65,5 @@
 
 {% block script %}
     <script src=" {% static 'procodejs/scrollitems.js' %} "></script> 
+    <script src=" {% static 'procodejs/selectorGet.js' %} "></script>
 {% endblock script %}

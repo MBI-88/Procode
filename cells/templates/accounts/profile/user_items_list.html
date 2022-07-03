@@ -8,9 +8,7 @@
               <p class="card-text">Precio: {{ item.price }} $</p>
               <p class="card-text">Descripción: {{ item.description }} </p>
 
-              <button class="btn btn-primary" id="updateitem-{{ item.pk }}" data-pk="{{ item.pk }}" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=getSelector(event)>
-                Actualizar
-              </button>
+              <a href=" {% url 'cells:update_item' item.pk %} " class="btn btn-primary">Actualizar</a>
               <button class="btn btn-primary" id="deleteitem-{{ item.pk }}" data-pk="{{ item.pk }}" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=getSelector(event)>
                 Eliminar
               </button>

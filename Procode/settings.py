@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# User name: Procode password: pr0c0d3 email:procodecubashop@gmail.com
+# User name: Procode password: pr0c0d3 email:procode@gmail.com
 # SECURITY WARNING: keep the secret key used in production secret!
 
 
@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cells.apps.CellsConfig',
-    'easy_thumbnails',
     'widget_tweaks',
     
 ]
@@ -138,7 +137,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Media file (user images, cells images,etc)
-
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 
 # Redirect Urls

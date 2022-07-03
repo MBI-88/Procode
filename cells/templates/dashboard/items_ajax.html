@@ -1,7 +1,7 @@
 {% for item in itemcells %}
     <div class="col">
         <div class="zoom">
-            <img src=" {{ item.image }} " class="img-fluid rounded w-50" alt="..">
+            <img src=" {{ item.image.url }} " class="img-fluid rounded w-50" alt="..">
         </div> 
         <address>
                 Price: {{ item.price }}. <br>

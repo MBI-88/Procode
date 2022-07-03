@@ -13,7 +13,7 @@ class ProfileUserModel(models.Model):
     phone = models.CharField(max_length=10)
     created_date = models.DateTimeField(auto_now_add=True,db_index=True)
     updated_date = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='user/%Y/%m/%d',blank=True)
+    image = models.ImageField(upload_to='users/%Y/%m/%d',blank=True)
     address = models.CharField(max_length=50,null=True)
 
     class Meta:

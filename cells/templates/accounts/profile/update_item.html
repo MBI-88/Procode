@@ -1,76 +1,76 @@
+{% extends 'cell_index.html' %}
+{% block title %}Actualizar articulo{% endblock title %}
 {% load widget_tweaks %}
-{% if messages %}
-    {% for mess in messages %}
-        <div class="alert alert-danger" role="alert">{{ mess }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endfor %}
-{% endif %}
 
-<form method="POST" id="updateitem" data-pk="{{pk}}">
-    {% csrf_token %}
-    <div class="row row-cols-1 container">
-        <div class="col p-3">
-            <li class="list-unstyled">
-                <label for="inputModelName" class="for-label">Nombre del modelo</label> 
-            </li>
-            <li class="list-unstyled">
-                {% if form.model_name.errors %}
-                    <div class="alert alert-danger" role="alert">{{ form.model_name.errors }}
-                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endif %}
-            {% render_field form.model_name class+="form-control" %}
-            </li>
-        </div>
-    </div>
-    <div class="row row-cols-1 container">
-        <div class="col pb-3">
-            <li class="list-unstyled">
-                <label for="inputPrice" class="form-label">Precio</label>
-            </li>
-            <li class="list-unstyled">
-                {% if form.price.errors %}
-                    <div class="alert alert-danger" role="alert">{{ form.price.errors }}
-                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-            {% endif %}
-            {% render_field form.price class+="form-control" %}
-            </li>
-        </div>
-    </div>
-    <div class="row row-cols-1 container">
-        <div class="col pb-3">
-            <li class="list-unstyled">
-                <label for="inputImage" class="form-label">Imagen</label>
-            </li>
-            <li class="list-unstyled">
-                {% if form.image.errors %}
-                    <div class="alert alert-danger" role="alert">{{ form.image.errors }}
-                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-            {% endif %}
-            {% render_field form.image class+="form-control" %}
-            </li>
-        </div>
-    </div>
-    <div class="row row-cols-1 container">
-        <div class="col pb-3">
-            <li class="list-unstyled">
-                <label for="inputDescription" class="form-label">Descripción</label>
-            </li>
-            <li class="list-unstyled">
-                {% if form.description.errors %}
-                    <div class="alert alert-danger" role="alert">{{ form.description.errors }}
-                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-            {% endif %}
-            {% render_field form.description class+="form-control" %}
-            </li>
-        </div>
-    </div>
+{% block content %}
+    <div class="container pt-4" style="height: 40rem;">
+        <form method="POST" id="createitem" enctyp="multipart/form-data" action="">
+            {% csrf_token %}
+            <div class="row row-cols-1 container">
+                <div class="col p-3">
+                    <li class="list-unstyled">
+                        <label for="inputModelName" class="for-label">Nombre del modelo</label> 
+                    </li>
+                    <li class="list-unstyled">
+                        {% if form.model_name.errors %}
+                            <div class="alert alert-danger" role="alert">{{ form.model_name.errors }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endif %}
+                    {% render_field form.model_name class+="form-control" %}
+                    </li>
+                </div>
+            </div>
+            <div class="row row-cols-1 container">
+                <div class="col pb-3">
+                    <li class="list-unstyled">
+                        <label for="inputPrice" class="form-label">Precio</label>
+                    </li>
+                    <li class="list-unstyled">
+                        {% if form.price.errors %}
+                            <div class="alert alert-danger" role="alert">{{ form.price.errors }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                    {% endif %}
+                    {% render_field form.price class+="form-control" %}
+                    </li>
+                </div>
+            </div>
+            <div class="row row-cols-1 container">
+                <div class="col pb-3">
+                    <li class="list-unstyled">
+                        <label for="inputImage" class="form-label">Imagen</label>
+                    </li>
+                    <li class="list-unstyled">
+                        {% if form.image.errors %}
+                            <div class="alert alert-danger" role="alert">{{ form.image.errors }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                    {% endif %}
+                    {% render_field form.image class+="form-control" %}
+                    </li>
+                </div>
+            </div>
+            <div class="row row-cols-1 container">
+                <div class="col pb-3">
+                    <li class="list-unstyled">
+                        <label for="inputDescription" class="form-label">Descripción</label>
+                    </li>
+                    <li class="list-unstyled">
+                        {% if form.description.errors %}
+                            <div class="alert alert-danger" role="alert">{{ form.description.errors }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                    {% endif %}
+                    {% render_field form.description class+="form-control" %}
+                    </li>
+                </div>
+            </div>
 
-    <div class="container text-end">
-        <button type="submit" class="btn btn-primary">Entrar</button>
+            <div class="container text-end">
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </div>
+        </form>
     </div>
-</form>
+{% endblock content %}
+{% block script %}{% endblock script %}
