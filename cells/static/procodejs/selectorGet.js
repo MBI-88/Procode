@@ -33,13 +33,13 @@ function getSelector(event){
             goGet('../login/');
             break;
         case 'deleteitem-'+pk:
-            goGet('../delete/item/<'+pk+'>/');
+            goGet('../delete/item/?pk='+pk);
             break;
         case 'deleteprofile':
-            goGet('../delete/profile/<'+pk+'>/');
+            goGet('../delete/profile/');
             break;
         case 'itemdetail-'+pk:
-            goGet('../shoping/<'+pk+'>/');
+            goGet('../shoping/'+pk+'/?pk='+pk);
             break;
 
     }

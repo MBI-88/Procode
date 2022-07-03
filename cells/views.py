@@ -302,7 +302,7 @@ class DeleteItem(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             self.model.objects.filter(pk=request.POST.get('pk')).delete()
-        return HttpResponse('302')
+        return redirect('cells:profile')
 
     
 
@@ -433,18 +433,17 @@ class DeleteProfile(View):
     @method_decorator(login_required)
     def get(self,request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class()
-        pk = request.GET.get('pk')
-        return render(request,self.template_name,{self.context_object_name:form,'pk':pk})
+        return render(request,self.template_name,{self.context_object_name:form})
     
 
     @method_decorator(login_required)
     def post(self,request:str,*args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
         if form.is_valid():
-            self.model.objects.filter(pk=request.POST.get('pk')).delete()
+            self.model.objects.filter(username=request.user.username).delete()
             logout(request)
-            return HttpResponse('302')
-        return render(request,self.template_name,{self.context_object_name:form})
+            return redirect('cells:index')
+        
 
 
 

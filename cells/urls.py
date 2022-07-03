@@ -30,6 +30,6 @@ urlpatterns = [
     path('update/item/<pk>/',views.UpdateItem.as_view(),name='update_item'),
     path('delete/item/<pk>/',views.DeleteItem.as_view(),name='delete_item'),
     path('profile/',views.Profile.as_view(),name='profile'),
-    path('update/profile/<pk>/',views.UpdateProfile.as_view(),name='update_profile'),
-    path('delete/profile/<pk>/',views.DeleteProfile.as_view(),name='delete_profile'),
+    path('update/profile/',views.UpdateProfile.as_view(),name='update_profile'),
+    path('delete/profile/',views.DeleteProfile.as_view(),name='delete_profile'),
 ]

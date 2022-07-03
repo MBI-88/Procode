@@ -1,5 +1,4 @@
-{% load widget_tweaks %}
-<form method="POST" id="deleteprofile" data-pk="{{ pk }}">
+<form method="POST" action=" {% url 'cells:delete_profile' %} " >
     {% csrf_token %}
     <div class="row row-cols-1 container">
         <div class="col p-3">
@@ -7,11 +6,12 @@
                 <label for="inputConfirm" class="for-label">Confirmación</label> 
             </li>
             <li class="list-unstyled">
-            {% render_field form.delete class+="form-control" %}
+                <p>Si acepta, se eliminará su perfil del sistema</p>
+                {{ form.as_p }}
             </li>
         </div>
     </div>
     <div class="container text-end">
-        <button type="submit" class="btn btn-primary">Entrar</button>
+        <button type="submit" class="btn btn-primary">Eliminar</button>
     </div>
 </form>
