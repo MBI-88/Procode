@@ -10,8 +10,6 @@ from django.views.generic import View
 from django.http import HttpResponse,HttpResponseServerError
 from .forms import (LoginForm,UserRegistrationForm,DeleteItemForm,UpdateItemForm,DeleteUserForm,UpdateUserForm)
 from .models import ShopingCellModel,ProfileUserModel
-from django.contrib.auth.views import (LogoutView,PasswordResetDoneView,
-                                        PasswordResetView,PasswordResetCompleteView,PasswordResetConfirmView)
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
@@ -72,19 +70,6 @@ class LoginUser(View):
         return render(request,self.template_name,{self.context_object_name:form})
     
     
-    
-    
-  
-# Logged out (Register)
-class LoggedoutUser(LogoutView):
-    """
-    LoggedoutUser view
-    methods: request.GET
-    LogoutView's son
-    """
-    template_name = None
-   
-
 
 # Register (Register)
 class Register(View):
@@ -117,11 +102,12 @@ class Register(View):
 
             #email
             subject = 'ProC0d3 Activaion\'account' 
-            message = render_to_string('email/email.html',{
+            message = render_to_string('email/email_register.html',{
                 'domain': get_current_site(request),
                 'user': new_user.username,
-                'uid64': urlsafe_base64_encode(force_bytes(new_user.pk)),
-                'token': default_token_generator.make_token(new_user)
+                'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
+                'token': default_token_generator.make_token(new_user),
+                'protocol': request.scheme,
             })
                 
             # email_sender
@@ -135,7 +121,7 @@ class Register(View):
                 # redireccion
                 return HttpResponse('302')
             except:
-                return HttpResponseServerError('errors/500.html') # pendiente
+                return HttpResponseServerError('errors/500.html')
         else:
             messages.add_message(request,level=messages.WARNING,message='Este usuario ya existe')
         return render(request,self.template_name,{self.context_object_name:form})
@@ -162,50 +148,6 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> HttpResponse:
         user.delete()
         return render(request,'') # El token no es valido/ pendiente (404)
     return redirect('cells:index') # Respuesta correcta y redirección
-
-
-# Pendiente a sacar del set de vistas a url directo
-# Reset Password (Register)
-class ResetUserPassword(PasswordResetView):
-    """
-    ResetUserPassword view
-    method: request.GET, request.POST
-    PassWordResetView's son
-    """
-    template_name = 'accounts/registration/reset_password.html'
-    email_template_name = 'email/email.html'
-
-
-
-# Reset Done (Register)
-class ResetUserPasswordDone(PasswordResetDoneView):
-    """
-    ResetUserPasswordDone view
-    methods: request.GET
-    PasswordResetDoneView's son
-    """
-    template_name = 'accounts/registration/reset_password_done.html'
-
-
-# Reset Confirmation (Register)
-class ResetUserPasswordConfirm(PasswordResetConfirmView):
-    """
-    ResetUserPasswordConfirm view
-    methods: request.GET, request.POST
-    PasswordResetConfirmView's son
-    """
-    template_name = 'accounts/registration/reset_password_confirm.html' # lleva formulario
-
-
-# Reset Complete (Register)
-class ResetUserPasswordComplete(PasswordResetCompleteView):
-    """
-    ResetUserPasswordComplete view
-    method: request.GET
-    PasswordCompleteView's son
-    """
-    template_name = 'accounts/registration/reset_password_complete.html'
-
 
 
 # List Items (Dashboard)

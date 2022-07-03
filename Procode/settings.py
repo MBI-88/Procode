@@ -30,6 +30,7 @@ DEBUG = True
 
 if (DEBUG):
     SECRET_KEY = 'django-insecure-tx^m7&!dk1pdfri*+roe+2-&#^^x-cph^aknzv60l9x&dwxbkc'
+    EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 else: 
     SECRET_KEY =  b'django-secure-' + os.urandom(20)
