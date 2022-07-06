@@ -1,13 +1,13 @@
 {% for item in itemcells %}
     <div class="col">
         <div class="zoom">
-            <img src=" {{ item.image.url }} " class="img-fluid rounded w-50" alt="..">
+            <img src="/media/{{ item.image }} " class="img-fluid rounded w-50" alt="..">
         </div> 
         <address>
                 Price: {{ item.price }}. <br>
                 Actualizado: {{ item.updated_date }}. <br>
         </address>
-        <button class="btn btn-warning" id="itemdetail-{{ item.pk }}" data-pk="{{ item.pk }}" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=getSelector(event)>
+        <button class="btn btn-warning" id="itemdetail-{{ item.pk }}" data-pk="{{ item.pk }}" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=itemdetail(event)>
             Detalles
         </button>
     </div>

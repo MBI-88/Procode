@@ -19,35 +19,27 @@ function goGet(urlget){
     }).catch(reject => console.log(reject))
 }
 
-function getSelector(event){
-    const id = event.target.id
-    const pk = event.target.dataset.pk
-    switch (id){
-        case 'login':
-            goGet('../login/');
-            break;
-        case 'register':
-            goGet('../register/');
-            break;
-        case 'profile':
-            goGet('../login/');
-            break;
-        case 'deleteitem-'+pk:
-            goGet('../delete/item/?pk='+pk);
-            break;
-        case 'deleteprofile':
-            goGet('../delete/profile/');
-            break;
-        case 'itemdetail-'+pk:
-            goGet('../shoping/'+pk+'/?pk='+pk);
-            break;
-
-    }
-
+function login(event){
+    goGet('../login/');
 }
 
+function register(event){
+    goGet('../register/');
+}
 
+function deleteitem(event){
+    const pk = event.target.dataset.pk
+    goGet('../delete/item/?pk='+pk);
+}
 
+function deleteprofile(event){
+    goGet('../delete/profile/');
+}
+
+function itemdetail(event){
+    const pk = event.target.dataset.pk
+    goGet('../shoping/'+pk+'/?pk='+pk);
+}
 
 
 

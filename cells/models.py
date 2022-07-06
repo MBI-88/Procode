@@ -13,7 +13,7 @@ class ProfileUserModel(models.Model):
     phone = models.CharField(max_length=10)
     created_date = models.DateTimeField(auto_now_add=True,db_index=True)
     updated_date = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='users/%Y/%m/%d',blank=True)
+    image = models.ImageField(upload_to='user/%Y/%m/%d',blank=True)
     address = models.CharField(max_length=50,null=True)
 
     class Meta:
@@ -36,8 +36,8 @@ class ShopingCellModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True,db_index=True)
     price = models.DecimalField(max_digits=10,decimal_places=2)
-    image = models.ImageField(upload_to='cells/%Y/%m/%d',blank=True)
-    description = models.TextField(max_length=100,blank=True)
+    image = models.ImageField(upload_to='smartphone/%Y/%m/%d',blank=True)
+    description = models.TextField(max_length=100,null=True)
 
     class Meta:
         ordering = ['-updated_date']

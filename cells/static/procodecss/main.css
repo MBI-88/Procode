@@ -1,3 +1,4 @@
+/* Index */
 .zoon img  {
      border-radius: 2px ;
      overflow: hidden;
@@ -49,3 +50,19 @@
      }
 }
 
+/* Profile */
+
+.card-bg {
+     background: linear-gradient(rgb(64, 183, 231),rgba(6, 6, 6, 0.913));
+     border-radius: 3%;
+     
+}
+.item-profile-bg {
+     width: 150rem;
+}
+
+#items-ajax{
+     border-radius: 5%;
+     margin: solid 5%;
+
+}

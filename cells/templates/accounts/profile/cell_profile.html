@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container-fluid  d-flex pt-2  w-auto">
-        <div class="container d-block ">
+        <div class="container d-block p-0 me-0">
             {% if messages %}
                 {% for mess in messages %}
                     <div class="alert alert-success" role="alert">{{ mess }}
@@ -13,13 +13,13 @@
                 {% endfor %}
             {% endif %}
             <!--Informacion de usuario-->
-            <div class="card mb-3 middle-bg-1 text-white-100" style="max-width: 300px;">
-                <div class="row g-0">
+            <div class="card mb-3 text-dark border-0" style="max-width: 300px">
+                <div class="row g-0 card-bg">
                     <div class="col-md-4">
-                        <img src=" {{ user.profile.image.url }}" class="img-fluid rounded-circle p-2" alt="No existe imagen">
+                        <img src="/media/{{ user.profile.image }}" class="img-fluid rounded-circle p-2" alt="No existe imagen">
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body rounded-pill">
+                        <div class="card-body  rounded-pill">
                             <h5 class="card-title"> {{ user.username }} </h5>
                             <p class="card-text">Nombre: {{ user.first_name }} </p>
                             <p class="card-text">Apellidos: {{ user.last_name }} </p>
@@ -33,33 +33,29 @@
                         </div>
                     </div>
                 </div>
-                <hr style="size:100px;color:#215f49; ">
                 <!--Navbar vertical opciones-->
                 <ul class="nav flex-column pt-2 ">
-                    <li class="nav-item p-2">  
-                        <form class="d-flex" method="GET" action="">
-                            <input class="form-control me-2" id="id-search" onkeydown=takeKeypress(event) type="search" placeholder="Buscar..." aria-label="Search" name="search">
-                        </form> 
+                    <li class="nav-item p-2">
+                        <a href=" {% url 'cells:create_item' %} " class="btn middle-bg-1">Crear articulo</a>
                     </li>
                     <li class="nav-item p-2">
-                        <a href=" {% url 'cells:create_item' %} " class="btn btn-warning">Crear articulo</a>
+                        <a href=" {% url 'cells:update_profile' %} " class="btn middle-bg-1">Editar perfil</a>
                     </li>
                     <li class="nav-item p-2">
-                        <a href=" {% url 'cells:update_profile' user.pk %} " class="btn btn-warning">Editar perfil</a>
-                    </li>
-                    <li class="nav-item p-2">
-                        <button class="btn btn-warning" id="deleteprofile" data-pk="{{ user.pk }}" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=getSelector(event)>
+                        <button class="btn middle-bg-1" id="deleteprofile" data-pk="{{ user.pk }}" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=deleteprofile(event)>
                             Eliminar perfil
                         </button>
                     </li>
                 </ul>
             </div>
-            
         </div>
 
         <!--Bloque para articulos del usuario-->
-        <div class="container w-100">
-            <div class="row row-cols-5 p-4 text-light" id="items-ajax">
+        <div class="container-fluid item-profile-bg">
+            <form class="d-flex" method="GET" action="">
+                <input class="form-control me-2" id="id-search" onkeydown=takeKeypress(event) type="search" placeholder="Buscar..." aria-label="Search" name="search">
+            </form> 
+            <div class="row row-cols-5 p-2 text-light" id="items-ajax">
                 {% include 'accounts/profile/user_items_list.html' %}
             </div>
         </div>

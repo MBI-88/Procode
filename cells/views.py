@@ -387,8 +387,11 @@ class UpdateProfile(View):
                 request.user.email = cd['email']
                 request.user.save()
                 
-                ProfileUserModel.objects.filter(user=request.user).update(
-                    phone=cd['phone'],image=cd['image'],address=cd['address'])
+                request.user.profile.phone = cd['phone']
+                request.user.profile.address = cd['address']
+                request.user.profile.image = cd['image']
+                request.user.profile.save()
+                
                 
 
                 #email
