@@ -35,7 +35,7 @@ class ShopingCellModel(models.Model):
     slug = models.SlugField(max_length=20,blank=True,unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True,db_index=True)
-    price = models.DecimalField(max_digits=10,decimal_places=2)
+    price = models.DecimalField(max_digits=6,decimal_places=2)
     image = models.ImageField(upload_to='smartphone/%Y/%m/%d',blank=True)
     description = models.TextField(max_length=100,null=True)
 
@@ -53,6 +53,6 @@ class ShopingCellModel(models.Model):
 
     def save(self,*args, **kwargs) -> None:
         if not self.slug:
-            self.slug = slugify(self.model_name+"-"+self.created_date)
+            self.slug = slugify(self.model_name +'-'+ str(self.owner_user.username))
         super().save(*args,**kwargs)
 

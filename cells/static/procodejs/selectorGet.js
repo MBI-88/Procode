@@ -29,7 +29,7 @@ function register(event){
 
 function deleteitem(event){
     const pk = event.target.dataset.pk
-    goGet('../delete/item/?pk='+pk);
+    goGet('../delete/item/'+pk+'/');
 }
 
 function deleteprofile(event){
@@ -38,7 +38,7 @@ function deleteprofile(event){
 
 function itemdetail(event){
     const pk = event.target.dataset.pk
-    goGet('../shoping/'+pk+'/?pk='+pk);
+    goGet('../shoping/'+pk+'/');
 }
 
 

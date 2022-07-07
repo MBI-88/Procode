@@ -16,6 +16,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from threading import Thread
+import re
 
 
 
@@ -144,8 +145,8 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> HttpResponse:
         user.save()
     else:
         user.delete()
-        return render(request,'') # El token no es valido/ pendiente (404)
-    return redirect('cells:index') # Respuesta correcta y redirección
+        return render(request,'dashboard/token_fail.html')
+    return redirect('cells:index') 
 
 
 # List Items (Dashboard)
@@ -163,9 +164,12 @@ class ShowItems(View):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         search = request.GET.get('search')
         page = request.GET.get('page')
-    
-        if search is not None:
-            # Sanetizar search
+
+        #Sanetizando la busqueda
+        pattern = re.compile("[a-zA-Z0-9\s]+")
+
+        if search is not None and pattern.search(search):
+            search = search.replace(' ','-')
             items = self.model.objects.filter(model_name__icontains=search)
         else:
             items = self.model.objects.all()
@@ -202,7 +206,7 @@ class DetailItem(View):
     context_object_name = 'itemcell'
 
     def get(self,request:str,*args, **kwargs) -> HttpResponse:
-        pk = request.GET.get('pk')
+        pk = kwargs['pk']
         item = self.model.objects.get(pk=pk)
         return render(request,self.template_name,{self.context_object_name:item})
 
@@ -256,7 +260,7 @@ class UpdateItem(View):
 
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
-        item = self.model.objects.get(pk=request.GET.get('pk'))
+        item = self.model.objects.get(pk=kwargs['pk'])
         form = self.form_class(initial={
             'model_name':item.model_name,
             'image':item.image,
@@ -268,8 +272,8 @@ class UpdateItem(View):
 
     @method_decorator(login_required)
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
-        item = self.model.objects.get(pk=request.POST.get('pk'))
-        form = self.form_class(request.POST,instance=item)
+        item = self.model.objects.get(pk=kwargs['pk'])
+        form = self.form_class(request.POST,files=request.FILES,instance=item)
         if form.is_valid():
             if form.has_changed():
                 form.save()
@@ -293,15 +297,14 @@ class DeleteItem(View):
     @method_decorator(login_required)
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class()
-        pk = request.GET.get('pk')
-        return render(request,self.template_name,{self.context_object_name:form,'pk':pk})
+        return render(request,self.template_name,{self.context_object_name:form,'pk':kwargs['pk']})
     
 
     @method_decorator(login_required)
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
         if form.is_valid():
-            self.model.objects.filter(pk=request.POST.get('pk')).delete()
+            self.model.objects.filter(pk=kwargs['pk']).delete()
         return redirect('cells:profile')
 
     
@@ -322,9 +325,12 @@ class Profile(View):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         search = request.GET.get('search')
         page = request.GET.get('page')
-    
-        if search is not None:
-            # Sanetizar search
+
+        # Sanetizando busqueda
+        pattern = re.compile("[a-zA-Z0-9\s]+")
+
+        if search is not None and pattern.search(search):
+            search = search.replace(' ','-')
             items = self.model.objects.filter(owner_user=request.user).filter(model_name__icontains=search)
         else:
             items = self.model.objects.filter(owner_user=request.user)

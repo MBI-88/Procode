@@ -8,12 +8,12 @@ admin.site.index_title = 'ProC0d3 admin'
 
 @admin.register(ShopingCellModel)
 class ShopingCellAdmin(admin.ModelAdmin):
-    list_display = ['model_name','created_date','price','updated_date']
+    list_display = ['model_name','created_date','price','updated_date','slug']
     list_filter = ['updated_date']
     ordering = ['-updated_date']
-    fields = ['model_name','price']
+    fields = ['model_name','price','description','slug']
     search_fields = ['model_name','price']
-    prepopulated_fields = {'slug':('model_name','created_date')}
+    
 
 @admin.register(ProfileUserModel)
 class ProfileUserAdmin(admin.ModelAdmin):

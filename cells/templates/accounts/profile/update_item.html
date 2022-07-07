@@ -3,8 +3,15 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <div class="container pt-4" style="height: 40rem;">
-        <form method="POST" id="createitem" enctyp="multipart/form-data" action="">
+    <div class="container pt-4 bg-profile" style="height: 60rem;">
+        {% if messages %}
+                {% for mess in messages %}
+                    <div class="alert alert-success" role="alert">{{ mess }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+        {% endif %}
+        <form method="POST"  enctype="multipart/form-data" action="">
             {% csrf_token %}
             <div class="row row-cols-1 container">
                 <div class="col p-3">
@@ -68,7 +75,7 @@
             </div>
 
             <div class="container text-end">
-                <button type="submit" class="btn btn-primary">Entrar</button>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
             </div>
         </form>
     </div>

@@ -3,8 +3,9 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <div class="container pt-4" style="height: 40rem;">
-        <form method="POST" id="createitem" enctyp="multipart/form-data" action="">
+    <div style="height: 2rem;"></div>
+    <div class="container pt-4 bg-profile" style="height: 50rem;">
+        <form method="POST" id="createitem" enctype="multipart/form-data" action="">
             {% csrf_token %}
             <div class="row row-cols-1 container">
                 <div class="col p-3">
@@ -68,9 +69,10 @@
             </div>
 
             <div class="container text-end">
-                <button type="submit" class="btn btn-primary">Entrar</button>
+                <button type="submit" class="btn btn-primary">Crear</button>
             </div>
         </form>
     </div>
+    <div style="height: 20rem;"></div>
 {% endblock content %}
 {% block script %}{% endblock script %}

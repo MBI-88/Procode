@@ -46,4 +46,11 @@ function takeKeypress(event){
         document.getElementById('items-ajax').innerHTML = ''
         GetFetch(1,search.toString())
     }
+    else {
+        if (search.length == 2){
+            document.getElementById('items-ajax').innerHTML = ''
+            GetFetch(1,'')
+        }
+
+    }
 }
