@@ -6,7 +6,7 @@
     <div class="container pt-4 bg-profile" style="height: 60rem;">
         {% if messages %}
                 {% for mess in messages %}
-                    <div class="alert alert-success" role="alert">{{ mess }}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">{{ mess }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endfor %}

@@ -5,6 +5,13 @@
 {% block content %}
     <div style="height: 2rem;"></div>
     <div class="container pt-4 bg-profile" style="height: 50rem;">
+        {% if messages %}
+            {% for mess in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">{{ mess }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
         <form method="POST" id="createitem" enctype="multipart/form-data" action="">
             {% csrf_token %}
             <div class="row row-cols-1 container">

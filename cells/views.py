@@ -1,3 +1,4 @@
+from pydoc import render_doc
 from django.shortcuts import redirect,render
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
@@ -113,16 +114,16 @@ class Register(View):
                 
             # email_sender
             try:
-                sendEmail(subject,message,cd['email'],new_user.username)
                 new_user.save()
+                sendEmail(subject,message,cd['email'],new_user.username)
                 ProfileUserModel.objects.create(user=new_user,phone=cd['phone'])
                     
                 # redireccion
                 return HttpResponse('302')
             except:
-                return HttpResponseServerError('errors/500.html')
-        else:
-            messages.add_message(request,level=messages.WARNING,message='Este nombre de usuario ya existe')
+                return HttpResponseServerError('El nombre de usuario ya existe')
+        
+        messages.add_message(request,level=messages.INFO,message='Registro completado.\nSiga el enlace enviado a su e-mail')
         return render(request,self.template_name,{self.context_object_name:form})
     
 
@@ -238,8 +239,9 @@ class CreateItem(View):
             model_name=cd['model_name'],price=cd['price'],
             image=cd['image'],description=cd['description']
             )
+            messages.add_message(request,level=messages.INFO,message='Articulo creado con exito')
             return redirect('cells:profile')
-        messages.add_message(request,level=messages.WARNING,message='Errores en la creacion del articulo')
+        messages.add_message(request,level=messages.WARNING,message='Errores en la creación del articulo')
         return render(request,self.template_name,{self.context_object_name:form})
 
 
@@ -277,7 +279,9 @@ class UpdateItem(View):
         if form.is_valid():
             if form.has_changed():
                 form.save()
+            messages.add_message(request,level=messages.INFO,message='Articulo actualizado con exito')
             return redirect('cells:profile')
+
         messages.add_message(request,level=messages.WARNING,message='Errores en la modificación del articulo')
         return render(request,self.template_name,{self.context_object_name:self.form_class})
         
@@ -305,6 +309,8 @@ class DeleteItem(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             self.model.objects.filter(pk=kwargs['pk']).delete()
+        
+        messages.add_message(request,level=messages.INFO,message='Articulo eliminado con exito')
         return redirect('cells:profile')
 
     
@@ -391,15 +397,11 @@ class UpdateProfile(View):
                 request.user.first_name = cd['first_name']
                 request.user.last_name = cd['last_name']
                 request.user.email = cd['email']
-                request.user.save()
                 
                 request.user.profile.phone = cd['phone']
                 request.user.profile.address = cd['address']
                 request.user.profile.image = cd['image']
-                request.user.profile.save()
                 
-                
-
                 #email
                 subject = 'ProC0d3 Activaion\'account' 
                 message = render_to_string('email/email_profile.html',{
@@ -410,18 +412,21 @@ class UpdateProfile(View):
                         
                 # email_sender
                 try:
+                    request.user.save()
+                    request.user.profile.save()
                     sendEmail(subject,message,cd['email'],cd['username'])
                     messages.add_message(request,level=messages.SUCCESS,message="Perfil actualizado!")
 
                     # redireccion
                     return redirect('cells:profile')
                 except:
-                    return HttpResponseServerError('errors/500.html') 
+                    return render(request,'errors/profile_error.html')
                 
             else:
                 messages.add_message(request,level=messages.INFO,message="No se realizaron cambios")
                 return redirect('cells:profile')
-       
+
+        messages.add_message(request,level=messages.WARNING,message='Errores en el formulario')
         return render(request,self.template_name,{self.context_object_name:form})
 
 

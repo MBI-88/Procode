@@ -7,7 +7,7 @@
         <div class="container d-block p-2 me-0">
             {% if messages %}
                 {% for mess in messages %}
-                    <div class="alert alert-success" role="alert">{{ mess }}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">{{ mess }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endfor %}
