@@ -73,6 +73,26 @@
      border-radius: 0% 0% 3% 3%;
 }
 
+.box-alert-transition {
+     position: relative;
+     left: 0%;
+     animation: transLeft 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+}
+@keyframes transLeft {
+     from {
+          
+          left: -100%;
+     }
+     to {
+          
+          left: 1rem;
+     }
+     
+}
+
+
+
 
 /* Shoping */
 
