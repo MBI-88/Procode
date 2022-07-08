@@ -36,6 +36,7 @@ function deleteprofile(event){
     goGet('../delete/profile/');
 }
 
+
 function itemdetail(event){
     const pk = event.target.dataset.pk
     goGet('../shoping/'+pk+'/');

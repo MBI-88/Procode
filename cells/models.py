@@ -14,7 +14,7 @@ class ProfileUserModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True,db_index=True)
     updated_date = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='user/%Y/%m/%d',blank=True)
-    address = models.CharField(max_length=50,null=True)
+    address = models.CharField(max_length=200,null=True)
 
     class Meta:
         ordering = ['-created_date']
@@ -31,13 +31,13 @@ class ShopingCellModel(models.Model):
     """
     owner_user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='shopingcell',on_delete=models.CASCADE)
     profile = models.ForeignKey(ProfileUserModel,on_delete=models.CASCADE,null=True)
-    model_name = models.CharField(max_length=20)
-    slug = models.SlugField(max_length=20,blank=True,unique=True)
+    model_name = models.CharField(max_length=150)
+    slug = models.SlugField(max_length=150,blank=True,unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True,db_index=True)
-    price = models.DecimalField(max_digits=6,decimal_places=2)
+    price = models.FloatField()
     image = models.ImageField(upload_to='smartphone/%Y/%m/%d',blank=True)
-    description = models.TextField(max_length=100,null=True)
+    description = models.TextField(max_length=1000,null=True)
 
     class Meta:
         ordering = ['-updated_date']

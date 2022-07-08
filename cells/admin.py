@@ -11,7 +11,7 @@ class ShopingCellAdmin(admin.ModelAdmin):
     list_display = ['model_name','created_date','price','updated_date','slug']
     list_filter = ['updated_date']
     ordering = ['-updated_date']
-    fields = ['model_name','price','description','slug']
+    fields = ['model_name','price','description','slug','image']
     search_fields = ['model_name','price']
     
 

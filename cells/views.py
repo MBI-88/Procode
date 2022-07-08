@@ -1,4 +1,3 @@
-from pydoc import render_doc
 from django.shortcuts import redirect,render
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
@@ -21,10 +20,11 @@ import re
 
 
 
+
 # Send Email
 def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> None:
     thred = Thread(target=send_mail,args=[subject,message,'procodecubashop@gmail.com',
-                    [recipient_list]],name=name_thred)
+                    [recipient_list],True],name=name_thred)
     thred.start()
 
 
@@ -170,14 +170,10 @@ class ShowItems(View):
         pattern = re.compile("[a-zA-Z0-9\s]+")
 
         if search is not None and pattern.search(search):
-            search = search.replace(' ','-')
-            items = self.model.objects.filter(model_name__icontains=search)
-        else:
-            items = self.model.objects.all()
-
-        count = len(items)
-        orphans = count - 8 if count > 8 else 0
-        paginator = Paginator(items,8,orphans=orphans)
+            items =  self.model.objects.filter(model_name__icontains=search) 
+        else: items = self.model.objects.all()
+        
+        paginator = Paginator(items,15)
 
         try:
             items = paginator.page(page)
@@ -336,14 +332,10 @@ class Profile(View):
         pattern = re.compile("[a-zA-Z0-9\s]+")
 
         if search is not None and pattern.search(search):
-            search = search.replace(' ','-')
             items = self.model.objects.filter(owner_user=request.user).filter(model_name__icontains=search)
-        else:
-            items = self.model.objects.filter(owner_user=request.user)
+        else: items = self.model.objects.filter(owner_user=request.user)
         
-        count = len(items)
-        orphans = count - 8 if count > 8 else 0
-        paginator = Paginator(items,8,orphans=orphans)
+        paginator = Paginator(items,15)
 
         try:
             items = paginator.page(page)

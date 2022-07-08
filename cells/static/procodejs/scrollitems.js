@@ -27,9 +27,9 @@ function GetFetch(page,search){
 
 function scrollInf(){
     const search = new String(document.getElementById('id-search').value)
-    const margin = document.body.clientHeight - window.innerHeight - 200
+    const margin = document.documentElement.clientHeight - window.innerHeight - 200
     let search_valid = ''
-    if (search.length > 4) {search_valid = search.toString()}
+    if (search.length > 3) {search_valid = search.toString()}
     
     if (window.screenTop > margin && empty_page == false && blocke_request == false){
         blocke_request = true
@@ -42,15 +42,12 @@ window.addEventListener('scroll',scrollInf)
 
 function takeKeypress(event){
     const search =  new String(event.target.value)
-    if (search.length > 4){
+    if (event.code != 'Backspace'){
         document.getElementById('items-ajax').innerHTML = ''
         GetFetch(1,search.toString())
     }
-    else {
-        if (search.length == 2){
-            document.getElementById('items-ajax').innerHTML = ''
-            GetFetch(1,'')
-        }
-
+    if (event.code == 'Backspace' && search.length == 1) {
+        location.reload()
     }
+    
 }

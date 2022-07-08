@@ -54,7 +54,7 @@
 
 .card-bg {
      background:#4829b2;
-     border-radius: 3% 3% 0% 0%;
+     border-radius: 3% 3% 0 0;
      
 }
 
@@ -92,14 +92,12 @@
 }
 
 
-
-
 /* Shoping */
 
 .item-block {
      overflow:scroll;
-     border: solid 1%;
-     border-radius: 1%;
+     border: solid 5%;
+     border-radius: 5px;
      background:#c1d1e894;
 }
 .image-carousel {

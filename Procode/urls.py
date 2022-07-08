@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('pr0c0d3-admin/', admin.site.urls),
     path('cells/',include('cells.urls',namespace='cells')),
 ]
 

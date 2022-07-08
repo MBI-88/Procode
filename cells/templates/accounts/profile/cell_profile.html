@@ -3,8 +3,9 @@
 {% load static %}
 
 {% block content %}
-    <div class="container-center d-flex pt-2  w-100  bg-profile h-100">
-        <div class="container d-block p-2 me-0">
+    <div class="row-cols-lg-2  row-md-2 row-g-2 row-cols-sm-1 pt-2 bg-profile d-lg-flex d-md-flex d-g-flex">
+        <!--Column 1-->
+        <div class="col-lg-3 col-sm-6 col-md-3 col-g-3 p-2 me-0">
             {% if messages %}
                 {% for mess in messages %}
                     <div class="alert alert-success alert-dismissible fade show box-alert-transition" role="alert">
@@ -17,12 +18,12 @@
                 {% endfor %}
             {% endif %}
             <!--Informacion de usuario-->
-            <div class="card mb-3 text-light border-0" style="max-width: 300px">
-                <div class="row g-0 card-bg">
-                    <div class="col-md-4">
-                        <img src="/media/{{ user.profile.image }}" class="img-fluid rounded-circle p-2" alt="No existe imagen">
+            <div class="card mb-3 text-light border-0">
+                <div class="row row-cols-lg-2 row-cols-md-1 row-cols-sm-1 g-0 card-bg d-md-block d-sm-block d-lg-flex d-g-flex">
+                    <div class="col-lg-4 col-sm-1 col-md-8">
+                        <img src="/media/{{ user.profile.image }}" class="img-fluid rounded-circle p-lg-1 p-g-2 p-md-3 p-sm-5" alt="No existe imagen">
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-lg-8 col-sm-1 col-md-8">
                         <div class="card-body  rounded-pill">
                             <h5 class="card-title"> {{ user.username }} </h5>
                             <p class="card-text">Nombre: {{ user.first_name }} </p>
@@ -38,13 +39,13 @@
                     </div>
                 </div>
                 <!--Navbar vertical opciones-->
-                <ul class="nav flex-column pt-2 bg-verticalsearch">
+                <ul class="nav flex-column  bg-verticalsearch p-4">
                     <li class="nav-item p-2">
                         <a href=" {% url 'cells:create_item' %} " class="btn middle-bg-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-boxes" viewBox="0 0 16 16">
                                 <path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504ZM7.5 9.933l-2.75 1.571v3.134l2.75-1.571V9.933Zm1 3.134 2.75 1.571v-3.134L8.5 9.933v3.134Zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567-2.742 1.567Zm2.242-2.433V3.504L8.5 5.076V8.21l2.75-1.572ZM7.5 8.21V5.076L4.75 3.504v3.134L7.5 8.21ZM5.258 2.643 8 4.21l2.742-1.567L8 1.076 5.258 2.643ZM15 9.933l-2.75 1.571v3.134L15 13.067V9.933ZM3.75 14.638v-3.134L1 9.933v3.134l2.75 1.571Z"/>
                             </svg>
-                            Crear articulo</a>
+                            Articulos</a>
                     </li>
                     <li class="nav-item p-2">
                         <a href=" {% url 'cells:update_profile' %} " class="btn middle-bg-1">
@@ -52,7 +53,7 @@
                                 <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
                                 <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                             </svg>
-                            Editar perfil</a>
+                            Editar</a>
                     </li>
                     <li class="nav-item p-2">
                         <button class="btn middle-bg-1" id="deleteprofile" data-pk="{{ user.pk }}" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=deleteprofile(event)>
@@ -60,7 +61,7 @@
                                 <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
                                 <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                             </svg>
-                            Eliminar perfil
+                            Eliminar
                         </button>
                     </li>
                     <li class="nav-item p-2">
@@ -72,18 +73,18 @@
                                 <path d="M3.902 4.222a4.996 4.996 0 0 1 5.202-2.113.5.5 0 0 1-.208.979 3.996 3.996 0 0 0-4.163 1.69.5.5 0 0 1-.831-.556Zm6.72-.955a.5.5 0 0 1 .705-.052A4.99 4.99 0 0 1 13.059 7v1.5a.5.5 0 1 1-1 0V7a3.99 3.99 0 0 0-1.386-3.028.5.5 0 0 1-.051-.705ZM3.68 5.842a.5.5 0 0 1 .422.568c-.029.192-.044.39-.044.59 0 .71-.1 1.417-.298 2.1l-1.14 3.923a.5.5 0 1 1-.96-.279L2.8 8.821A6.531 6.531 0 0 0 3.058 7c0-.25.019-.496.054-.736a.5.5 0 0 1 .568-.422Zm8.882 3.66a.5.5 0 0 1 .456.54c-.084 1-.298 1.986-.64 2.934l-.744 2.068a.5.5 0 0 1-.941-.338l.745-2.07a10.51 10.51 0 0 0 .584-2.678.5.5 0 0 1 .54-.456Z"/>
                                 <path d="M4.81 1.37A6.5 6.5 0 0 1 14.56 7a.5.5 0 1 1-1 0 5.5 5.5 0 0 0-8.25-4.765.5.5 0 0 1-.5-.865Zm-.89 1.257a.5.5 0 0 1 .04.706A5.478 5.478 0 0 0 2.56 7a.5.5 0 0 1-1 0c0-1.664.626-3.184 1.655-4.333a.5.5 0 0 1 .706-.04ZM1.915 8.02a.5.5 0 0 1 .346.616l-.779 2.767a.5.5 0 1 1-.962-.27l.778-2.767a.5.5 0 0 1 .617-.346Zm12.15.481a.5.5 0 0 1 .49.51c-.03 1.499-.161 3.025-.727 4.533l-.07.187a.5.5 0 0 1-.936-.351l.07-.187c.506-1.35.634-2.74.663-4.202a.5.5 0 0 1 .51-.49Z"/>
                             </svg>
-                            Cambiar clave</a>
+                            Clave</a>
                     </li>
                 </ul>
             </div>
         </div>
-
+        <!--Column 2-->
         <!--Bloque para articulos del usuario-->
-        <div class="container-start-100 p-2" style="width: 150rem;">
-            <form class="d-flex w-50" method="GET" action="">
+        <div class="col-lg-9 col-sm-6 col-md-9 cols-g-9  p-2 container">
+            <form class="d-flex w-50 pb-3" method="GET" action="">
                 <input class="form-control me-2" id="id-search" onkeydown=takeKeypress(event) type="search" placeholder="Buscar..." aria-label="Search" name="search">
             </form> 
-            <div class="row row-cols-g-3 row-cols-sm-1 p-1 text-light" id="items-ajax">
+            <div class="row row-cols-lg-5 row-cols-sm-1 row-cols-md-9 row-cols-g-4 p-1 text-light" id="items-ajax">
                 {% include 'accounts/profile/user_items_list.html' %}
             </div>
         </div>
