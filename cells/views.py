@@ -103,7 +103,7 @@ class Register(View):
             new_user.email = cd['email']
 
             #email
-            subject = 'ProC0d3 Activaion\'account' 
+            subject = 'ProC0d3 Registro de usuario' 
             message = render_to_string('email/email_register.html',{
                 'domain': get_current_site(request),
                 'user': new_user.username,
@@ -403,7 +403,7 @@ class UpdateProfile(View):
                 request.user.profile.image = cd['image']
                 
                 #email
-                subject = 'ProC0d3 Activaion\'account' 
+                subject = 'ProC0d3 Actualización de perfil' 
                 message = render_to_string('email/email_profile.html',{
                     'domain': get_current_site(request),
                     'user': cd['username'],
