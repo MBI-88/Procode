@@ -8,7 +8,6 @@ function animationOne(event){
     const element4 = document.getElementById('img-inter1')
     element4.hidden = false
     element4.className += ' procode-pres4'
-    
 }
 
 function animationTwo(event){
