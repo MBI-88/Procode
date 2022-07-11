@@ -27,9 +27,10 @@ function GetFetch(page,search){
 
 function scrollInf(){
     const search = new String(document.getElementById('id-search').value)
+
     const margin = document.documentElement.clientHeight - window.innerHeight - 200
     let search_valid = ''
-    if (search.length > 3) {search_valid = search.toString()}
+    if (search.length >= 3) {search_valid = search.toString()}
     
     if (window.screenTop > margin && empty_page == false && blocke_request == false){
         blocke_request = true
@@ -41,11 +42,11 @@ function scrollInf(){
 window.addEventListener('scroll',scrollInf)
 
 function takeKeypress(event){
+    // analizar empty_page
     const search =  new String(event.target.value)
-    if (event.code != 'Backspace'){
-        document.getElementById('items-ajax').innerHTML = ''
-        GetFetch(1,search.toString())
-    }
+    document.getElementById('items-ajax').innerHTML = ''
+    GetFetch(1,search.toString())
+    
     if (event.code == 'Backspace' && search.length == 1) {
         location.reload()
     }
