@@ -1,6 +1,7 @@
 'use strict'
 
-function animationOne(event){ 
+function animationOne(){ 
+    document.getElementById('block-1').onmouseover = null
     const element3 = document.getElementById('text-inter1')
     element3.hidden = false
     element3.className += ' procode-pres3'
@@ -10,7 +11,8 @@ function animationOne(event){
     element4.className += ' procode-pres4'
 }
 
-function animationTwo(event){
+function animationTwo(){
+    document.getElementById('block-2').onmouseover = null
     const element3 = document.getElementById('text-inter2')
     element3.hidden = false
     element3.className += ' procode-pres5'
@@ -20,7 +22,8 @@ function animationTwo(event){
     element4.className += ' procode-pres6'
 }
 
-function animationThree(event){
+function animationThree(){
+    document.getElementById('middle-block').onmouseover = null
     const element = document.getElementById('text-bg-2')
     element.hidden = false
     element.className += ' text-middle-2'

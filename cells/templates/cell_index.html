@@ -157,7 +157,7 @@
         </div>
       </div>
 
-      <div class="middle-bg-2" onmouseover=animationThree(event)>
+      <div class="middle-bg-2" onmouseover=animationThree() id="middle-block">
         <h5 class="h5-h-100 text-light p-lg-5 pt-5 text-center" id="text-bg-2" hidden >
           <p>
             Lorem ipsum dolor sit amet consectetur, <br>
@@ -169,7 +169,7 @@
         </h5>
       </div>
 
-      <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1" id="block-2" onmouseover=animationTwo(event)>
+      <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1" id="block-2" onmouseover=animationTwo()>
         <div class="col-lg-5 col-g-5 col-sm-1 text-center">
           <h5 class="h5-h-100 text-dark p-lg-5 pt-2" id="text-inter2" hidden>
             <p>
@@ -200,38 +200,21 @@
   <!--Footer-->
   <footer class="footer-bg card-footer pt-5">
         <div class="container-sm text-light abs-center pb-4 ">
-          <div class="row row-cols-3 pb-3 pt-5 text-center">
-            <div class="col"><h6 class="h6 font-monospace">URLS</h6>
+          <div class="row row-cols-1 pb-3 pt-5 text-center">
+            <div class="col"><h6 class="h6 fw-bold">URLS</h6>
               <ul class="d-block list-unstyled ">
                 <li><a href="{% url 'cells:index' %}" class="text-white nav-link text-light  active">Casa</a></li>
                 <li><a href="{% url 'cells:dashboar_list' %}" class="text-white nav-link text-light  active" >Tienda</a></li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-              </ul>
-            </div>
-            <div class="col"><h6 class="h6 font-monospace">Contact</h6>
-              <ul class="d-block list-unstyled ">
-                <li>1</li>
-                <li>2</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-              </ul>
-            </div>
-            <div class="col"><h6 class="h6 font-monospace">Info</h6>
-              <ul class="d-block list-unstyled ">
-                <li>1</li>
-                <li>2</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
+                <li><a href="#" class="text-white nav-link text-light  active">Información</a></li>
+                <li><a href="#" class="text-white nav-link text-light  active">Contactos</a></li>
+                <li><a href="#" class="text-white nav-link text-light  active">Quienes somos</a></li>
               </ul>
             </div>
           </div>
           <p class="text-center font-monospace fw-bold fs-5">Copyright © 2022 ProC0d3 |Team </p>
           <div class="container-sm text-center">
             <div class="row  d-inline-flex">
+
               <div class="col">
                 <a href="#">
                   <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
@@ -239,6 +222,7 @@
                   </svg>
                 </a>
               </div>
+
               <div class="col">
                 <a href="#">
                   <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
@@ -246,6 +230,7 @@
                   </svg>
                 </a>
               </div>
+
               <div class="col">
                 <a href="#">
                   <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
@@ -253,6 +238,7 @@
                   </svg>
                 </a>
               <div>
+
             </div>
           </div>
         </div>
