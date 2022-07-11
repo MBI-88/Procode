@@ -29,26 +29,126 @@
 }
 
 .middle-bg-2 {
+     position: relative;
      background: url('../img/img_presentation/havana-2774928_1920.jpg') 100rem center;
-     height: 25em;
+     height: 20rem;
+
+
 }
 
-
-.logo-trans {
-     margin-top: 0rem;
-     animation: 1.5s cubic-bezier(0.42, 0.0, 0.58, 1.0) slidein;
+.text-middle-2 {
+     position: relative;
+     left: 0%;
+     z-index: 10000;
+     animation: prosmiddle2 3.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-
-@keyframes slidein {
+@keyframes prosmiddle2 {
      from {
-          
-          margin-top: -160px;
+          left: -100%;
      }
      to {
-          
-          margin-top: 0rem;
+          left: 1rem;
      }
 }
+
+
+.procode-pres1 {
+     position: relative;
+     left: 0%;
+     animation: prosliding1 2.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+}
+@keyframes prosliding1 {
+     from {
+          left: -100%;
+     }
+     to {
+          left: 1rem;
+     }
+     
+}
+
+.procode-pres2 {
+     right: 0%;
+     position: relative;
+     animation: prosliding2 2.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+}
+@keyframes prosliding2 {
+     from {
+          right: -100%;
+     }
+     to {
+          right: 1rem;
+     }
+}
+
+.procode-pres3 {
+     position: relative;
+     top: 0%;
+     z-index: 10000;
+     animation: prosliding3 3.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+@keyframes prosliding3 {
+     from {
+          top: -100%;
+     }
+     to {
+          top: 1rem;
+     }
+     
+}
+
+.procode-pres4 {
+     position: relative;
+     right: 0%;
+     z-index: 10000;
+     animation: prosliding4 4s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+@keyframes prosliding4 {
+     from {
+          right: -100%;
+     }
+     to {
+          right: 1rem;
+     }
+}
+
+
+.procode-pres5 {
+     bottom: 0%;
+     position: relative;
+     z-index: 10000;
+     animation: prosliding5 3.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+@keyframes prosliding5 {
+     from {
+          bottom: -100%;
+     }
+     to {
+          bottom: 1rem;
+     }
+     
+}
+
+.procode-pres6 {
+     position: relative;
+     right: 0%;
+     z-index: 10000;
+     animation: prosliding6 4s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+@keyframes prosliding6 {
+     from {
+          right: -100%;
+     }
+     to {
+          right: 1rem;
+     }
+     
+}
+
+
+
 
 /* Profile */
 

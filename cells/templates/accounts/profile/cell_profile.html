@@ -84,7 +84,7 @@
             <form class="d-flex w-50 pb-3" method="GET" action="">
                 <input class="form-control me-2" id="id-search" onkeydown=takeKeypress(event) type="search" placeholder="Buscar..." aria-label="Search" name="search">
             </form> 
-            <div class="row row-cols-lg-5 row-cols-sm-1 row-cols-md-9 row-cols-g-4 p-1 text-light" id="items-ajax">
+            <div class="row row-cols-lg-5 row-cols-sm-1 row-cols-md-9 row-cols-g-4 p-1 text-light" style="height: 50rem;overflow:scroll" id="items-ajax" onscroll=scrollInf()>
                 {% include 'accounts/profile/user_items_list.html' %}
             </div>
         </div>
