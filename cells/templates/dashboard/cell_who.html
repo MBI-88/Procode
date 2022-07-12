@@ -1,11 +1,44 @@
 {% extends 'cell_index.html' %}
 {% block title %}Quienes somos{% endblock title %}
+{% load static %}
 
 {% block content %}
-    <div class="container-center text-center p-3 whoare">
-        <h3 class="bi-type-h3">Equipo de Pr0c0d3</h3>
-        <p class="text-body">
-            {% lorem 6 p random %}
-        </p>
+    <div class="container-center text-center p-2 whoare">
+        <h3 class="bi-type-h3 text-white">Equipo de Pr0c0d3</h3>
+        <div class="user w-auto">
+            <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1">
+              <div class="col-lg-5 col-g-5 col-sm-1 text-center">
+                <h6 class="h6-h-100 text-white p-lg-5 pt-2">
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+                     Debitis consectetur reprehenderit quam quis dolore consequatur, <br>
+                     labore ducimus voluptatum quae tempora eligendi illo sit aperiam <br>
+                     assumenda nisi incidunt doloremque vitae odio. <br>
+                  </p>
+                </h6>
+    
+              </div>
+              <div class="col-lg-7 col-g-5 col-sm-1 text-center  p-lg-5 p-sm-4 p-md-3 pb-2">
+                <img src=" {% static 'img/img_presentation/image-0.jpg' %} " alt="" class="img-fluid rounded-circle w-25">
+              </div>
+            </div>
+        </div>
+        <div class="user w-auto">
+            <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1">
+              <div class="col-lg-5 col-g-5 col-sm-1 text-center">
+                <h6 class="h6-h-100 text-white p-lg-5 pt-2">
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+                     Debitis consectetur reprehenderit quam quis dolore consequatur, <br>
+                     labore ducimus voluptatum quae tempora eligendi illo sit aperiam <br>
+                     assumenda nisi incidunt doloremque vitae odio. <br>
+                  </p>
+                </h6>
+    
+              </div>
+              <div class="col-lg-7 col-g-5 col-sm-1 text-center  p-lg-5 p-sm-4 p-md-3 pb-2">
+                <img src=" {% static 'img/img_presentation/image-0.jpg' %} " alt="" class="img-fluid rounded-circle w-25">
+              </div>
+            </div>
+        </div>
+        
     </div>
 {% endblock content %}

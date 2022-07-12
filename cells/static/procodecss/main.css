@@ -208,20 +208,73 @@
      border-radius: 1%;
 }
 
+
 /* Who we are */
+
 .whoare {
-     top: 0%;
+     background: url('../img/img_presentation/havana-4033111.jpg') 100rem center;
      position: relative;
-     animation: whosliding 2s cubic-bezier(0.19, 1, 0.22, 1);
-     border-radius: 1%;
+     
      
 }
-@keyframes whosliding {
+
+.user {
+     background: #edf2f97b;
+     border-radius: 1%;
+     position: relative;
+     margin: 5%;
+     left: 0%;
+     animation: usersliding 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+}
+@keyframes usersliding {
      from {
-          top: -100%
+          left: -100%;
      }
      to {
-          top: 1rem;
+          left: 1rem;
+     }
+     
+}
+
+
+/* Contact */
+
+.contact-user {
+     height: 50em;
+     position: relative;
+     background:#edf2f9;
+     border-radius: 1%;
+     margin: 2%;
+     bottom: 0%;
+     animation: contactsliding 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+@keyframes contactsliding {
+     from {
+          bottom: -100%;
+     }
+     to {
+          bottom: 1rem;
+     }
+     
+}
+
+/* Info */
+
+.info {
+     background: #c1d1e894;
+     position: relative;
+     margin:8%;
+     border-radius: 1%;
+     right: 0%;
+     animation: infosliding 1s cubic-bezier(0.23, 1, 0.320, 1);
+}
+@keyframes infosliding {
+     from {
+          right: -100%;
+     }
+     to {
+          right: 1rem;
      }
      
 }
