@@ -2,7 +2,25 @@
 {% block title %}Información{% endblock title %}
 
 {% block content %}
+    <div class="container-center text-center" style="background: #c1d1e894;margin:2%;border-radius: 1%;" >
+        <div class="container p-4" id="block-1" onmouseover=animationOne()>
+            <h3 class="bi-type-h3">Recuento</h3>
+            <p class="text-body" id="text-inter1" hidden>
+                {% lorem 3 b random %}
+            </p>
+        </div>
+        <div class="container p-4" id="block-2" onmouseover=animationTwo()>
+            <h3 class="bi-type-h3">Acuerdos</h3>
+            <p class="text-body" id="text-inter2" hidden>
+                {% lorem 3 b random %}
+            </p>
 
-
-
+        </div>
+        <div class="container p-4" id="middle-block" onmouseover=animationThree()>
+            <h3 class="bi-type-h3">Porque elegirnos</h3>
+            <p class="text-body" id="text-bg-2" hidden>
+                {% lorem 3 b random %}
+            </p>
+        </div>
+    </div>
 {% endblock content %}

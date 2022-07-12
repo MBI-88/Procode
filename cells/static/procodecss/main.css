@@ -207,3 +207,21 @@
      image-resolution: from-image 300dpi;
      border-radius: 1%;
 }
+
+/* Who we are */
+.whoare {
+     top: 0%;
+     position: relative;
+     animation: whosliding 2s cubic-bezier(0.19, 1, 0.22, 1);
+     border-radius: 1%;
+     
+}
+@keyframes whosliding {
+     from {
+          top: -100%
+     }
+     to {
+          top: 1rem;
+     }
+     
+}
