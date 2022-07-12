@@ -23,7 +23,7 @@ import re
 
 # Send Email
 def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> None:
-    thred = Thread(target=send_mail,args=[subject,message,'procodecubashop@gmail.com',
+    thred = Thread(target=send_mail,args=[subject,message,'procode@gmail.com',
                     [recipient_list],True],name=name_thred)
     thred.start()
 
