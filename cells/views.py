@@ -38,6 +38,27 @@ def index(request:str) -> HttpResponse:
     """
     return render(request,'cell_index.html')
 
+def contact(request:str) -> HttpResponse:
+    """
+    Contact view
+    methods: request.GET
+    """
+    return render(request,'dashboard/cell_contact.html')
+
+def info(request:str) -> HttpResponse:
+    """
+    Info view
+    methods: request.GET
+    """
+    return render(request,'dashboard/cell_info.html')
+
+def who(request:str) -> HttpResponse:
+    """
+    Who view
+    methods: request.GET
+    """
+    return render(request,'dashboard/cell_who.html')
+
 
 # Login (Register)
 class LoginUser(View):
