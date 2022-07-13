@@ -1,15 +1,13 @@
-from lib2to3.pgen2.token import tok_name
 from rest_framework.views import APIView
-from ..models import ProfileUserModel,ShopingCellModel
-from django.contrib.auth.models import User
-from .serializers import ShopingCellModelSerializer,UserRegistrationSerializer,UpdateUserSerializer 
+from rest_framework.generics import ListAPIView,RetrieveAPIView
+from ..models import ShopingCellModel
+from .serializers import ShopingCellModelSerializer,UserRegistrationSerializer,UpdateUserSerializer,UserSerializer 
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from .serializers import UserSerializer,UserRegistrationSerializer,UpdateUserSerializer
 from django.contrib.sessions.models import Session 
 from datetime import datetime
 
@@ -66,20 +64,22 @@ class Logout(APIView):
 class Register(APIView):
     
     def post(request:str,*args, **kwargs) -> Response:
-        user = request.data
         return
 
 
 
 
 # List Items (Dashboard)
-class ShowItems():
-    pass
+class ShowItems(ListAPIView):
+    queryset = ShopingCellModel.objects.all()
+    serializer_class = ShopingCellModelSerializer
+
 
 
 # Detail Items (Dashboard)
-class DetailItem():
-    pass
+class DetailItem(RetrieveAPIView):
+    queryset = ShopingCellModel.objects.all()
+    serializer_class = ShopingCellModelSerializer
 
 
 
