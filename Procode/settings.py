@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cells.apps.CellsConfig',
     'widget_tweaks',
+    'rest_framework',
     
 ]
 

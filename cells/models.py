@@ -35,7 +35,7 @@ class ShopingCellModel(models.Model):
     slug = models.SlugField(max_length=150,blank=True,unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True,db_index=True)
-    price = models.FloatField()
+    price = models.FloatField(max_length=6)
     image = models.ImageField(upload_to='smartphone/%Y/%m/%d',blank=True)
     description = models.TextField(max_length=1000,null=True)
 
