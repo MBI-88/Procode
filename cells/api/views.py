@@ -22,7 +22,6 @@ class Register():
 # List Items (Dashboard)
 class ShowItems(generics.ListAPIView):
     pagination_class = Paginator
-    paginate_by = 15
     queryset = ShopingCellModel.objects.all()
     serializer_class = ShopingCellModelSerializer
 

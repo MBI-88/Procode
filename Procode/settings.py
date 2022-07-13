@@ -148,3 +148,9 @@ LOGING_REDIRECT_URL = 'cells:profile'
 LOGOUT_REDIRECT_URL = 'cells:index'
 LOGIN_URL = 'cells:login'
 LOGOUT_URL = 'cells:logout'
+
+# Rest Framework
+
+REST_FRAMEWORK = {
+    
+}
