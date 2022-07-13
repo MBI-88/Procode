@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'cells.apps.CellsConfig',
     'widget_tweaks',
     'rest_framework',
+    'rest_framework.authtoken',
     
 ]
 

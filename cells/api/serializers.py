@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from ..models import ShopingCellModel
+from django.contrib.auth.models import User
 import re
 
 # Serializer
@@ -50,6 +51,7 @@ class UpdateUserSerializer(serializers.Serializer):
         raise serializers.ValidationError('El numero no coincide con el prefijo del sistema')
 
 
-class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField(max_length=25,required=True)
-    password = serializers.CharField(required=True)
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username','email','first_name','last_name']
