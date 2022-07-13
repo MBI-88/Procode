@@ -1,7 +1,6 @@
 from django import forms
 import re
 from cells.models import ShopingCellModel
-from django.contrib.auth.models import User
 
 #  Users
 class LoginForm(forms.Form):
