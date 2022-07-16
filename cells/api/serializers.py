@@ -62,6 +62,20 @@ class UpdateUserSerializer(serializers.Serializer):
             if (pattern.search(value)):
                 return value
         raise serializers.ValidationError('El numero no coincide con el prefijo del sistema')
+    
+    
+    def update(self, instance, validated_data) -> object:
+        updated_user = validated_data['user']
+        updated_user.username = validated_data['username']
+        updated_user.first_name = validated_data['first_name']
+        updated_user.last_name = validated_data['last_name']
+        updated_user.email = validated_data['email']
+        updated_user.profile = validated_data['phone']
+        updated_user.profile = validated_data['image']
+        updated_user.profile = validated_data['address']
+        updated_user.save()
+        updated_user.profile.save()
+        return updated_user
 
 
 class UserSerializer(serializers.ModelSerializer):
