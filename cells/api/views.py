@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView,RetrieveAPIView
+from rest_framework.viewsets import ModelViewSet
 from ..models import ShopingCellModel
 from .serializers import ShopingCellModelSerializer,UserRegistrationSerializer,UpdateUserSerializer,UserSerializer 
 from django.shortcuts import get_object_or_404
@@ -64,7 +65,15 @@ class Logout(APIView):
 class Register(APIView):
     
     def post(request:str,*args, **kwargs) -> Response:
-        return
+        data = UserRegistrationSerializer(request.data)
+        if data.is_valid():
+            try:
+                data.save()
+                return Response(data={'message':'Usuario registrado!'},status=status.HTTP_201_CREATED)
+            except:
+                return Response(data={'message':'Error interno'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return Response(data=data.error_messages,status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
 
@@ -73,6 +82,7 @@ class Register(APIView):
 class ShowItems(ListAPIView):
     queryset = ShopingCellModel.objects.all()
     serializer_class = ShopingCellModelSerializer
+    
 
 
 

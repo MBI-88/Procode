@@ -34,6 +34,18 @@ class UserRegistrationSerializer(serializers.Serializer):
         raise serializers.ValidationError('El numero no coincide con el prefijo del sistema')
 
 
+    def create(self, validated_data) -> object:
+        user = User()
+        user.username = validated_data['username']
+        user.first_name = validated_data['first_name']
+        user.last_name = validated_data['last_name']
+        user.set_password(validated_data['password'])
+        user.email = validated_data['email']
+        user.save()
+        ProfileUserModel.objects.create(user=user,phone=validated_data['phone'])
+        return user
+
+
 class UpdateUserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=25,required=True)
     first_name = serializers.CharField(max_length=50,required=True)
