@@ -6,10 +6,16 @@ import re
 
 # Serializer
  
-class ShopingCellModelSerializer(serializers.ModelSerializer):
+class ShopingCellModelListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShopingCellModel
-        fields = ['owner_user','profile','model_name','price','image','description']
+        fields = ['model_name','price','image']
+
+class ShopingCellModelDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShopingCellModel
+        fields = ['id','model_name','owner_user','profile','updated_date','price','image','description']
+
 
 class UserRegistrationSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=25,required=True)

@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('pr0c0d3-admin/', admin.site.urls),
     path('cells/',include('cells.urls',namespace='cells')),
+    path('api/',include('cells.api.urls',namespace='cells_api')),
 ]
 
 if settings.DEBUG:
