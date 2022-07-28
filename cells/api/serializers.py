@@ -8,6 +8,11 @@ import re
 class ShopingCellModelListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShopingCellModel
+        fields = ['model_name','price','image']
+
+class ShopingCellModelDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShopingCellModel
         fields = ['id','model_name','owner_user','profile','updated_date','price','image','description']
 
 

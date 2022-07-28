@@ -2,8 +2,9 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView,RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
 from ..models import ShopingCellModel
-from .serializers import (ShopingCellModelListSerializer,UserRegistrationSerializer,
-                          UserUpdateSerializer,UserSerializer)
+from .serializers import (ShopingCellModelListSerializer,ShopingCellModelDetailSerializer,
+                          UserRegistrationSerializer,UserUpdateSerializer,UserSerializer)
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -79,7 +80,7 @@ class Register(APIView):
 
 
 # List Items (Dashboard)
-class ShowItems(ModelViewSet):
+class ShowItems(ListAPIView):
     queryset = ShopingCellModel.objects.all()
     serializer_class = ShopingCellModelListSerializer
     
