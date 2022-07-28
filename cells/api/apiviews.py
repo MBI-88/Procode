@@ -1,10 +1,7 @@
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
-from rest_framework.viewsets import ModelViewSet
 from ..models import ShopingCellModel
 from .serializers import (ShopingCellModelListSerializer,
                           UserRegistrationSerializer,UserUpdateSerializer,UserSerializer)
-from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -12,6 +9,9 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.sessions.models import Session 
 from datetime import datetime
+from rest_framework.pagination import PageNumberPagination
+import re
+
 
 # Views
 
@@ -80,9 +80,56 @@ class Register(APIView):
 
 
 # List Items (Dashboard)
-class ShowItems(ListAPIView):
+class ShowItems(APIView):
     queryset = ShopingCellModel.objects.all()
     serializer_class = ShopingCellModelListSerializer
+    pagination_class = PageNumberPagination
+
+    def get(self, request:str, *args, **kwargs) -> Response:
+        search = request.GET.get('search')
+        pattern = re.compile("[a-zA-Z0-9\s]+")
+        page = request.GET.get('page')
+
+        try:
+            page = int(request.GET.get('page'))
+        except:
+            return Response({'message':'Page not integer'},status=status.HTTP_400_BAD_REQUEST)
+
+        if search is not None and pattern.search(search):
+            items = self.paginate_queryset(self.queryset.filter(model_name__icontains=search))
+        else: items = self.paginate_queryset(self.queryset)
+            
+        if items is not None:
+            serializer = self.serializer_class(items,many=True)
+            return self.get_paginated_response(serializer.data)
+            
+        
+    
+    
+
+    @property
+    def paginator(self) -> object:
+        if not hasattr(self,'_paginator'):
+            if not hasattr(self, '_paginator'):
+                if self.pagination_class is None:
+                    self._paginator = None
+                else:
+                    self._paginator = self.pagination_class()
+        return self._paginator  
+    
+
+    def paginate_queryset(self, queryset:object) -> object:
+        if self.paginator is None:
+            return None
+        return self.paginator.paginate_queryset(queryset, self.request, view=self)
+    
+
+    def get_paginated_response(self, data:dict) -> object:
+        assert self.paginator is not None
+        return self.paginator.get_paginated_response(data)
+    
+
+
     
 
 
