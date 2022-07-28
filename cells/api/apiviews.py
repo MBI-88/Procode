@@ -86,6 +86,14 @@ class ShowItems(ListAPIView):
     
 
 
+
+# Detail Items (Dashboard)
+class DetailItem(RetrieveAPIView):
+    queryset = ShopingCellModel.objects.all()
+    serializer_class = ShopingCellModelDetailSerializer
+
+
+
 # Create Item (Profile)
 class CreateItem():
     pass
