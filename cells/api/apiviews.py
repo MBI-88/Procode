@@ -2,9 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView,RetrieveAPIView
 from rest_framework.viewsets import ModelViewSet
 from ..models import ShopingCellModel
-from .serializers import (ShopingCellModelListSerializer,ShopingCellModelDetailSerializer,
-                          UserRegistrationSerializer,UpdateUserSerializer,UserSerializer)
-from django.shortcuts import get_object_or_404
+from .serializers import (ShopingCellModelListSerializer,UserRegistrationSerializer,
+                          UserUpdateSerializer,UserSerializer)
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -49,8 +48,8 @@ class Logout(APIView):
                 if all_sessions.exists():
                     for session in all_sessions:
                         session_data = session.get_decode()
-                    if user.id == int(session_data.get('_auth_user_id')):
-                        session.delete()
+                        if user.id == int(session_data.get('_auth_user_id')):
+                            session.delete()
 
                 token.delete()
                 return Response({'Sesión':'Salida completada!'},status=status.HTTP_200_OK)
@@ -65,7 +64,7 @@ class Logout(APIView):
 # Register (Register)
 class Register(APIView):
     
-    def post(request:str,*args, **kwargs) -> Response:
+    def post(self,request:str,*args, **kwargs) -> Response:
         data = UserRegistrationSerializer(request.data)
         if data.is_valid():
             try:
@@ -80,18 +79,10 @@ class Register(APIView):
 
 
 # List Items (Dashboard)
-class ShowItems(ListAPIView):
+class ShowItems(ModelViewSet):
     queryset = ShopingCellModel.objects.all()
     serializer_class = ShopingCellModelListSerializer
     
-
-
-
-# Detail Items (Dashboard)
-class DetailItem(RetrieveAPIView):
-    queryset = ShopingCellModel.objects.all()
-    serializer_class = ShopingCellModelDetailSerializer
-
 
 
 # Create Item (Profile)
@@ -107,12 +98,29 @@ class DeleteItem():
     pass
 
 # Profile (Profile)
-class Profile():
+class Profile(APIView):
+    permission_classes = IsAuthenticated
     pass
 
 # Profile Update (Profile)
-class ProfileUpdate():
-    pass
+class ProfileUpdate(APIView):
+    permission_classes = IsAuthenticated
+    
+    def post(self,request:str,*args, **kwargs) -> Response:
+        token = request.POST.get('token')
+        token = Token.objects.filter(key=token).first()
+        if token:
+            user_s = UserUpdateSerializer(instance=token.user,data=request.data)
+            if user_s.is_valid():
+                user_s.save()
+                return Response({'message':'Profile updated','user':user_s.data},
+                                status=status.HTTP_200_OK) 
+
+            return Response({'message':'Not valid credential'},
+                            status=status.HTTP_409_CONFLICT)   
+
+        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
+
 
 # Profile Delete (Profile)
 class DeleteProfile():

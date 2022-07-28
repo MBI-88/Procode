@@ -1,4 +1,3 @@
-from attr import fields
 from rest_framework import serializers
 from ..models import ShopingCellModel,ProfileUserModel
 from django.contrib.auth.models import User
@@ -7,11 +6,6 @@ import re
 # Serializer
  
 class ShopingCellModelListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ShopingCellModel
-        fields = ['model_name','price','image']
-
-class ShopingCellModelDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShopingCellModel
         fields = ['id','model_name','owner_user','profile','updated_date','price','image','description']
@@ -52,7 +46,7 @@ class UserRegistrationSerializer(serializers.Serializer):
         return user
 
 
-class UpdateUserSerializer(serializers.Serializer):
+class UserUpdateSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=25,required=True)
     first_name = serializers.CharField(max_length=50,required=True)
     last_name = serializers.CharField(max_length=100,required=True)
@@ -71,17 +65,16 @@ class UpdateUserSerializer(serializers.Serializer):
     
     
     def update(self, instance, validated_data) -> object:
-        updated_user = validated_data['user']
-        updated_user.username = validated_data['username']
-        updated_user.first_name = validated_data['first_name']
-        updated_user.last_name = validated_data['last_name']
-        updated_user.email = validated_data['email']
-        updated_user.profile = validated_data['phone']
-        updated_user.profile = validated_data['image']
-        updated_user.profile = validated_data['address']
-        updated_user.save()
-        updated_user.profile.save()
-        return updated_user
+        instance.username = validated_data['username']
+        instance.first_name = validated_data['first_name']
+        instance.last_name = validated_data['last_name']
+        instance.email = validated_data['email']
+        instance.profile.phone = validated_data['phone']
+        instance.profile.image = validated_data['image']
+        instance.profile.address = validated_data['address']
+        instance.save()
+        instance.profile.save()
+        return instance
 
 
 class UserSerializer(serializers.ModelSerializer):
