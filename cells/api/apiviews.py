@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView,RetrieveAPIView
+from rest_framework.generics import ListAPIView
 from rest_framework.viewsets import ModelViewSet
 from ..models import ShopingCellModel
-from .serializers import (ShopingCellModelListSerializer,ShopingCellModelDetailSerializer,
+from .serializers import (ShopingCellModelListSerializer,
                           UserRegistrationSerializer,UserUpdateSerializer,UserSerializer)
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
@@ -87,29 +87,27 @@ class ShowItems(ListAPIView):
 
 
 
-# Detail Items (Dashboard)
-class DetailItem(RetrieveAPIView):
-    queryset = ShopingCellModel.objects.all()
-    serializer_class = ShopingCellModelDetailSerializer
-
-
 
 # Create Item (Profile)
 class CreateItem():
     pass
 
+
 # Update Item (Profile)
 class UpdateItem():
     pass
+
 
 # Delete Item (Profile)
 class DeleteItem():
     pass
 
+
 # Profile (Profile)
 class Profile(APIView):
     permission_classes = IsAuthenticated
     pass
+
 
 # Profile Update (Profile)
 class ProfileUpdate(APIView):
@@ -129,6 +127,7 @@ class ProfileUpdate(APIView):
                             status=status.HTTP_409_CONFLICT)   
 
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
+
 
 
 # Profile Delete (Profile)
