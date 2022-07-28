@@ -8,7 +8,7 @@ import re
 class ShopingCellModelListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShopingCellModel
-        fields = ['id','model_name','owner_user','profile','updated_date','price','image','description']
+        fields = ['model_name','owner_user','profile','updated_date','price','image','description']
 
 
 class UserRegistrationSerializer(serializers.Serializer):
