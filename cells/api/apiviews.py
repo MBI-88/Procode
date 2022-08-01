@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from ..models import ShopingCellModel
-from .serializers import (ShopingCellModelListSerializer,
+from .serializers import (ProfileUserSerializer, ShopingCellModelListSerializer,
                           UserRegistrationSerializer,UserUpdateSerializer,UserSerializer)
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -31,9 +31,9 @@ class Login(ObtainAuthToken):
 
                 else:
                     token.delete()
-                    return Response({'error':'Usuario ya inició session'},status=status.HTTP_409_CONFLICT)
+                    return Response({'error':'User session already'},status=status.HTTP_409_CONFLICT)
             else: 
-                return Response({'error':'No puede iniciar sesión'},status=status.HTTP_401_UNAUTHORIZED)
+                return Response({'error':'Not starting session'},status=status.HTTP_401_UNAUTHORIZED)
         return Response(data=login_s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -53,12 +53,12 @@ class Logout(APIView):
                             session.delete()
 
                 token.delete()
-                return Response({'Sesión':'Salida completada!'},status=status.HTTP_200_OK)
+                return Response({'Session':'Done!'},status=status.HTTP_200_OK)
 
-            return Response({'error':'No existe usuario con estas credenciales'},status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error':'Not user credentials'},status=status.HTTP_400_BAD_REQUEST)
         
         except:
-            return Response({'error':'No existe este token'},status=status.HTTP_409_CONFLICT) 
+            return Response({'error':'Not token'},status=status.HTTP_409_CONFLICT) 
         
 
 
@@ -70,9 +70,9 @@ class Register(APIView):
         if data.is_valid():
             try:
                 data.save()
-                return Response(data={'message':'Usuario registrado!'},status=status.HTTP_201_CREATED)
+                return Response(data={'message':'Registration done!'},status=status.HTTP_201_CREATED)
             except:
-                return Response(data={'message':'Error interno'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response(data={'message':'Error'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response(data=data.error_messages,status=status.HTTP_406_NOT_ACCEPTABLE)
 
@@ -151,9 +151,42 @@ class DeleteItem():
 
 
 # Profile (Profile)
-class Profile(APIView):
+class Profile(ShowItems):
     permission_classes = IsAuthenticated
-    pass
+    queryset = ShopingCellModel.objects.all()
+    serializer_class = ShopingCellModelListSerializer
+    pagination_class = PageNumberPagination
+    
+    def get(self,request:str,*args, **kwargs) -> Response:
+        search = request.GET.get('search')
+        pattern = re.compile("[a-zA-Z0-9\s]+")
+        page = request.GET.get('page')
+        token = request.GET.get('token')
+        token = Token.objects.filter(key=token).first()
+
+        if token:
+            user = token.user
+            try:
+                page = int(request.GET.get('page'))
+            except:
+                return Response({'message':'Page not integer'},status=status.HTTP_400_BAD_REQUEST)
+
+            if search is not None and pattern.search(search):
+                items = self.paginate_queryset(self.queryset.filter(owner_user=user).filter(model_name__icontains=search))
+            else: items = self.paginate_queryset(self.queryset.filter(owner_user=user))
+                
+            if items is not None:
+                data_items_s = self.serializer_class(items,many=True)
+                user_data_s = UserSerializer(user)
+                profile_data_s = ProfileUserSerializer(user.profile)
+            
+                return Response({'user':user_data_s,'profile':profile_data_s,'items':data_items_s},status=status.HTTP_200_OK)
+        
+        return Response({'message':'Not token'},status=status.HTTP_400_BAD_REQUEST)
+
+        
+    
+    
 
 
 # Profile Update (Profile)
