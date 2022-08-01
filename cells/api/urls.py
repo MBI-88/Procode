@@ -8,4 +8,5 @@ urlpatterns = [
     path('logout/',apiviews.Logout.as_view(),name='logout_api'),
     path('register/',apiviews.Register.as_view(),name='register_api'),
     path('showitems/',apiviews.ShowItems.as_view(),name='showitems_api'),
+    path('profile/',apiviews.Profile.as_view(),name='profile_api'),
 ]

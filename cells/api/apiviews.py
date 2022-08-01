@@ -3,7 +3,6 @@ from ..models import ShopingCellModel
 from .serializers import (ProfileUserSerializer, ShopingCellModelListSerializer,
                           UserRegistrationSerializer,UserUpdateSerializer,UserSerializer)
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -15,8 +14,10 @@ import re
 
 # Views
 
-# Login (Register)
+# Login (Register) ok
 class Login(ObtainAuthToken):
+    authentication_classes = ()
+    permission_classes = ()
     
     def post(self, request, *args, **kwargs) -> Response:
         login_s = self.serializer_class(data=request.data,context={'request':request})
@@ -33,19 +34,21 @@ class Login(ObtainAuthToken):
                     token.delete()
                     return Response({'error':'User session already'},status=status.HTTP_409_CONFLICT)
             else: 
-                return Response({'error':'Not starting session'},status=status.HTTP_401_UNAUTHORIZED)
+                return Response({'error':'User not actived'},status=status.HTTP_401_UNAUTHORIZED)
         return Response(data=login_s.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# Logout (Register) ok
 class Logout(APIView):
+    queryset = Session.objects.all()
     
     def get(self,request,*args, **kwargs) -> Response:
         try:
-            token = request.GET.get('token')
+            token = request.auth
             token = Token.objects.filter(key=token).first()
             if token:
                 user = token.user
-                all_sessions = Session.objects.filter(expire_date__gte=datetime.now())
+                all_sessions = self.queryset.filter(expire_date__gte=datetime.now())
                 if all_sessions.exists():
                     for session in all_sessions:
                         session_data = session.get_decode()
@@ -64,7 +67,9 @@ class Logout(APIView):
 
 # Register (Register)
 class Register(APIView):
-    
+    authentication_classes = ()
+    permission_classes = ()
+
     def post(self,request:str,*args, **kwargs) -> Response:
         data = UserRegistrationSerializer(request.data)
         if data.is_valid():
@@ -79,8 +84,10 @@ class Register(APIView):
 
 
 
-# List Items (Dashboard)
+# List Items (Dashboard) ok
 class ShowItems(APIView):
+    authentication_classes = ()
+    permission_classes = ()
     queryset = ShopingCellModel.objects.all()
     serializer_class = ShopingCellModelListSerializer
     pagination_class = PageNumberPagination
@@ -103,9 +110,6 @@ class ShowItems(APIView):
             serializer = self.serializer_class(items,many=True)
             return self.get_paginated_response(serializer.data)
             
-        
-    
-    
 
     @property
     def paginator(self) -> object:
@@ -130,29 +134,44 @@ class ShowItems(APIView):
     
 
 
-    
-
-
-
-
 # Create Item (Profile)
-class CreateItem():
-    pass
+class CreateItem(APIView):
+    
+    def get(self,request:str,*args, **kwargs) -> Response:
+        token = request.auth
+        return
+    
+    def post(self,request:str,*args, **kwargs) -> Response:
+        token = request.auth
+        return
 
 
 # Update Item (Profile)
-class UpdateItem():
-    pass
+class UpdateItem(APIView):
+    
+    def get(self,request:str,*args, **kwargs) -> Response:
+        token = request.auth
+        return
+    
+    def post(self,request:str,*args, **kwargs) -> Response:
+        token = request.auth
+        return
 
 
 # Delete Item (Profile)
-class DeleteItem():
-    pass
+class DeleteItem(APIView):
+    
+    def get(self,request:str,*args, **kwargs) -> Response:
+        token = request.auth
+        return
+    
+    def post(self,request:str,*args, **kwargs) -> Response:
+        token = request.auth
+        return
 
 
 # Profile (Profile)
 class Profile(ShowItems):
-    permission_classes = IsAuthenticated
     queryset = ShopingCellModel.objects.all()
     serializer_class = ShopingCellModelListSerializer
     pagination_class = PageNumberPagination
@@ -161,7 +180,7 @@ class Profile(ShowItems):
         search = request.GET.get('search')
         pattern = re.compile("[a-zA-Z0-9\s]+")
         page = request.GET.get('page')
-        token = request.GET.get('token')
+        token = request.auth
         token = Token.objects.filter(key=token).first()
 
         if token:
@@ -178,7 +197,7 @@ class Profile(ShowItems):
             if items is not None:
                 data_items_s = self.serializer_class(items,many=True)
                 user_data_s = UserSerializer(user)
-                profile_data_s = ProfileUserSerializer(user.profile)
+                profile_data_s = ProfileUserSerializer(user.profile) # Pendiente a comprobar
             
                 return Response({'user':user_data_s,'profile':profile_data_s,'items':data_items_s},status=status.HTTP_200_OK)
         
@@ -191,16 +210,19 @@ class Profile(ShowItems):
 
 # Profile Update (Profile)
 class ProfileUpdate(APIView):
-    permission_classes = IsAuthenticated
     
+    def get(self,request:str,*args, **kwargs) -> Response:
+        token = request.auth
+        return 
+
     def post(self,request:str,*args, **kwargs) -> Response:
-        token = request.POST.get('token')
+        token = request.auth
         token = Token.objects.filter(key=token).first()
         if token:
             user_s = UserUpdateSerializer(instance=token.user,data=request.data)
             if user_s.is_valid():
                 user_s.save()
-                return Response({'message':'Profile updated','user':user_s.data},
+                return Response({'message':'Profile updated!','user':user_s.data},
                                 status=status.HTTP_200_OK) 
 
             return Response({'message':'Not valid credential'},
@@ -211,5 +233,13 @@ class ProfileUpdate(APIView):
 
 
 # Profile Delete (Profile)
-class DeleteProfile():
-    pass
+class DeleteProfile(APIView):
+
+    def get(self,request:str,*args, **kwargs) -> Response:
+        token = request.auth
+        return
+
+    def post(self,request:str,*args, **kwargs) -> Response:
+        token = request.auth
+        return
+    
