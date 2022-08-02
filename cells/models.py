@@ -10,7 +10,7 @@ class ProfileUserModel(models.Model):
     Tabla de Registro de usuarios
     """
     user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="profile")
-    phone = models.CharField(max_length=10)
+    phone = models.CharField(max_length=8)
     created_date = models.DateTimeField(auto_now_add=True,db_index=True)
     updated_date = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='user/%Y/%m/%d',blank=True)

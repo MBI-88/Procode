@@ -43,7 +43,7 @@ class UpdateUserForm(forms.Form):
     email = forms.EmailField()
     phone = forms.CharField(max_length=8,required=True)
     image = forms.ImageField()
-    address = forms.CharField(max_length=100,required=True)
+    address = forms.CharField(max_length=200,required=True)
 
 
     def clean_phone(self) -> str:
