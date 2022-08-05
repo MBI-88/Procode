@@ -71,7 +71,6 @@ class LoginUser(View):
     form_class = LoginForm
     context_object_name = 'form'
     
-
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class()
         return render(request,self.template_name,{self.context_object_name:form})
@@ -262,8 +261,6 @@ class CreateItem(View):
         return render(request,self.template_name,{self.context_object_name:form})
 
 
-   
-
 
 # Update Item (Profile)
 class UpdateItem(View):
@@ -291,15 +288,17 @@ class UpdateItem(View):
 
     @method_decorator(login_required)
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
-        item = self.model.objects.get(pk=kwargs['pk'])
-        form = self.form_class(request.POST,files=request.FILES,instance=item)
-        if form.is_valid():
-            if form.has_changed():
-                form.save()
-            messages.add_message(request,level=messages.INFO,message='Articulo actualizado con exito')
-            return redirect('cells:profile')
-
-        messages.add_message(request,level=messages.WARNING,message='Errores en la modificación del articulo')
+        user_item = self.model.objects.get(pk=kwargs['pk'])
+        if request.user.username == user_item.owner_user.username:
+            form = self.form_class(request.POST,files=request.FILES,instance=user_item)
+            if form.is_valid():
+                if form.has_changed():
+                    form.save()
+                    messages.add_message(request,level=messages.INFO,message='Articulo actualizado con exito')
+                return redirect('cells:profile')
+            messages.add_message(request,level=messages.WARNING,message='Errores en la modificación del articulo')
+        else:
+            messages.add_message(request,level=messages.ERROR,message='Este no tu articulo')
         return render(request,self.template_name,{self.context_object_name:self.form_class})
         
 
@@ -324,10 +323,13 @@ class DeleteItem(View):
     @method_decorator(login_required)
     def post(self, request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
-        if form.is_valid():
-            self.model.objects.filter(pk=kwargs['pk']).delete()
-        
-        messages.add_message(request,level=messages.INFO,message='Articulo eliminado con exito')
+        user_item = self.model.objects.get(pk=kwargs['pk'])
+        if request.user.username == user_item.owner_user.username:
+            if form.is_valid():
+                self.model.objects.filter(pk=kwargs['pk']).delete()
+                messages.add_message(request,level=messages.INFO,message='Articulo eliminado con exito')
+        else:
+            messages.add_message(request,level=messages.ERROR,message='Este no tu articulo')
         return redirect('cells:profile')
 
     
@@ -410,7 +412,6 @@ class UpdateProfile(View):
                 request.user.first_name = cd['first_name']
                 request.user.last_name = cd['last_name']
                 request.user.email = cd['email']
-                
                 request.user.profile.phone = cd['phone']
                 request.user.profile.address = cd['address']
                 request.user.profile.image = cd['image']
