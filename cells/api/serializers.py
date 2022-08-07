@@ -53,8 +53,11 @@ class UserRegistrationSerializer(serializers.Serializer):
     def validate(self, attrs:dict) -> dict:
         pattern = re.compile("^5[1-8]")
 
-        if User.objects.get(username=attrs['username']) and User.objects.get(email=attrs['email']):
-            raise serializers.ValidationError('This user allready exists')
+        if User.objects.get(username=attrs['username']):
+            raise serializers.ValidationError('This username allready exists')
+        
+        if User.objects.get(email=attrs['email']):
+            raise serializers.ValidationError('This e-mail allready exists')
 
         if attrs['password'] != attrs['password2']: raise serializers.ValidationError('Password not mach')
 
