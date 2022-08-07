@@ -3,7 +3,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils.text import slugify
 
-# Create your models here.
+# ****************************************** Profile Model *****************************************************
 
 class ProfileUserModel(models.Model):
     """
@@ -24,6 +24,7 @@ class ProfileUserModel(models.Model):
         return f'Profile for user {self.user.username}'
     
 
+# ************************************************* Shoping Model ***************************************************
 
 class ShopingCellModel(models.Model):
     """

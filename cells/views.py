@@ -20,6 +20,7 @@ import re
 
 
 
+# ************************************* Email tool ************************************************
 
 # Send Email
 def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> None:
@@ -28,7 +29,8 @@ def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> Non
     thred.start()
 
 
-# Create your views here.
+
+# **************************************** Function Views ************************************************
 
 # Index
 def index(request:str) -> HttpResponse:
@@ -59,6 +61,8 @@ def who(request:str) -> HttpResponse:
     """
     return render(request,'dashboard/cell_who.html')
 
+
+# ********************************************* Login View ***********************************************
 
 # Login (Register)
 class LoginUser(View):
@@ -92,6 +96,7 @@ class LoginUser(View):
         return render(request,self.template_name,{self.context_object_name:form})
     
     
+# ******************************************* Register Views **************************************************
 
 # Register (Register)
 class Register(View):
@@ -170,6 +175,8 @@ def registrationUserDone(request:str,uid64:bytes,token:str) -> HttpResponse:
     return redirect('cells:index') 
 
 
+# **************************************** Dashboard Views **********************************************
+
 # List Items (Dashboard)
 class ShowItems(View):
     """
@@ -228,6 +235,7 @@ class DetailItem(View):
         return render(request,self.template_name,{self.context_object_name:item})
 
 
+# ********************************************* Profile Views ****************************************************
 
 # Create Item (Profile)
 class CreateItem(View):

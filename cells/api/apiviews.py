@@ -21,6 +21,7 @@ import re
 
 
 # Views
+# ****************************************** Login Views **************************************
 
 # Login (Register) ok
 class Login(ObtainAuthToken):
@@ -70,6 +71,7 @@ class Logout(APIView):
             return Response({'message':'Token not exists'},status=status.HTTP_404_NOT_FOUND)
         
 
+# ***************************************** Register View *******************************************
 
 # Register (Register) ok
 class Register(APIView):
@@ -96,6 +98,8 @@ class Register(APIView):
             return Response(data={'message':'Registration done!'},status=status.HTTP_201_CREATED)
         return Response(data=data.errors,status=status.HTTP_406_NOT_ACCEPTABLE)
 
+
+#**************************************** Dashboard Views ******************************************
 
 # List Items (Dashboard) ok
 class ShowItems(APIView):
@@ -144,7 +148,6 @@ class ShowItems(APIView):
 
 
 
-
 # Detail item (Dashboar) ok
 class DetailItem(APIView):
     authentication_classes = ()
@@ -171,6 +174,7 @@ class DetailItem(APIView):
 
 
 
+#*************************************** Profile Views ***************************************************
 
 # Create Item (Profile) ok
 class CreateItem(APIView):
@@ -188,6 +192,7 @@ class CreateItem(APIView):
                 return Response({'message':'Item created!'},status=status.HTTP_201_CREATED)
             return Response({'message':data.errors},status=status.HTTP_406_NOT_ACCEPTABLE)
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
+
 
 
 # Update Item (Profile) ok
@@ -212,6 +217,7 @@ class UpdateItem(APIView):
         return Response({'message':'Not credentials'},status=status.HTTP_401_UNAUTHORIZED)
 
 
+
 # Delete Item (Profile) ok
 class DeleteItem(APIView):
     queryset = ShopingCellModel.objects.all()
@@ -230,6 +236,7 @@ class DeleteItem(APIView):
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
     
     
+
 # Show Items (Profile) ok
 class ShowItemProfile(ShowItems):
     authentication_classes = (TokenAuthentication,)
@@ -258,6 +265,7 @@ class ShowItemProfile(ShowItems):
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
 
 
+
 # Profile (Profile) ok
 class Profile(APIView):
     serializer_class = UserUpdateSerializer
@@ -281,6 +289,7 @@ class Profile(APIView):
             user_data = self.serializer_class(user_data)
             return Response(data=user_data.data,status=status.HTTP_200_OK)
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
+
 
 
 # Profile Update (Profile) ok
@@ -312,6 +321,7 @@ class DeleteProfile(APIView):
             self.queryset.filter(username=user.username).delete()
             return Response({'message':'User deleted!'},status=status.HTTP_202_ACCEPTED)
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
+
 
 
 # Profile Change password (Profile) ok

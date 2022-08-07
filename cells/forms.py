@@ -3,12 +3,16 @@ from django.contrib.auth.models import User
 import re
 from cells.models import ShopingCellModel
 
-#  Users
+#************************************** Login Form ***************************************************
+
+# Login
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=25,required=True)
     password = forms.CharField(widget=forms.PasswordInput,required=True)
 
+#************************************* Register Form *****************************************************
 
+# User Registration
 class UserRegistrationForm(forms.Form):
     username = forms.CharField(max_length=25,required=True)
     first_name = forms.CharField(max_length=50,required=True)
@@ -42,7 +46,8 @@ class UserRegistrationForm(forms.Form):
         if User.objects.get(email=cd['email']): raise forms.ValidationError('Este email ya tiene usuario')
         return cd['email']
 
-    
+
+# Update User Form
 class UpdateUserForm(forms.Form):
     username = forms.CharField(max_length=25,required=True)
     first_name = forms.CharField(max_length=50,required=True)
@@ -61,13 +66,14 @@ class UpdateUserForm(forms.Form):
         raise forms.ValidationError('El numero no coincide con el prefijo del sistema')
 
 
+# Delete User Form
 class DeleteUserForm(forms.Form):
     delete = forms.CharField(widget=forms.CheckboxInput)
 
 
+#********************************************* Items Forms ****************************************************
 
-
-# Items
+# Items Form
 class DeleteItemForm(forms.Form):
     delete = forms.CharField(widget=forms.CheckboxInput)
 

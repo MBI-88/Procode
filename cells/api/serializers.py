@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 import re
 
 # Serializer
- 
+
+ #*********************** Items **********************************************************
+
 class ShopingCellModelListSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=False)
     model_name = serializers.CharField(max_length=150,required=True)
@@ -36,6 +38,8 @@ class ShopingCellModelListSerializer(serializers.Serializer):
         )
         return instance
     
+
+#******************************* User ************************************************************
 
 class UserRegistrationSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=25,required=True)
