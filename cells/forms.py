@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 import re
 from cells.models import ShopingCellModel
 
@@ -18,23 +19,29 @@ class UserRegistrationForm(forms.Form):
     phone = forms.CharField(max_length=8,required=True)
     
 
-
     def clean_password2(self) -> str:
         cd = self.cleaned_data
         if (cd['password'] != cd['password2']):
             raise forms.ValidationError('Las claves no coinciden')
-        
         return cd['password2']
     
     def clean_phone(self) -> str:
         cd = self.cleaned_data
         pattern = re.compile("^5[1-8]")   
-        if (len(cd['phone']) == 8):
-            if (pattern.search(cd['phone'])):
-                return cd['phone']
+        if (len(cd['phone']) == 8) and pattern.search(cd['phone']) :
+            return cd['phone']
         raise forms.ValidationError('El numero no coincide con el prefijo del sistema')
-
     
+    def clean_username(self) -> str:
+        cd = self.cleaned_data
+        if User.objects.get(username=cd['username']): raise forms.ValidationError('El nombre de usuario ya existe')
+        return cd['username']
+    
+    def clean_email(self) -> str:
+        cd = self.cleaned_data
+        if User.objects.get(email=cd['email']): raise forms.ValidationError('Este email ya tiene usuario')
+        return cd['email']
+
     
 class UpdateUserForm(forms.Form):
     username = forms.CharField(max_length=25,required=True)
@@ -49,11 +56,9 @@ class UpdateUserForm(forms.Form):
     def clean_phone(self) -> str:
         cd = self.cleaned_data
         pattern = re.compile("^5[1-8]")   
-        if (len(cd['phone']) == 8):
-            if (pattern.search(cd['phone'])):
-                return cd['phone']
+        if (len(cd['phone']) == 8) and pattern.search(cd['phone']):
+            return cd['phone']
         raise forms.ValidationError('El numero no coincide con el prefijo del sistema')
-
 
 
 class DeleteUserForm(forms.Form):

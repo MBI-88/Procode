@@ -116,7 +116,7 @@ class Register(View):
             cd = form.cleaned_data
             new_user = self.model()
             new_user.username = cd['username']
-            new_user.is_active = True
+            #new_user.is_active = False
             new_user.set_password(cd['password'])
             new_user.first_name = cd['first_name']
             new_user.last_name = cd['last_name']
@@ -412,16 +412,19 @@ class UpdateProfile(View):
                 request.user.first_name = cd['first_name']
                 request.user.last_name = cd['last_name']
                 request.user.email = cd['email']
+                #request.user.is_active = False
                 request.user.profile.phone = cd['phone']
                 request.user.profile.address = cd['address']
                 request.user.profile.image = cd['image']
                 
                 #email
-                subject = 'ProC0d3 Actualización de perfil' 
+                subject = 'ProC0d3 Actualización de perfil de usuario' 
                 message = render_to_string('email/email_profile.html',{
                     'domain': get_current_site(request),
-                    'user': cd['username'],
-                    'body':"Su perfil se actualizó con exito!"
+                    'user': request.user.username,
+                    'uid': urlsafe_base64_encode(force_bytes(request.user.pk)),
+                    'token': default_token_generator.make_token(request.user),
+                    'protocol': request.scheme,
                 })
                         
                 # email_sender

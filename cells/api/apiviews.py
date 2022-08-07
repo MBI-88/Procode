@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from ..models import ShopingCellModel
-from .serializers import (ShopingCellModelListSerializer,UserRegistrationSerializer,
+from .serializers import (ShopingCellModelListSerializer, UserChangePassSerializer,UserRegistrationSerializer,
                           UserUpdateSerializer,UserSerializer)
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -11,6 +11,12 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 from datetime import datetime
 from rest_framework.pagination import PageNumberPagination
+from cells.views import sendEmail
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth.tokens import default_token_generator
 import re
 
 
@@ -31,11 +37,11 @@ class Login(ObtainAuthToken):
                 token,created = Token.objects.get_or_create(user=user)
                 if created:
                    return Response(
-                    {'token':token.key,'user':user_s.data,'message':'Login ok!'},status=status.HTTP_201_CREATED)
+                    {'token':token.key,'user':user_s.data,'message':'Login ok!'},status=status.HTTP_202_ACCEPTED)
 
                 else:
                     token.delete()
-                    return Response({'error':'User session already'},status=status.HTTP_409_CONFLICT)
+                    return Response({'error':'User session exists'},status=status.HTTP_409_CONFLICT)
             else: 
                 return Response({'error':'User not actived'},status=status.HTTP_401_UNAUTHORIZED)
         return Response(data=login_s.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -48,9 +54,8 @@ class Logout(APIView):
     
     def get(self,request,*args, **kwargs) -> Response:
         try:
-            token = request.auth
+            token = Token.objects.get(key=request.auth)
             if token is not None:
-                token = Token.objects.filter(key=token).first()
                 user = token.user
                 all_sessions = self.queryset.filter(expire_date__gte=datetime.now())
                 if all_sessions.exists():
@@ -60,30 +65,36 @@ class Logout(APIView):
                             session.delete()
                 token.delete()
                 return Response({'Session':'Done!'},status=status.HTTP_200_OK)
-            return Response({'error':'Not token'},status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error':'Not token'},status=status.HTTP_406_NOT_ACCEPTABLE)
         except:
             return Response({'message':'Token not exists'},status=status.HTTP_404_NOT_FOUND)
         
 
 
-# Register (Register) pendiente
+# Register (Register) ok
 class Register(APIView):
     authentication_classes = ()
     permission_classes = ()
     http_method_names = ['post']
+    queryset = User.objects.all()
+    serializer_class = UserRegistrationSerializer
 
     def post(self,request:str,*args, **kwargs) -> Response:
-        data = UserRegistrationSerializer(request.data)
+        data = self.serializer_class(data=request.data)
         if data.is_valid():
-            try:
-                data.save()
-                return Response(data={'message':'Registration done!'},status=status.HTTP_201_CREATED)
-            except:
-                return Response(data={'message':'Error'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+            data.save()
+            new_user = self.queryset.get(username=request.data['username'])
+            subject = 'ProC0d3 Api Registro de usuario' 
+            message = render_to_string('email/email_register.html',{
+                'domain': get_current_site(request),
+                'user': new_user.username,
+                'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
+                'token': default_token_generator.make_token(new_user),
+                'protocol': request.scheme,
+            })
+            sendEmail(subject,message,new_user.email,new_user.username)
+            return Response(data={'message':'Registration done!'},status=status.HTTP_201_CREATED)
         return Response(data=data.errors,status=status.HTTP_406_NOT_ACCEPTABLE)
-
-
 
 
 # List Items (Dashboard) ok
@@ -156,7 +167,6 @@ class DetailItem(APIView):
             'user_data':user.data,
             'item_data':item.data,
         }
-
         return Response(data=data,status=status.HTTP_200_OK)
 
 
@@ -168,9 +178,8 @@ class CreateItem(APIView):
     http_method_names = ['post']
     
     def post(self,request:str,*args, **kwargs) -> Response:
-        token = request.auth
+        token = Token.objects.get(key=request.auth)
         if token is not None:
-            token = Token.objects.filter(key=token).first()
             user = token.user
             data = self.serializer_class(data=request.data)
             data.userinstance(user)
@@ -178,7 +187,7 @@ class CreateItem(APIView):
                 data.save()
                 return Response({'message':'Item created!'},status=status.HTTP_201_CREATED)
             return Response({'message':data.errors},status=status.HTTP_406_NOT_ACCEPTABLE)
-        return Response({'message':'Not credentials'},status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
 
 
 # Update Item (Profile) ok
@@ -188,7 +197,7 @@ class UpdateItem(APIView):
     http_method_names = ['put']
 
     def put(self,request:str,*args, **kwargs) -> Response:
-        token = request.auth
+        token = Token.objects.get(key=request.auth)
         pk = kwargs['pk']
         if token is not None:
             user = token.user
@@ -209,21 +218,18 @@ class DeleteItem(APIView):
     http_method_names = ['delete']
 
     def delete(self,request:str,*args, **kwargs) -> Response:
-        token = request.auth
+        token = Token.objects.get(key=request.auth)
         pk = kwargs['pk']
         if token is not None:
             user = token.user
             user_item = self.queryset.get(pk=pk)
             if user.username == user_item.owner_user.username:
                 self.queryset.filter(pk=pk).delete()
-                return Response({'message':'Item deleted!'},status=status.HTTP_200_OK)
+                return Response({'message':'Item deleted!'},status=status.HTTP_202_ACCEPTED)
             return Response({'message':'It\'s not your item'},status=status.HTTP_401_UNAUTHORIZED)
-        return Response({'message':'Not credentials'},status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
     
     
-    
-
-
 # Show Items (Profile) ok
 class ShowItemProfile(ShowItems):
     authentication_classes = (TokenAuthentication,)
@@ -232,10 +238,9 @@ class ShowItemProfile(ShowItems):
         search = request.GET.get('search')
         pattern = re.compile("[a-zA-Z0-9\s]+")
         page = request.GET.get('page')
-        token = request.auth
+        token = Token.objects.get(key=request.auth)
 
         if token is not None:
-            token = Token.objects.filter(key=token).first()
             user = token.user
             try:
                 page = int(request.GET.get('page'))
@@ -250,8 +255,7 @@ class ShowItemProfile(ShowItems):
                 serializer = self.serializer_class(items,many=True)
                 return self.get_paginated_response(serializer.data)
         
-        return Response({'message':'Not token'},status=status.HTTP_400_BAD_REQUEST)
-
+        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
 
 
 # Profile (Profile) ok
@@ -260,7 +264,7 @@ class Profile(APIView):
     http_method_names = ['get']
     
     def get(self,request:str,*args,**kwargs) -> Response:
-        token = Token.objects.filter(key=request.auth).first()
+        token = Token.objects.get(key=request.auth)
         if token is not None:
             user = token.user
             user_data = {
@@ -276,49 +280,84 @@ class Profile(APIView):
             }
             user_data = self.serializer_class(user_data)
             return Response(data=user_data.data,status=status.HTTP_200_OK)
-        return Response({'message':'Not token'},status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
 
 
-
-# Profile Update (Profile)
+# Profile Update (Profile) ok
 class ProfileUpdate(APIView):
     http_method_names = ['put']
+    serializer_class = UserUpdateSerializer
 
     def put(self,request:str,*args, **kwargs) -> Response:
-        token = request.auth
-
+        token = Token.objects.get(key=request.auth)
         if token is not None:
-            token = Token.objects.filter(key=token).first()
-            user_s = UserUpdateSerializer(instance=token.user,data=request.data)
+            user_s = self.serializer_class(instance=token.user,data=request.data)
             if user_s.is_valid():
                 user_s.save()
-                return Response({'message':'Profile updated!'},status=status.HTTP_201_CREATED) 
-
+                return Response({'message':'Profile updated!'},status=status.HTTP_202_ACCEPTED) 
             return Response({'error':user_s.errors},status=status.HTTP_406_NOT_ACCEPTABLE)   
-
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
 
 
 
-# Profile Delete (Profile)
+# Profile Delete (Profile) ok
 class DeleteProfile(APIView):
     http_method_names = ['delete']
+    queryset = User.objects.all()
 
     def delete(self,request:str,*args, **kwargs) -> Response:
-        token = request.auth
+        token = Token.objects.get(key=request.auth)
         if token is not None:
-            token = Token.objects.get(key=token)
             user = token.user
-            User.objects.filter(username=user.username).delete()
-        return Response({'message':'User deleted!'},status=status.HTTP_202_ACCEPTED)
+            self.queryset.filter(username=user.username).delete()
+            return Response({'message':'User deleted!'},status=status.HTTP_202_ACCEPTED)
+        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
 
 
-# Profile Change password (Profile)
+# Profile Change password (Profile) ok
 class ChangePassword(APIView):
-    pass
+    http_method_names = ['put']
+    serializer_class = UserChangePassSerializer
+
+    def put(self,request:str,*args, **kwargs) -> Response:
+        token = Token.objects.get(key=request.auth)
+        if token is not None:
+            new_user = token.user
+            data = self.serializer_class(instance=new_user,data=request.data)
+            if data.is_valid():
+                data.save()
+                subject = 'ProC0d3 Api Registro de usuario' 
+                message = render_to_string('email/email_register.html',{
+                    'domain': get_current_site(request),
+                    'user': new_user.username,
+                    'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
+                    'token': default_token_generator.make_token(new_user),
+                    'protocol': request.scheme,
+                })
+                sendEmail(subject,message,new_user.email,new_user.username)
+                return Response({'message':'Open your e-mail and follow the link'},status=status.HTTP_200_OK)
+            return Response({'message':'Invalid data'},status=status.HTTP_406_NOT_ACCEPTABLE)
+        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
 
 
-# Profile Changed password (Profile)
+# Profile Changed password (Profile) pendiente
 class ChangedPassword(APIView):
-    pass
+    http_method_names = ['get']
+    queryset = User.objects.all()
+
+    def get(self,request:str,*args, **kwargs) -> Response:
+        try:
+            uid = urlsafe_base64_decode(kwargs['uidb64']).decode()
+            user = self.queryset.get(pk=uid)
+        except (TypeError,ValueError,OverflowError,User.DoesNotExist):
+            user = None
+        
+        if (user is not None and default_token_generator.check_token(user,kwargs['token'])):
+            user.is_active = True
+            user.save()
+        else:
+            user.delete()
+            return Response({'message':'User not exists'},status=status.HTTP_404_NOT_FOUND)
+
+        return Response({'message':'Password successful changed!'},status=status.HTTP_202_ACCEPTED)
     
