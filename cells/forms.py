@@ -36,15 +36,7 @@ class UserRegistrationForm(forms.Form):
             return cd['phone']
         raise forms.ValidationError('El numero no coincide con el prefijo del sistema')
     
-    def clean_username(self) -> str:
-        cd = self.cleaned_data
-        if User.objects.get(username=cd['username']): raise forms.ValidationError('El nombre de usuario ya existe')
-        return cd['username']
-    
-    def clean_email(self) -> str:
-        cd = self.cleaned_data
-        if User.objects.get(email=cd['email']): raise forms.ValidationError('Este email ya tiene usuario')
-        return cd['email']
+
 
 
 # Update User Form

@@ -30,10 +30,19 @@ DEBUG = True
 
 if (DEBUG):
     SECRET_KEY = 'django-insecure-tx^m7&!dk1pdfri*+roe+2-&#^^x-cph^aknzv60l9x&dwxbkc'
-    EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    EMAIL_HOST = 'localhost'
+    EMAIL_PORT = '1025'
 
 else: 
     SECRET_KEY =  b'django-secure-' + os.urandom(20)
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = '' # Put your e-mail admin
+    EMAIL_PORT = '' # Put your port 
+    EMAIL_HOST_USER = 'procode@gmail.com'
+    EMAIL_HOST_PASSWORD = ''
+    EMAIL_USE_TLS = True
+    EMAIL_USE_SSL = True
 
 
 ALLOWED_HOSTS = []
@@ -149,6 +158,7 @@ USE_I18N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
@@ -171,5 +181,7 @@ LOGOUT_REDIRECT_URL = 'cells:index'
 LOGIN_URL = 'cells:login'
 LOGOUT_URL = 'cells:logout'
 
+# time delay
 
+PASSWORD_RESET_TIMEOUT_DAYS = 86400
 

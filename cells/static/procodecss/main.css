@@ -39,7 +39,6 @@
 .text-middle-2 {
      position: relative;
      top: 0%;
-     z-index: 10000;
      animation: prosmiddle2 1s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 @keyframes prosmiddle2 {
@@ -86,7 +85,6 @@
 .procode-pres3 {
      position: relative;
      left: 0%;
-     z-index: 10000;
      animation: prosliding3 1s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 @keyframes prosliding3 {
@@ -102,7 +100,6 @@
 .procode-pres4 {
      position: relative;
      right: 0%;
-     z-index: 10000;
      animation: prosliding4 1s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 @keyframes prosliding4 {
@@ -118,7 +115,6 @@
 .procode-pres5 {
      left: 0%;
      position: relative;
-     z-index: 10000;
      animation: prosliding5 1s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 @keyframes prosliding5 {
@@ -134,7 +130,6 @@
 .procode-pres6 {
      position: relative;
      right: 0%;
-     z-index: 10000;
      animation: prosliding6 1s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 @keyframes prosliding6 {

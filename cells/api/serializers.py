@@ -53,12 +53,6 @@ class UserRegistrationSerializer(serializers.Serializer):
     def validate(self, attrs:dict) -> dict:
         pattern = re.compile("^5[1-8]")
 
-        if User.objects.get(username=attrs['username']):
-            raise serializers.ValidationError('This username allready exists')
-        
-        if User.objects.get(email=attrs['email']):
-            raise serializers.ValidationError('This e-mail allready exists')
-
         if attrs['password'] != attrs['password2']: raise serializers.ValidationError('Password not mach')
 
         if (len(attrs['phone']) != 8 and pattern.search(attrs['phone']) == None):
@@ -73,9 +67,12 @@ class UserRegistrationSerializer(serializers.Serializer):
         user.last_name = validated_data['last_name']
         user.set_password(validated_data['password'])
         user.email = validated_data['email']
-        #user.is_active = False
-        user.save()
-        ProfileUserModel.objects.create(user=user,phone=validated_data['phone'])
+        user.is_active = False
+        try:
+            user.save()
+            ProfileUserModel.objects.create(user=user,phone=validated_data['phone'])
+        except:
+            raise serializers.ValidationError('User already exists')
         return validated_data
 
 
@@ -94,19 +91,22 @@ class UserUpdateSerializer(serializers.Serializer):
         pattern = re.compile("^5[1-8]")   
         if (len(value) == 8) and pattern.search(value):
             return value
-        raise serializers.ValidationError('El numero no coincide con el prefijo del sistema')
+        raise serializers.ValidationError('The phone number not match')
     
     def update(self, instance:object, validated_data:dict) -> object:
         instance.username = validated_data['username']
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
         instance.email = validated_data['email']
-        #instance.is_active = False
+        instance.is_active = False
         instance.profile.phone = validated_data['phone']
         instance.profile.image = validated_data['image']
         instance.profile.address = validated_data['address']
-        instance.save()
-        instance.profile.save()
+        try:
+            instance.save()
+            instance.profile.save()
+        except:
+            raise serializers.ValidationError('The username already exists')
         return instance
 
 

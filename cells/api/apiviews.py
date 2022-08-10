@@ -14,7 +14,7 @@ from rest_framework.pagination import PageNumberPagination
 from cells.views import sendEmail
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
-from django.utils.encoding import force_bytes
+from django.utils.encoding import force_bytes,force_str
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.tokens import default_token_generator
 import re
@@ -95,7 +95,7 @@ class Register(APIView):
                 'protocol': request.scheme,
             })
             sendEmail(subject,message,new_user.email,new_user.username)
-            return Response(data={'message':'Registration done!'},status=status.HTTP_201_CREATED)
+            return Response(data={'message':'Registration done, open your e-mail and fallow the link'},status=status.HTTP_201_CREATED)
         return Response(data=data.errors,status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
@@ -111,11 +111,11 @@ class ShowItems(APIView):
     http_method_names = ['get']
 
     def get(self, request:str, *args, **kwargs) -> Response:
-        search = request.GET.get('search')
+        search = request.query_params.get('search')
         pattern = re.compile("[a-zA-Z0-9\s]+")
-        page = request.GET.get('page')
+        page = request.query_params.get('page')
         try:
-            page = int(request.GET.get('page'))
+            page = int(page)
         except:
             return Response({'message':'Page not integer'},status=status.HTTP_400_BAD_REQUEST)
 
@@ -130,11 +130,10 @@ class ShowItems(APIView):
     @property
     def paginator(self) -> object:
         if not hasattr(self,'_paginator'):
-            if not hasattr(self, '_paginator'):
-                if self.pagination_class is None:
-                    self._paginator = None
-                else:
-                    self._paginator = self.pagination_class()
+            if self.pagination_class is None:
+                self._paginator = None
+            else:
+                self._paginator = self.pagination_class()
         return self._paginator  
     
     def paginate_queryset(self, queryset:object) -> object:
@@ -177,9 +176,10 @@ class DetailItem(APIView):
 #*************************************** Profile Views ***************************************************
 
 # Create Item (Profile) ok
-class CreateItem(APIView):
+class ItemProfile(APIView):
     serializer_class = ShopingCellModelListSerializer
-    http_method_names = ['post']
+    queryset = ShopingCellModel.objects.all()
+    http_method_names = ['post','put','delete']
     
     def post(self,request:str,*args, **kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
@@ -192,19 +192,11 @@ class CreateItem(APIView):
                 return Response({'message':'Item created!'},status=status.HTTP_201_CREATED)
             return Response({'message':data.errors},status=status.HTTP_406_NOT_ACCEPTABLE)
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
-
-
-
-# Update Item (Profile) ok
-class UpdateItem(APIView):
-    queryset = ShopingCellModel.objects.all()
-    serializer_class = ShopingCellModelListSerializer
-    http_method_names = ['put']
-
+    
     def put(self,request:str,*args, **kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
-        pk = kwargs['pk']
-        if token is not None:
+        pk = request.query_params.get('pk')
+        if token is not None and pk is not None:
             user = token.user
             user_item = self.queryset.get(pk=pk)
             if user.username == user_item.owner_user.username:
@@ -214,43 +206,35 @@ class UpdateItem(APIView):
                     return Response({'message':'Item updated!'},status=status.HTTP_202_ACCEPTED)
                 return Response({'message':data.errors},status=status.HTTP_406_NOT_ACCEPTABLE)
             return Response({'message':'It\'s not your item'},status=status.HTTP_401_UNAUTHORIZED)
-        return Response({'message':'Not credentials'},status=status.HTTP_401_UNAUTHORIZED)
-
-
-
-# Delete Item (Profile) ok
-class DeleteItem(APIView):
-    queryset = ShopingCellModel.objects.all()
-    http_method_names = ['delete']
-
+        return Response({'message':'Not credentials or id didn\t send'},status=status.HTTP_401_UNAUTHORIZED)
+    
     def delete(self,request:str,*args, **kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
-        pk = kwargs['pk']
-        if token is not None:
+        pk = request.query_params.get('pk')
+        if token is not None and pk is not None:
             user = token.user
             user_item = self.queryset.get(pk=pk)
             if user.username == user_item.owner_user.username:
                 self.queryset.filter(pk=pk).delete()
                 return Response({'message':'Item deleted!'},status=status.HTTP_202_ACCEPTED)
             return Response({'message':'It\'s not your item'},status=status.HTTP_401_UNAUTHORIZED)
-        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
-    
-    
+        return Response({'message':'Not credentials or id didn\t send'},status=status.HTTP_401_UNAUTHORIZED)
+
 
 # Show Items (Profile) ok
 class ShowItemProfile(ShowItems):
     authentication_classes = (TokenAuthentication,)
 
     def get(self, request: str, *args, **kwargs) -> Response:
-        search = request.GET.get('search')
+        search = request.query_params.get('search')
         pattern = re.compile("[a-zA-Z0-9\s]+")
-        page = request.GET.get('page')
+        page = request.query_params.get('page')
         token = Token.objects.get(key=request.auth)
 
         if token is not None:
             user = token.user
             try:
-                page = int(request.GET.get('page'))
+                page = int(page)
             except:
                 return Response({'message':'Page not integer'},status=status.HTTP_400_BAD_REQUEST)
             
@@ -269,7 +253,8 @@ class ShowItemProfile(ShowItems):
 # Profile (Profile) ok
 class Profile(APIView):
     serializer_class = UserUpdateSerializer
-    http_method_names = ['get']
+    http_method_names = ['get','put','delete']
+    queryset = User.objects.all()
     
     def get(self,request:str,*args,**kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
@@ -290,30 +275,25 @@ class Profile(APIView):
             return Response(data=user_data.data,status=status.HTTP_200_OK)
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
 
-
-
-# Profile Update (Profile) ok
-class ProfileUpdate(APIView):
-    http_method_names = ['put']
-    serializer_class = UserUpdateSerializer
-
     def put(self,request:str,*args, **kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
         if token is not None:
             user_s = self.serializer_class(instance=token.user,data=request.data)
             if user_s.is_valid():
                 user_s.save()
-                return Response({'message':'Profile updated!'},status=status.HTTP_202_ACCEPTED) 
+                subject = 'ProC0d3 Api Actualizacion de usuario de usuario' 
+                message = render_to_string('email/email_profile.html',{
+                    'domain': get_current_site(request),
+                    'user': user_s.username,
+                    'uid': urlsafe_base64_encode(force_bytes(user_s.pk)),
+                    'token': default_token_generator.make_token(user_s),
+                    'protocol': request.scheme,
+                })
+                sendEmail(subject,message,user_s.email,user_s.username)
+                return Response({'message':'Profile updated, open your e-mail and follow the link'},status=status.HTTP_202_ACCEPTED) 
             return Response({'error':user_s.errors},status=status.HTTP_406_NOT_ACCEPTABLE)   
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
-
-
-
-# Profile Delete (Profile) ok
-class DeleteProfile(APIView):
-    http_method_names = ['delete']
-    queryset = User.objects.all()
-
+    
     def delete(self,request:str,*args, **kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
         if token is not None:
@@ -357,7 +337,7 @@ class ChangedPassword(APIView):
 
     def get(self,request:str,*args, **kwargs) -> Response:
         try:
-            uid = urlsafe_base64_decode(kwargs['uidb64']).decode()
+            uid = force_str(urlsafe_base64_decode(args['uidb64']))
             user = self.queryset.get(pk=uid)
         except (TypeError,ValueError,OverflowError,User.DoesNotExist):
             user = None
@@ -366,8 +346,6 @@ class ChangedPassword(APIView):
             user.is_active = True
             user.save()
         else:
-            user.delete()
             return Response({'message':'User not exists'},status=status.HTTP_404_NOT_FOUND)
-
         return Response({'message':'Password successful changed!'},status=status.HTTP_202_ACCEPTED)
     

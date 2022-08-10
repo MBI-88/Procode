@@ -16,12 +16,12 @@ urlpatterns = [
     path('reset/',PasswordResetView.as_view(
         template_name='accounts/registration/reset_password.html',
         email_template_name='email/email.html',
-        success_url='../reset/done/'),name='password_reset'),
+        success_url='done/'),name='password_reset'),
     path("reset/done/",PasswordResetDoneView.as_view(
         template_name='accounts/registration/reset_password_done.html'),name='password_reset_done'),
     path('reset/<uidb64>/<token>/',PasswordResetConfirmView.as_view(
         template_name='accounts/registration/reset_password_confirm.html',
-        success_url='../reset/complete/'),name='password_reset_confirm'),
+        success_url='complete/'),name='password_reset_confirm'),
     path('reset/complete/',PasswordResetCompleteView.as_view(
         template_name = 'accounts/registration/reset_password_complete.html'),name='password_reset_complete'),
     path('shoping/',views.ShowItems.as_view(),name='dashboar_list'),
