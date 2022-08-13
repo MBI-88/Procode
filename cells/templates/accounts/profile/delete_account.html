@@ -1,4 +1,5 @@
-<form method="POST" action=" {% url 'cells:delete_profile' %} " >
+{% load widget_tweaks %}
+<form method="POST" action="" id="deleteprofile" >
     {% csrf_token %}
     <div class="row row-cols-1 container">
         <div class="col p-3">
@@ -7,7 +8,7 @@
             </li>
             <li class="list-unstyled">
                 <p>Si acepta, se eliminará su perfil del sistema</p>
-                {{ form.as_p }}
+                {% render_field form.delete class+="form.control" %}
             </li>
         </div>
     </div>

@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
 import re
 from cells.models import ShopingCellModel
 
@@ -37,8 +36,6 @@ class UserRegistrationForm(forms.Form):
         raise forms.ValidationError('El numero no coincide con el prefijo del sistema')
     
 
-
-
 # Update User Form
 class UpdateUserForm(forms.Form):
     username = forms.CharField(max_length=25,required=True)
@@ -61,6 +58,25 @@ class UpdateUserForm(forms.Form):
 # Delete User Form
 class DeleteUserForm(forms.Form):
     delete = forms.CharField(widget=forms.CheckboxInput)
+
+
+# Change Password User
+class ChangePasswordForm(forms.Form):
+    currentpassword = forms.CharField(widget=forms.PasswordInput,required=True)
+    newpassword = forms.CharField(widget=forms.PasswordInput,required=True)
+    confirmpassword = forms.CharField(widget=forms.PasswordInput,required=True)
+
+    def clean_confirmpassword(self) -> str:
+        cd = self.cleaned_data
+        if cd['newpassword'] != cd['confirmpassword']:
+            raise forms.ValidationError('Las claves no coinciden')
+        return cd['confirmpassword']
+
+
+# Restore Password User
+class RestorePassowrdForm(forms.Form):
+    email = forms.EmailField()
+
 
 
 #********************************************* Items Forms ****************************************************

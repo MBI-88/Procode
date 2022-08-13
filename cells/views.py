@@ -1,3 +1,5 @@
+from curses.ascii import HT
+import email
 from django.shortcuts import redirect,render
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
@@ -8,7 +10,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.http import HttpResponse
-from .forms import (LoginForm,UserRegistrationForm,DeleteItemForm,UpdateItemForm,DeleteUserForm,UpdateUserForm)
+from .forms import (LoginForm,UserRegistrationForm,DeleteItemForm,UpdateItemForm,DeleteUserForm,UpdateUserForm,ChangePasswordForm,RestorePassowrdForm)
 from .models import ShopingCellModel,ProfileUserModel
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
@@ -114,35 +116,38 @@ class Register(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            new_user = self.model()
-            new_user.username = cd['username']
-            new_user.is_active = False
-            new_user.set_password(cd['password'])
-            new_user.first_name = cd['first_name']
-            new_user.last_name = cd['last_name']
-            new_user.email = cd['email']
-           
-            # email_sender
-            try:
-                new_user.save()
-                ProfileUserModel.objects.create(user=new_user,phone=cd['phone'])
+            if self.model.objects.filter(email=cd['email']) == None:
+                new_user = self.model()
+                new_user.username = cd['username']
+                new_user.is_active = False
+                new_user.set_password(cd['password'])
+                new_user.first_name = cd['first_name']
+                new_user.last_name = cd['last_name']
+                new_user.email = cd['email']
+            
+                # email_sender
+                try:
+                    new_user.save()
+                    ProfileUserModel.objects.create(user=new_user,phone=cd['phone'])
 
-                #email
-                subject = 'ProC0d3 Registro de usuario' 
-                message = render_to_string('email/email_register.html',{
-                    'domain': get_current_site(request),
-                    'user': new_user.username,
-                    'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
-                    'token': default_token_generator.make_token(new_user),
-                    'protocol': request.scheme,
-                })
+                    #email
+                    subject = 'ProC0d3 Registro de usuario' 
+                    message = render_to_string('email/email_register.html',{
+                        'domain': get_current_site(request),
+                        'user': new_user.username,
+                        'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
+                        'token': default_token_generator.make_token(new_user),
+                        'protocol': request.scheme,
+                    })
 
-                sendEmail(subject,message,cd['email'],new_user.username)
-                messages.add_message(request,level=messages.SUCCESS,message='Registro completado.Siga el enlace enviado a su e-mail')  
-                # redireccion
-                return HttpResponse('302')
-            except:
-                messages.add_message(request,level=messages.WARNING,message='El nombre de usuario ya existe') 
+                    sendEmail(subject,message,cd['email'],new_user.username)
+                    messages.add_message(request,level=messages.SUCCESS,message='Registro completado.Siga el enlace enviado a su e-mail')  
+                    # redireccion
+                    return HttpResponse('302')
+                except:
+                    messages.add_message(request,level=messages.WARNING,message='El nombre de usuario ya existe') 
+            else:
+                messages.add_message(request,level=messages.WARNING,message='El e-mail ya existe en nuestro sistema')
         return render(request,self.template_name,{self.context_object_name:form})
     
 
@@ -399,6 +404,8 @@ class UpdateProfile(View):
                 'image': request.user.profile.image,
                 'address': request.user.profile.address
         })
+        request.user.email = ''
+        request.user.save()
         return render(request,self.template_name,{self.context_object_name:form})
     
     @method_decorator(login_required)
@@ -406,37 +413,40 @@ class UpdateProfile(View):
         form = self.form_class(request.POST,files=request.FILES)
         if form.is_valid():
             cd = form.cleaned_data
-            request.user.username = cd['username']
-            request.user.first_name = cd['first_name']
-            request.user.last_name = cd['last_name']
-            request.user.email = cd['email']
-            request.user.is_active = False
-            request.user.profile.phone = cd['phone']
-            request.user.profile.address = cd['address']
-            request.user.profile.image = cd['image']
-                        
-            # email_sender
-            try:
-                request.user.save()
-                request.user.profile.save()
+            if self.model.objects.filter(email=cd['email']) == None:
+                request.user.username = cd['username']
+                request.user.first_name = cd['first_name']
+                request.user.last_name = cd['last_name']
+                request.user.email = cd['email']
+                request.user.is_active = False
+                request.user.profile.phone = cd['phone']
+                request.user.profile.address = cd['address']
+                request.user.profile.image = cd['image']
+                            
+                # email_sender
+                try:
+                    request.user.save()
+                    request.user.profile.save()
 
-                #email
-                subject = 'ProC0d3 Actualización de perfil de usuario' 
-                message = render_to_string('email/email_profile.html',{
-                    'domain': get_current_site(request),
-                    'user': request.user.username,
-                    'uid': urlsafe_base64_encode(force_bytes(request.user.pk)),
-                    'token': default_token_generator.make_token(request.user),
-                    'protocol': request.scheme,
-                })
+                    #email
+                    subject = 'ProC0d3 Actualización de perfil de usuario' 
+                    message = render_to_string('email/email_profile.html',{
+                        'domain': get_current_site(request),
+                        'user': request.user.username,
+                        'uid': urlsafe_base64_encode(force_bytes(request.user.pk)),
+                        'token': default_token_generator.make_token(request.user),
+                        'protocol': request.scheme,
+                    })
 
-                sendEmail(subject,message,cd['email'],cd['username'])
-                messages.add_message(request,level=messages.SUCCESS,message="Perfil actualizado siga el link en su e-mail")
+                    sendEmail(subject,message,cd['email'],cd['username'])
+                    messages.add_message(request,level=messages.SUCCESS,message="Perfil actualizado siga el link en su e-mail")
 
-                # redireccion
-                return redirect('cells:logout')
-            except:
-                messages.add_message(request,level=messages.WARNING,message='El nombre de usuario ya existe') 
+                    # redireccion
+                    return redirect('cells:logout')
+                except:
+                    messages.add_message(request,level=messages.WARNING,message='El nombre de usuario ya existe') 
+            else:
+                messages.add_message(request,level=messages.WARNING,message='El e-mail ya existe en nuestro sistema')
         return render(request,self.template_name,{self.context_object_name:form})
 
 
@@ -453,22 +463,96 @@ class DeleteProfile(View):
     form_class = DeleteUserForm
     context_object_name = 'form'
     
-
     @method_decorator(login_required)
     def get(self,request:str, *args, **kwargs) -> HttpResponse:
         form = self.form_class()
         return render(request,self.template_name,{self.context_object_name:form})
     
-
     @method_decorator(login_required)
     def post(self,request:str,*args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
         if form.is_valid():
             self.model.objects.filter(username=request.user.username).delete()
             messages.add_message(request,level=messages.SUCCESS,message='Su cuenta fue eliminada')
-            return redirect('cells:logout')
+            return HttpResponse('302')
         
 
 
+# Profile Canche password (Profile)
+class ChangePasswordProfile(View):
+    form_class = ChangePasswordForm
+    context_object_name = 'form'
+    template_name = 'accounts/registration/change_password.html'
 
+    @method_decorator(login_required)
+    def get(self,request:str, *args, **kwargs) -> HttpResponse:
+        form = self.form_class()
+        return render(request,self.template_name,{self.context_object_name:form})
+    
+    @method_decorator(login_required)
+    def post(self,request:str,*args, **kwargs) -> HttpResponse:
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            request.user.set_password(cd['newpassword'])
+            request.user.is_active = False
+            try:
+                request.user.save()
+                #email
+                subject = 'ProC0d3 Cambio de password de usuario' 
+                message = render_to_string('email/email_password.html',{
+                    'domain': get_current_site(request),
+                    'user': request.user.username,
+                    'uid': urlsafe_base64_encode(force_bytes(request.user.pk)),
+                    'token': default_token_generator.make_token(request.user),
+                    'protocol': request.scheme,
+                })
+                sendEmail(subject,message,request.user.email,request.user.username)
+                messages.add_message(request,level=messages.SUCCESS,message='Siga el enlace que se envio a su e-mail')
+                return HttpResponse('302')
+            except:
+                messages.add_message(request,level=messages.WARNING,message='Presentamos errores en el envio del e-mail, contacte con procode@gmail.com \
+                    para la activación de su cuenta')
+                return HttpResponse('302')
+        return render(request,self.template_name,{self.form_class:form})
+
+
+# Restore Password (Profile)
+class RestorePassword(View):
+    form_class = RestorePassowrdForm
+    template_name = 'accounts/registration/restore_password.html'
+    context_object_name = 'form'
+    model = User
+
+    def get(self,request:str,*args, **kwargs) -> HttpResponse:
+        form = self.form_class()
+        return render(request,self.template_name,{self.context_object_name:form})
+    
+    def post(self,request:str,*args, **kwargs) -> HttpResponse:
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            try:
+                user = self.model.objects.get(email=cd['email'])
+                user.is_active = False
+                user.set_password('password1') # hacerlo mas fuerte
+                user.save()
+                #email
+                subject = 'ProC0d3 Restablecimiento de credenciales' 
+                message = render_to_string('email/email_restored.html',{
+                    'domain': get_current_site(request),
+                    'user': user.username,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': default_token_generator.make_token(user),
+                    'protocol': request.scheme,
+                    'password': 'password1',
+                })
+                sendEmail(subject,message,cd['email'],user.username)
+                messages.add_message(request,level=messages.SUCCESS,message='Siga el enlace que se envio a su e-mail')
+                return HttpResponse('302')
+            except:
+                messages.add_message(request,level=messages.WARNING,message='Presentamos errores en el envio del e-mail, contacte con procode@gmail.com \
+                    para la activación de su cuenta')
+                return HttpResponse('302')
+        return render(request,self.template_name,{self.form_class:form})
 

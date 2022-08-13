@@ -58,6 +58,18 @@ function itemdetail(event){
 }
 
 
+function changepassword(event) {
+    document.getElementById('modaltitle').innerHTML = 'Cambio de clave'
+    goGet('../register/changepassword/')
+
+}
+
+function restorepassword(event) {
+    document.getElementById('modaltitle').innerHTML = 'Restablecimiento de Clave'
+    goGet('../restore/password/')
+}
+
+
 
 
 

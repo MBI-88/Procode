@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-from telnetlib import LOGOUT
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -183,5 +182,5 @@ LOGOUT_URL = 'cells:logout'
 
 # time delay
 
-PASSWORD_RESET_TIMEOUT_DAYS = 86400
+PASSWORD_RESET_TIMEOUT_DAYS = 86400 #s
 

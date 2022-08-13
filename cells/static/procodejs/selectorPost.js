@@ -12,9 +12,7 @@ function goPost(form,urlpost,urlredic){
             window.location.href = urlredic
         }
         document.querySelector('.modal-body').innerHTML = html
-    })
-    
-    
+    })  
 }
 
 function postSelector(event){
@@ -28,9 +26,21 @@ function postSelector(event){
         case 'register':
             goPost(postselect,'../register/','../index/');
             break;
-            
+        case 'changepassword':
+            goPost(postselect,'../register/changepassword/','../index/');
+            break;
+        case 'deleteprofile':
+            goPost(postselect,'../delete/profile/','../index/');
+            break;
+        case 'restorepassword':
+            goPost(postselect,'../restore/password/', '../index/');
+            break;
+        case 'deleteprofile':
+            goPost(postselect,'/delete/profile/','../index/');
+            break;
+        case 'deleteitem':
+            goPost(postselect,'/delete/item/'+postselect.dataset.pk+'/','../profile/')
     }
-
 }
 
 

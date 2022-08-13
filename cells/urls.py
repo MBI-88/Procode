@@ -12,18 +12,9 @@ urlpatterns = [
     path('login/',views.LoginUser.as_view(),name='login'),
     path('logout/',LogoutView.as_view(),name='logout'),
     path('register/',views.Register.as_view(),name='register'),
-    path('registrer/<uidb64>/<token>/',views.registrationUserDone,name='registerdone'),
-    path('reset/',PasswordResetView.as_view(
-        template_name='accounts/registration/reset_password.html',
-        email_template_name='email/email.html',
-        success_url='done/'),name='password_reset'),
-    path("reset/done/",PasswordResetDoneView.as_view(
-        template_name='accounts/registration/reset_password_done.html'),name='password_reset_done'),
-    path('reset/<uidb64>/<token>/',PasswordResetConfirmView.as_view(
-        template_name='accounts/registration/reset_password_confirm.html',
-        success_url='complete/'),name='password_reset_confirm'),
-    path('reset/complete/',PasswordResetCompleteView.as_view(
-        template_name = 'accounts/registration/reset_password_complete.html'),name='password_reset_complete'),
+    path('register/changepassword/',views.ChangePasswordProfile.as_view(),name='change_password'),
+    path('register/<uidb64>/<token>/',views.registrationUserDone,name='registerdone'),
+    path('restore/password/',views.RestorePassword.as_view(),name='restore_password'),
     path('shoping/',views.ShowItems.as_view(),name='dashboar_list'),
     path('shoping/<pk>/',views.DetailItem.as_view(),name='dashboar_detail'),
     path('create/item/',views.CreateItem.as_view(),name='create_item'),
