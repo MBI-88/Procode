@@ -1,5 +1,3 @@
-from curses.ascii import HT
-import email
 from django.shortcuts import redirect,render
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
@@ -20,8 +18,6 @@ from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from threading import Thread
 import re
 
-
-
 # ************************************* Email tool ************************************************
 
 # Send Email
@@ -29,9 +25,6 @@ def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> Non
     thred = Thread(target=send_mail,args=[subject,message,'procode@gmail.com',
                     [recipient_list],True],name=name_thred)
     thred.start()
-
-
-
 
 # **************************************** Function Views ************************************************
 
@@ -90,7 +83,7 @@ class LoginUser(View):
             if user is not None:
                 login(request,user=user)
                 return HttpResponse('302')
-            messages.add_message(request,level=messages.INFO,message='El usuario no esta activo o no existe en el sistema')
+            messages.add_message(request,level=messages.INFO,message='Usuario no activo o credenciales incorrectas')
         return render(request,self.template_name,{self.context_object_name:form})
     
     
@@ -116,7 +109,7 @@ class Register(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            if self.model.objects.filter(email=cd['email']) == None:
+            if not self.model.objects.filter(email=cd['email']).exists():
                 new_user = self.model()
                 new_user.username = cd['username']
                 new_user.is_active = False
@@ -124,12 +117,10 @@ class Register(View):
                 new_user.first_name = cd['first_name']
                 new_user.last_name = cd['last_name']
                 new_user.email = cd['email']
-            
                 # email_sender
                 try:
                     new_user.save()
                     ProfileUserModel.objects.create(user=new_user,phone=cd['phone'])
-
                     #email
                     subject = 'ProC0d3 Registro de usuario' 
                     message = render_to_string('email/email_register.html',{
@@ -139,7 +130,6 @@ class Register(View):
                         'token': default_token_generator.make_token(new_user),
                         'protocol': request.scheme,
                     })
-
                     sendEmail(subject,message,cd['email'],new_user.username)
                     messages.add_message(request,level=messages.SUCCESS,message='Registro completado.Siga el enlace enviado a su e-mail')  
                     # redireccion
@@ -157,7 +147,6 @@ def registrationUserDone(request:str,uidb64:bytes,token:str) -> HttpResponse:
     """
     registrationUserDone view
     methods: request.GET
-
     """
     try:
         pk = force_str(urlsafe_base64_decode(uidb64))
@@ -194,11 +183,9 @@ class ShowItems(View):
 
         #Sanetizando la busqueda
         pattern = re.compile("[a-zA-Z0-9\s]+")
-
         if search is not None and pattern.search(search):
             items =  self.model.objects.filter(model_name__icontains=search) 
         else: items = self.model.objects.all()
-        
         paginator = Paginator(items,15)
 
         try:
@@ -209,10 +196,8 @@ class ShowItems(View):
             if is_ajax:
                 return HttpResponse('')
             items = paginator.page(paginator.num_pages)
-        
         if is_ajax:
             return render(request,'dashboard/items_ajax.html',{self.context_object_name:items})
-
         return render(request,self.template_name,{self.context_object_name:items})
     
 
@@ -413,7 +398,7 @@ class UpdateProfile(View):
         form = self.form_class(request.POST,files=request.FILES)
         if form.is_valid():
             cd = form.cleaned_data
-            if self.model.objects.filter(email=cd['email']) == None:
+            if not self.model.objects.filter(email=cd['email']).exists():
                 request.user.username = cd['username']
                 request.user.first_name = cd['first_name']
                 request.user.last_name = cd['last_name']
@@ -421,13 +406,11 @@ class UpdateProfile(View):
                 request.user.is_active = False
                 request.user.profile.phone = cd['phone']
                 request.user.profile.address = cd['address']
-                request.user.profile.image = cd['image']
-                            
+                request.user.profile.image = cd['image']   
                 # email_sender
                 try:
                     request.user.save()
                     request.user.profile.save()
-
                     #email
                     subject = 'ProC0d3 Actualización de perfil de usuario' 
                     message = render_to_string('email/email_profile.html',{
@@ -437,10 +420,8 @@ class UpdateProfile(View):
                         'token': default_token_generator.make_token(request.user),
                         'protocol': request.scheme,
                     })
-
                     sendEmail(subject,message,cd['email'],cd['username'])
                     messages.add_message(request,level=messages.SUCCESS,message="Perfil actualizado siga el link en su e-mail")
-
                     # redireccion
                     return redirect('cells:logout')
                 except:
@@ -494,11 +475,11 @@ class ChangePasswordProfile(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            request.user.set_password(cd['newpassword'])
-            request.user.is_active = False
-            try:
+            if authenticate(request,username=request.user.username,password=cd['currentpassword']) is not None:
+                request.user.set_password(cd['newpassword'])
+                request.user.is_active = False
                 request.user.save()
-                #email
+                    #email
                 subject = 'ProC0d3 Cambio de password de usuario' 
                 message = render_to_string('email/email_password.html',{
                     'domain': get_current_site(request),
@@ -510,11 +491,9 @@ class ChangePasswordProfile(View):
                 sendEmail(subject,message,request.user.email,request.user.username)
                 messages.add_message(request,level=messages.SUCCESS,message='Siga el enlace que se envio a su e-mail')
                 return HttpResponse('302')
-            except:
-                messages.add_message(request,level=messages.WARNING,message='Presentamos errores en el envio del e-mail, contacte con procode@gmail.com \
-                    para la activación de su cuenta')
-                return HttpResponse('302')
-        return render(request,self.template_name,{self.form_class:form})
+            else:
+                messages.add_message(request,level=messages.WARNING,message='La clave actual no es válida')
+        return render(request,self.template_name,{self.context_object_name:form})
 
 
 # Restore Password (Profile)
@@ -551,8 +530,6 @@ class RestorePassword(View):
                 messages.add_message(request,level=messages.SUCCESS,message='Siga el enlace que se envio a su e-mail')
                 return HttpResponse('302')
             except:
-                messages.add_message(request,level=messages.WARNING,message='Presentamos errores en el envio del e-mail, contacte con procode@gmail.com \
-                    para la activación de su cuenta')
-                return HttpResponse('302')
-        return render(request,self.template_name,{self.form_class:form})
+                messages.add_message(request,level=messages.WARNING,message='El e-mail no es válido en nuestro sistema')
+        return render(request,self.template_name,{self.context_object_name:form})
 

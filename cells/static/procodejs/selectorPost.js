@@ -9,9 +9,12 @@ function goPost(form,urlpost,urlredic){
     }).then(response => response.text())
     .then(html => {
         if (html == '302'){
+            document.querySelector('.modal-body').innerHTML = 'Completed!'
             window.location.href = urlredic
         }
-        document.querySelector('.modal-body').innerHTML = html
+        else {
+            document.querySelector('.modal-body').innerHTML = html
+        }
     })  
 }
 
@@ -42,6 +45,5 @@ function postSelector(event){
             goPost(postselect,'/delete/item/'+postselect.dataset.pk+'/','../profile/')
     }
 }
-
 
 window.addEventListener('submit',postSelector)
