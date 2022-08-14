@@ -7,7 +7,7 @@ from cells.models import ShopingCellModel
 # Login
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=25,required=True)
-    password = forms.CharField(widget=forms.PasswordInput,required=True)
+    password = forms.CharField(widget=forms.PasswordInput,max_length=12,required=True)
 
 #************************************* Register Form *****************************************************
 
@@ -16,12 +16,11 @@ class UserRegistrationForm(forms.Form):
     username = forms.CharField(max_length=25,required=True)
     first_name = forms.CharField(max_length=50,required=True)
     last_name = forms.CharField(max_length=100,required=True)
-    password = forms.CharField(widget=forms.PasswordInput,required=True)
-    password2 = forms.CharField(widget=forms.PasswordInput,required=True)
-    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput,max_length=12,required=True)
+    password2 = forms.CharField(widget=forms.PasswordInput,max_length=12,required=True)
+    email = forms.EmailField(max_length=25)
     phone = forms.CharField(max_length=8,required=True)
     
-
     def clean_password2(self) -> str:
         cd = self.cleaned_data
         if (cd['password'] != cd['password2']):
@@ -41,11 +40,10 @@ class UpdateUserForm(forms.Form):
     username = forms.CharField(max_length=25,required=True)
     first_name = forms.CharField(max_length=50,required=True)
     last_name = forms.CharField(max_length=100,required=True)
-    email = forms.EmailField()
+    email = forms.EmailField(max_length=25)
     phone = forms.CharField(max_length=8,required=True)
     image = forms.ImageField()
     address = forms.CharField(max_length=200,required=True)
-
 
     def clean_phone(self) -> str:
         cd = self.cleaned_data
@@ -62,9 +60,9 @@ class DeleteUserForm(forms.Form):
 
 # Change Password User
 class ChangePasswordForm(forms.Form):
-    currentpassword = forms.CharField(widget=forms.PasswordInput,required=True)
-    newpassword = forms.CharField(widget=forms.PasswordInput,required=True)
-    confirmpassword = forms.CharField(widget=forms.PasswordInput,required=True)
+    currentpassword = forms.CharField(widget=forms.PasswordInput,max_length=12,required=True)
+    newpassword = forms.CharField(widget=forms.PasswordInput,max_length=12,required=True)
+    confirmpassword = forms.CharField(widget=forms.PasswordInput,max_length=12,required=True)
 
     def clean_newpassword(self) -> str:
         cd = self.cleaned_data
@@ -79,11 +77,9 @@ class ChangePasswordForm(forms.Form):
         return cd['confirmpassword']
 
 
-
 # Restore Password User
 class RestorePassowrdForm(forms.Form):
-    email = forms.EmailField()
-
+    email = forms.EmailField(max_length=25)
 
 
 #********************************************* Items Forms ****************************************************
