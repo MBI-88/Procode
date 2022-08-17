@@ -1,16 +1,15 @@
 {
-    
     "editor.minimap.enabled": false,
     "workbench.editorAssociations": {
         "*.sqlite3": "default"
     },
     "jupyter.interactiveWindowMode": "perFile",
     "editor.fontSize": 18,
-    "editor.formatOnSave":true,
+    "editor.formatOnSave": true,
     "npm.enableRunFromFolder": true,
     "python.formatting.provider": "autopep8",
     "python.linting.enabled": true,
-    "python.linting.lintOnSave": true ,
+    "python.linting.lintOnSave": true,
     "python.autoComplete.addBrackets": true,
     "python.analysis.completeFunctionParens": true,
     "editor.fontLigatures": true,
@@ -19,23 +18,23 @@
     "files.associations": {
         "**/*.html": "html",
         "**/*.js": "javascript",
-        "**/templates/**/*.html":"django-html",
-        "**/templates/**/*":"django-text",
-        "**/requirements{/**,*}.{text,in}":"pip-requirements",
-
+        "**/templates/**/*.html": "django-html",
+        "**/templates/**/*": "django-text",
+        "**/requirements{/**,*}.{text,in}": "pip-requirements",
     },
     "editor.tabCompletion": "on",
-    "editor.tokenColorCustomizations":{
+    "editor.tokenColorCustomizations": {
         "textMateRules": [
             {
-               "name": "variable.parameter",
-               "scope":"variable.parameter",
-               "settings": {
-                   "foreground": "#349dda",
-                   "fontStyle": "italic"
-               },
+                "name": "variable.parameter",
+                "scope": "variable.parameter",
+                "settings": {
+                    "foreground": "#349dda",
+                    "fontStyle": "italic"
+                },
             },
-            {   "name": "definition.funtion",
+            {
+                "name": "definition.funtion",
                 "scope": "entity.name.function",
                 "settings": {
                     "foreground": "#e9f0a9d2",
@@ -44,17 +43,16 @@
             },
             {
                 "name": "definition.class.type",
-                "scope":"entity.name.type",
+                "scope": "entity.name.type",
                 "settings": {
                     "foreground": "#9fe68ad3",
                     "fontStyle": ""
                 }
-            }, 
+            },
         ],
         "keywords": {
             "fontStyle": "italic",
             "foreground": "#40a5e9"
-            
         }
     },
     "jupyter.askForKernelRestart": false,
@@ -70,6 +68,14 @@
     "git.enableSmartCommit": true,
     "emmet.includeLanguages": {
         "django-html": "html",
-        
-    }
+    },
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Develop",
+            "database": "${workspaceFolder:Procode}/db.sqlite3"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
 }
