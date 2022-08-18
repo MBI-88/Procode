@@ -232,22 +232,18 @@ class ShowItemProfile(ShowItems):
         pattern = re.compile("[a-zA-Z0-9\s]+")
         page = request.query_params.get('page')
         token = Token.objects.get(key=request.auth)
-
         if token is not None:
             user = token.user
             try:
                 page = int(page)
             except:
                 return Response({'message':'Page not integer'},status=status.HTTP_400_BAD_REQUEST)
-            
             if search is not None and pattern.search(search):
                     items = self.paginate_queryset(self.queryset.filter(owner_user=user).filter(model_name__icontains=search))
             else: items = self.paginate_queryset(self.queryset.filter(owner_user=user))
-
             if items is not None:
                 serializer = self.serializer_class(items,many=True)
                 return self.get_paginated_response(serializer.data)
-        
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
 
 
@@ -343,11 +339,11 @@ class TokenLinkRecived(APIView):
 
     def get(self,request:str, *args, **kwargs) -> Response:
         try:
-            uid = force_str(urlsafe_base64_decode(args['uidb64']))
+            uid = force_str(urlsafe_base64_decode(kwargs['uidb64']))
             user = self.queryset.get(pk=uid)
         except (TypeError,ValueError,OverflowError,User.DoesNotExist):
             user = None
-        if (user is not None and default_token_generator.check_token(user,args['token'])):
+        if (user is not None and default_token_generator.check_token(user,kwargs['token'])):
             user.is_active = True
             user.save()
         else:
