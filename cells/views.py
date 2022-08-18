@@ -142,8 +142,8 @@ class Register(View):
     
 
 
-# Registration succefull  (Register) Pendiente
-def registrationUserDone(request:str,uidb64:bytes,token:str) -> HttpResponse:
+# Registration succefull  (Register)
+def tokenLinkRecived(request:str,uidb64:bytes,token:str) -> HttpResponse:
     """
     registrationUserDone view
     methods: request.GET
@@ -153,7 +153,6 @@ def registrationUserDone(request:str,uidb64:bytes,token:str) -> HttpResponse:
         user = User.objects.get(pk=pk)
     except(TypeError,ValueError,OverflowError,User.DoesNotExist):
         user = None
-
     if (user is not None and default_token_generator.check_token(user,token)):
         user.is_active = True
         user.save()
@@ -180,14 +179,12 @@ class ShowItems(View):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         search = request.GET.get('search')
         page = request.GET.get('page')
-
         #Sanetizando la busqueda
         pattern = re.compile("[a-zA-Z0-9\s]+")
         if search is not None and pattern.search(search):
             items =  self.model.objects.filter(model_name__icontains=search) 
         else: items = self.model.objects.all()
         paginator = Paginator(items,15)
-
         try:
             items = paginator.page(page)
         except PageNotAnInteger:
@@ -341,16 +338,12 @@ class Profile(View):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         search = request.GET.get('search')
         page = request.GET.get('page')
-
         # Sanetizando busqueda
         pattern = re.compile("[a-zA-Z0-9\s]+")
-
         if search is not None and pattern.search(search):
             items = self.model.objects.filter(owner_user=request.user).filter(model_name__icontains=search)
         else: items = self.model.objects.filter(owner_user=request.user)
-        
         paginator = Paginator(items,15)
-
         try:
             items = paginator.page(page)
         except PageNotAnInteger:
@@ -359,7 +352,6 @@ class Profile(View):
             if is_ajax:
                 return HttpResponse('')
             items = paginator.page(paginator.num_pages)
-        
         if is_ajax:
             return render(request,'accounts/profile/user_items_list.html',{self.context_object_name:items})
         return render(request,self.template_name,{self.context_object_name:items})
@@ -389,8 +381,6 @@ class UpdateProfile(View):
                 'image': request.user.profile.image,
                 'address': request.user.profile.address
         })
-        request.user.email = ''
-        request.user.save()
         return render(request,self.template_name,{self.context_object_name:form})
     
     @method_decorator(login_required)
@@ -398,36 +388,39 @@ class UpdateProfile(View):
         form = self.form_class(request.POST,files=request.FILES)
         if form.is_valid():
             cd = form.cleaned_data
-            if not self.model.objects.filter(email=cd['email']).exists():
-                request.user.username = cd['username']
-                request.user.first_name = cd['first_name']
-                request.user.last_name = cd['last_name']
-                request.user.email = cd['email']
-                request.user.is_active = False
-                request.user.profile.phone = cd['phone']
-                request.user.profile.address = cd['address']
-                request.user.profile.image = cd['image']   
-                # email_sender
-                try:
-                    request.user.save()
-                    request.user.profile.save()
-                    #email
-                    subject = 'ProC0d3 Actualización de perfil de usuario' 
-                    message = render_to_string('email/email_profile.html',{
-                        'domain': get_current_site(request),
-                        'user': request.user.username,
-                        'uid': urlsafe_base64_encode(force_bytes(request.user.pk)),
-                        'token': default_token_generator.make_token(request.user),
-                        'protocol': request.scheme,
-                    })
-                    sendEmail(subject,message,cd['email'],cd['username'])
-                    messages.add_message(request,level=messages.SUCCESS,message="Perfil actualizado siga el link en su e-mail")
-                    # redireccion
-                    return redirect('cells:logout')
-                except:
-                    messages.add_message(request,level=messages.WARNING,message='El nombre de usuario ya existe') 
+            request.user.username = cd['username']
+            request.user.first_name = cd['first_name']
+            request.user.last_name = cd['last_name']
+            request.user.is_active = False
+            if request.user.email == cd['email']: pass
             else:
-                messages.add_message(request,level=messages.WARNING,message='El e-mail ya existe en nuestro sistema')
+                if self.model.objects.filter(email=cd['email']).exists():
+                    messages.add_message(request,level=messages.WARNING,message='El e-mail ya existe en nuestro sistema')
+                    return render(request,self.template_name,{self.context_object_name:form})
+                request.user.email = cd['email']
+
+            request.user.profile.phone = cd['phone']
+            request.user.profile.address = cd['address']
+            request.user.profile.image = cd['image']   
+            try:
+                request.user.save()
+                request.user.profile.save()
+                #email
+                subject = 'ProC0d3 Actualización de perfil de usuario' 
+                message = render_to_string('email/email_profile.html',{
+                    'domain': get_current_site(request),
+                    'user': request.user.username,
+                    'uid': urlsafe_base64_encode(force_bytes(request.user.pk)),    
+                    'token': default_token_generator.make_token(request.user),
+                    'protocol': request.scheme,
+                })
+                sendEmail(subject,message,cd['email'],cd['username'])
+                messages.add_message(request,level=messages.SUCCESS,message="Perfil actualizado siga el \
+                    link en su e-mail")
+                # redireccion
+                return redirect('cells:logout')
+            except:
+                messages.add_message(request,level=messages.WARNING,message='El nombre de usuario ya existe') 
         return render(request,self.template_name,{self.context_object_name:form})
 
 
@@ -514,7 +507,7 @@ class RestorePassword(View):
             try:
                 user = self.model.objects.get(email=cd['email'])
                 user.is_active = False
-                user.set_password('password1') # hacerlo mas fuerte
+                user.set_password('password1') # hacerlo mas fuerte para producción
                 user.save()
                 #email
                 subject = 'ProC0d3 Restablecimiento de credenciales' 

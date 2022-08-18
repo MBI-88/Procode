@@ -1,3 +1,4 @@
+from sys import maxsize
 from rest_framework import serializers
 from ..models import ProfileUserModel,ShopingCellModel
 from django.contrib.auth.models import User
@@ -61,6 +62,8 @@ class UserRegistrationSerializer(serializers.Serializer):
         return attrs
 
     def create(self, validated_data:dict) -> object:
+        if User.objects.filter(email=validated_data['email']).exists():
+            raise serializers.ValidationError('E-mail already exists')
         user = User()
         user.username = validated_data['username']
         user.first_name = validated_data['first_name']
@@ -97,7 +100,11 @@ class UserUpdateSerializer(serializers.Serializer):
         instance.username = validated_data['username']
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
-        instance.email = validated_data['email']
+        if instance.email == validated_data['email']: pass
+        else:
+            if User.objects.filter(email=validated_data['email']).exists():
+                raise serializers.ValidationError('E-mail already exists')
+            instance.email = validated_data['email']
         instance.is_active = False
         instance.profile.phone = validated_data['phone']
         instance.profile.image = validated_data['image']
@@ -128,5 +135,14 @@ class UserChangePassSerializer(serializers.Serializer):
     def update(self, instance:object, validated_data:dict) -> object:
         instance.set_password(validated_data['password'])
         instance.is_active = False
+        instance.save()
+        return instance
+
+class UserRestorePasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def update(self, instance:object, validated_data:dict) -> object:
+        instance.is_active = False
+        instance.set_password('password1') # hacerlo mas fuerte para producción
         instance.save()
         return instance

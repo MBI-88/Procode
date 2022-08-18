@@ -1,7 +1,9 @@
+import email
+from urllib import request
 from rest_framework.views import APIView
 from ..models import ShopingCellModel
 from .serializers import (ShopingCellModelListSerializer, UserChangePassSerializer,UserRegistrationSerializer,
-                          UserUpdateSerializer,UserSerializer)
+                          UserUpdateSerializer,UserSerializer,UserRestorePasswordSerializer)
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework import status
@@ -39,7 +41,6 @@ class Login(ObtainAuthToken):
                 if created:
                    return Response(
                     {'token':token.key,'user':user_s.data,'message':'Login ok!'},status=status.HTTP_202_ACCEPTED)
-
                 else:
                     token.delete()
                     return Response({'error':'User session exists'},status=status.HTTP_409_CONFLICT)
@@ -87,7 +88,8 @@ class Register(APIView):
             data.save()
             new_user = self.queryset.get(username=request.data['username'])
             subject = 'ProC0d3 Api Registro de usuario' 
-            message = render_to_string('email/email_register.html',{
+            # pendiente a cambios en la dirección de retorno (espera por front end)
+            message = render_to_string('email/email_register_api.html',{
                 'domain': get_current_site(request),
                 'user': new_user.username,
                 'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
@@ -282,7 +284,8 @@ class Profile(APIView):
             if user_s.is_valid():
                 user_s.save()
                 subject = 'ProC0d3 Api Actualizacion de usuario de usuario' 
-                message = render_to_string('email/email_profile.html',{
+                # pendiente a cambios en la dirección de retorno (espera por front end)
+                message = render_to_string('email/email_profile_api.html',{
                     'domain': get_current_site(request),
                     'user': user_s.username,
                     'uid': urlsafe_base64_encode(force_bytes(user_s.pk)),
@@ -317,7 +320,8 @@ class ChangePassword(APIView):
             if data.is_valid():
                 data.save()
                 subject = 'ProC0d3 Api Registro de usuario' 
-                message = render_to_string('email/email_register.html',{
+                # pendiente a cambios en la dirección de retorno (espera por front end)
+                message = render_to_string('email/email_password_api.html',{
                     'domain': get_current_site(request),
                     'user': new_user.username,
                     'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
@@ -331,21 +335,55 @@ class ChangePassword(APIView):
 
 
 # Profile Changed password (Profile) pendiente
-class ChangedPassword(APIView):
+class TokenLinkRecived(APIView):
     http_method_names = ['get']
+    authentication_classes = ()
+    permission_classes = ()
     queryset = User.objects.all()
 
-    def get(self,request:str,*args, **kwargs) -> Response:
+    def get(self,request:str, *args, **kwargs) -> Response:
         try:
             uid = force_str(urlsafe_base64_decode(args['uidb64']))
             user = self.queryset.get(pk=uid)
         except (TypeError,ValueError,OverflowError,User.DoesNotExist):
             user = None
-        
-        if (user is not None and default_token_generator.check_token(user,kwargs['token'])):
+        if (user is not None and default_token_generator.check_token(user,args['token'])):
             user.is_active = True
             user.save()
         else:
             return Response({'message':'User not exists'},status=status.HTTP_404_NOT_FOUND)
-        return Response({'message':'Password successful changed!'},status=status.HTTP_202_ACCEPTED)
+        return Response({'message':'Ok'},status=status.HTTP_202_ACCEPTED)
+
+# Profile Restore password (Profile) pendiente
+class RestorePassword(APIView):
+    http_method_names = ['post']
+    queryset = User.objects.all()
+    authentication_classes = ()
+    permission_classes = ()
+    serializer_class = UserRestorePasswordSerializer
+
+    def post(self,request:str,*args, **kwargs) -> Response:
+        email = request.data['email'] # comprobar dato
+        if email is not None:
+            user = self.queryset.filter(email=email).first()
+            if user is not None:
+                data = self.serializer_class(instance=user,data=request.data)
+                if data.is_valid():
+                    data.save()
+                    subject = 'ProC0d3 Api Registro de usuario' 
+                    # pendiente a cambios en la dirección de retorno (espera por front end)
+                    message = render_to_string('email/email_restored_api.html',{
+                        'domain': get_current_site(request),
+                        'user': user.username,
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                        'token': default_token_generator.make_token(user),
+                        'protocol': request.scheme,
+                        'password': 'password1',
+                    })
+                    sendEmail(subject,message,user.email,user.username)
+                    return Response({'message':'Open your e-mail and follow the link'},status=status.HTTP_202_ACCEPTED)
+            else:
+                return Response({'message':'User not exists'},status=status.HTTP_404_NOT_FOUND)
+        return Response({'message':'Email empty'},status=status.HTTP_406_NOT_ACCEPTABLE)
+
     

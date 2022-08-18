@@ -13,6 +13,6 @@ urlpatterns = [
     path('profile/showitems/',apiviews.ShowItemProfile.as_view(),name='profile_showitems_api'),
     path('itemprofile/',apiviews.ItemProfile.as_view(),name='item_profile_api'),
     path('profile/change-password/',apiviews.ChangePassword.as_view(),name='change_password_api'),
-    path('profile/changed-password/<uidb64>/<token>/',apiviews.ChangedPassword.as_view(),name='changed_password_api'),
+    path('profile/changed-password/<uidb64>/<token>/',apiviews.TokenLinkRecived.as_view(),name='token_link_api'),
 
 ]

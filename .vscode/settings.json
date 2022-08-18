@@ -14,7 +14,7 @@
     "python.analysis.completeFunctionParens": true,
     "editor.fontLigatures": true,
     "python.defaultInterpreterPath": "/home/rootmbi/Enviroments/EnvDjango/bin/python3.10",
-    "editor.fontWeight": "normal",
+    "editor.fontWeight": "bold",
     "files.associations": {
         "**/*.html": "html",
         "**/*.js": "javascript",
@@ -63,7 +63,7 @@
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "python.languageServer": "Pylance",
     "terminal.integrated.fontFamily": "Courier New",
-    "editor.fontFamily": "'Courier New', monospace",
+    "editor.fontFamily": "'Fira Code', monospace",
     "editor.unicodeHighlight.invisibleCharacters": false,
     "git.enableSmartCommit": true,
     "emmet.includeLanguages": {
