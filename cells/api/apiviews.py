@@ -3,7 +3,7 @@ from urllib import request
 from rest_framework.views import APIView
 from ..models import ShopingCellModel
 from .serializers import (ShopingCellModelListSerializer, UserChangePassSerializer,UserRegistrationSerializer,
-                          UserUpdateSerializer,UserSerializer,UserRestorePasswordSerializer)
+                          UserUpdateSerializer,UserSerializer,UserRestorePasswordSerializer,DataShowProfile)
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework import status
@@ -97,7 +97,7 @@ class Register(APIView):
                 'protocol': request.scheme,
             })
             sendEmail(subject,message,new_user.email,new_user.username)
-            return Response(data={'message':'Registration done, open your e-mail and fallow the link'},status=status.HTTP_201_CREATED)
+            return Response(data={'message':'Registration done'},status=status.HTTP_201_CREATED)
         return Response(data=data.errors,status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
@@ -162,10 +162,10 @@ class DetailItem(APIView):
         item = self.queryset.get(pk=pk)
         user = {
             'first_name':item.owner_user.first_name,
-            'email':item.owner_user.email,
+            'last_name':item.owner_user.last_name,
             'phone':item.profile.phone,
         }
-        user = UserUpdateSerializer(user)
+        user = DataShowProfile(user)
         item = self.serializer_class(item)
         data = {
             'user_data':user.data,
@@ -220,7 +220,7 @@ class ItemProfile(APIView):
                 self.queryset.filter(pk=pk).delete()
                 return Response({'message':'Item deleted!'},status=status.HTTP_202_ACCEPTED)
             return Response({'message':'It\'s not your item'},status=status.HTTP_401_UNAUTHORIZED)
-        return Response({'message':'Not credentials or id didn\t send'},status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'message':'Not credentials or id didn\'t send'},status=status.HTTP_401_UNAUTHORIZED)
 
 
 # Show Items (Profile) ok
@@ -276,20 +276,22 @@ class Profile(APIView):
     def put(self,request:str,*args, **kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
         if token is not None:
-            user_s = self.serializer_class(instance=token.user,data=request.data)
+            user = token.user
+            user_s = self.serializer_class(instance=user,data=request.data)
             if user_s.is_valid():
                 user_s.save()
+                token.delete()
                 subject = 'ProC0d3 Api Actualizacion de usuario de usuario' 
                 # pendiente a cambios en la dirección de retorno (espera por front end)
                 message = render_to_string('email/email_profile_api.html',{
                     'domain': get_current_site(request),
-                    'user': user_s.username,
-                    'uid': urlsafe_base64_encode(force_bytes(user_s.pk)),
-                    'token': default_token_generator.make_token(user_s),
+                    'user': user.username,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': default_token_generator.make_token(user),
                     'protocol': request.scheme,
                 })
-                sendEmail(subject,message,user_s.email,user_s.username)
-                return Response({'message':'Profile updated, open your e-mail and follow the link'},status=status.HTTP_202_ACCEPTED) 
+                sendEmail(subject,message,user.email,user.username)
+                return Response({'message':'Profile updated'},status=status.HTTP_202_ACCEPTED) 
             return Response({'error':user_s.errors},status=status.HTTP_406_NOT_ACCEPTABLE)   
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
     
@@ -315,6 +317,7 @@ class ChangePassword(APIView):
             data = self.serializer_class(instance=new_user,data=request.data)
             if data.is_valid():
                 data.save()
+                token.delete()
                 subject = 'ProC0d3 Api Registro de usuario' 
                 # pendiente a cambios en la dirección de retorno (espera por front end)
                 message = render_to_string('email/email_password_api.html',{
@@ -325,7 +328,7 @@ class ChangePassword(APIView):
                     'protocol': request.scheme,
                 })
                 sendEmail(subject,message,new_user.email,new_user.username)
-                return Response({'message':'Open your e-mail and follow the link'},status=status.HTTP_200_OK)
+                return Response({'message':'Accepted'},status=status.HTTP_200_OK)
             return Response({'message':'Invalid data'},status=status.HTTP_406_NOT_ACCEPTABLE)
         return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
 
@@ -348,7 +351,8 @@ class TokenLinkRecived(APIView):
             user.save()
         else:
             return Response({'message':'User not exists'},status=status.HTTP_404_NOT_FOUND)
-        return Response({'message':'Ok'},status=status.HTTP_202_ACCEPTED)
+        return Response({'message':'OK'},status=status.HTTP_202_ACCEPTED)
+
 
 # Profile Restore password (Profile) pendiente
 class RestorePassword(APIView):
@@ -377,7 +381,7 @@ class RestorePassword(APIView):
                         'password': 'password1',
                     })
                     sendEmail(subject,message,user.email,user.username)
-                    return Response({'message':'Open your e-mail and follow the link'},status=status.HTTP_202_ACCEPTED)
+                    return Response({'message':'Accepted'},status=status.HTTP_202_ACCEPTED)
             else:
                 return Response({'message':'User not exists'},status=status.HTTP_404_NOT_FOUND)
         return Response({'message':'Email empty'},status=status.HTTP_406_NOT_ACCEPTABLE)
