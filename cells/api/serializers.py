@@ -13,7 +13,7 @@ class ShopingCellModelListSerializer(serializers.Serializer):
     model_name = serializers.CharField(max_length=150,required=True)
     updated_date = serializers.CharField(required=False)
     price = serializers.CharField(max_length=6,required=False)
-    image = serializers.ImageField(allow_null=True)
+    image = serializers.ImageField(allow_null=True) # validate on front end image type (jpg,png)
     description = serializers.CharField(max_length=1000,required=False,allow_null=True)
 
     def userinstance(self,instance:object) -> object:
@@ -84,7 +84,7 @@ class UserUpdateSerializer(serializers.Serializer):
     phone = serializers.CharField(max_length=8,required=True)
     created_date = serializers.DateTimeField(required=False)
     updated_date = serializers.DateTimeField(required=False)
-    image = serializers.ImageField(required=False,allow_null=True)
+    image = serializers.ImageField(required=False,allow_null=True) # validate on front end image type (jpg,png)
     address = serializers.CharField(max_length=200,required=False)
 
     def validate_phone(self,value:str) -> str:
@@ -114,7 +114,7 @@ class UserUpdateSerializer(serializers.Serializer):
         return instance
 
 
-class DataShowProfile(serializers.Serializer):
+class ProfileSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=50,required=True)
     last_name = serializers.CharField(max_length=100,required=True)
     phone = serializers.CharField(max_length=8,required=True)
@@ -128,23 +128,26 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserChangePassSerializer(serializers.Serializer):
-    password = serializers.CharField(required=True,max_length=50)
-    password2 = serializers.CharField(required=True,max_length=50)
+    currentpassword = serializers.CharField(required=True,max_length=50)
+    newpassword = serializers.CharField(required=True,max_length=50)
+    confirmpassword = serializers.CharField(required=True,max_length=50)
 
     def validate(self, attrs:dict) -> dict:
-        if (attrs['password'] != attrs['password2']):
+        if (attrs['currentpassword'] == attrs['newpassword']):
+            raise serializers.ValidationError('Current password ==  new password')
+        if (attrs['newpassword'] != attrs['confirmpassword']):
             raise serializers.ValidationError('Passwords not mach')
         return attrs
     
     def update(self, instance:object, validated_data:dict) -> object:
-        instance.set_password(validated_data['password'])
+        instance.set_password(validated_data['newpassword'])
         instance.is_active = False
         instance.save()
         return instance
 
 
 class UserRestorePasswordSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
+    email = serializers.EmailField(required=True,max_length=50)
 
     def update(self, instance:object, validated_data:dict) -> object:
         instance.is_active = False

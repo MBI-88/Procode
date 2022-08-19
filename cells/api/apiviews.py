@@ -3,7 +3,7 @@ from urllib import request
 from rest_framework.views import APIView
 from ..models import ShopingCellModel
 from .serializers import (ShopingCellModelListSerializer, UserChangePassSerializer,UserRegistrationSerializer,
-                          UserUpdateSerializer,UserSerializer,UserRestorePasswordSerializer,DataShowProfile)
+                          UserUpdateSerializer,UserSerializer,UserRestorePasswordSerializer,ProfileSerializer)
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework import status
@@ -165,7 +165,7 @@ class DetailItem(APIView):
             'last_name':item.owner_user.last_name,
             'phone':item.profile.phone,
         }
-        user = DataShowProfile(user)
+        user = ProfileSerializer(user)
         item = self.serializer_class(item)
         data = {
             'user_data':user.data,
@@ -354,7 +354,7 @@ class TokenLinkRecived(APIView):
         return Response({'message':'OK'},status=status.HTTP_202_ACCEPTED)
 
 
-# Profile Restore password (Profile) pendiente
+# Profile Restore password (Profile) ok
 class RestorePassword(APIView):
     http_method_names = ['post']
     queryset = User.objects.all()
