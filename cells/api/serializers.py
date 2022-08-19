@@ -134,7 +134,7 @@ class UserChangePassSerializer(serializers.Serializer):
 
     def validate(self, attrs:dict) -> dict:
         if (attrs['currentpassword'] == attrs['newpassword']):
-            raise serializers.ValidationError('Current password ==  new password')
+            raise serializers.ValidationError('Current password equal to  new password')
         if (attrs['newpassword'] != attrs['confirmpassword']):
             raise serializers.ValidationError('Passwords not mach')
         return attrs
