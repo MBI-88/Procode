@@ -1,7 +1,7 @@
 import email
 from urllib import request
 from rest_framework.views import APIView
-from ..models import ShopingCellModel
+from ..models import ShopCellModel
 from .serializers import (ShopingCellModelListSerializer, UserChangePassSerializer,UserRegistrationSerializer,
                           UserUpdateSerializer,UserSerializer,UserRestorePasswordSerializer,ProfileSerializer)
 from rest_framework.response import Response
@@ -107,7 +107,7 @@ class Register(APIView):
 class ShowItems(APIView):
     authentication_classes = ()
     permission_classes = ()
-    queryset = ShopingCellModel.objects.all()
+    queryset = ShopCellModel.objects.all()
     serializer_class = ShopingCellModelListSerializer
     pagination_class = PageNumberPagination
     http_method_names = ['get']
@@ -153,7 +153,7 @@ class ShowItems(APIView):
 class DetailItem(APIView):
     authentication_classes = ()
     permission_classes = ()
-    queryset = ShopingCellModel.objects.all()
+    queryset = ShopCellModel.objects.all()
     serializer_class = ShopingCellModelListSerializer
     http_method_names = ['get']
 
@@ -180,7 +180,7 @@ class DetailItem(APIView):
 # Create Item (Profile) ok
 class ItemProfile(APIView):
     serializer_class = ShopingCellModelListSerializer
-    queryset = ShopingCellModel.objects.all()
+    queryset = ShopCellModel.objects.all()
     http_method_names = ['post','put','delete']
     
     def post(self,request:str,*args, **kwargs) -> Response:

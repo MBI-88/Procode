@@ -1,6 +1,6 @@
 from django import forms
 import re
-from cells.models import ShopingCellModel
+from cells.models import ShopCellModel
 
 #************************************** Login Form ***************************************************
 
@@ -92,7 +92,7 @@ class DeleteItemForm(forms.Form):
 class UpdateItemForm(forms.ModelForm):
     
     class Meta:
-        model = ShopingCellModel
+        model = ShopCellModel
         fields = ['model_name','price','image','description']
 
     

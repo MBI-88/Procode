@@ -9,7 +9,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.http import HttpResponse
 from .forms import (LoginForm,UserRegistrationForm,DeleteItemForm,UpdateItemForm,DeleteUserForm,UpdateUserForm,ChangePasswordForm,RestorePassowrdForm)
-from .models import ShopingCellModel,ProfileUserModel
+from .models import ShopCellModel,ProfileUserModel
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
@@ -172,7 +172,7 @@ class ShowItems(View):
     View's son
     """
     template_name = 'dashboard/cell_items.html'
-    model = ShopingCellModel
+    model = ShopCellModel
     context_object_name = 'itemcells'
 
     def get(self, request:str, *args, **kwargs) -> HttpResponse:
@@ -207,7 +207,7 @@ class DetailItem(View):
     View's son
     """
     template_name = 'dashboard/item_detail.html'
-    model = ShopingCellModel
+    model = ShopCellModel
     context_object_name = 'itemcell'
 
     def get(self,request:str,*args, **kwargs) -> HttpResponse:
@@ -226,7 +226,7 @@ class CreateItem(View):
     View's son
     """
     template_name = 'accounts/profile/create_item.html'
-    model = ShopingCellModel
+    model = ShopCellModel
     form_class = UpdateItemForm
     context_object_name = 'form'
 
@@ -259,7 +259,7 @@ class UpdateItem(View):
     View's son
     """
     template_name = 'accounts/profile/update_item.html'
-    model = ShopingCellModel
+    model = ShopCellModel
     form_class = UpdateItemForm
     context_object_name = 'form'
 
@@ -299,7 +299,7 @@ class DeleteItem(View):
     View's son
     """
     template_name = 'accounts/profile/delete_item.html'
-    model = ShopingCellModel
+    model = ShopCellModel
     form_class = DeleteItemForm
     context_object_name = 'form'
     
@@ -330,7 +330,7 @@ class Profile(View):
     View's son
     """
     template_name = 'accounts/profile/cell_profile.html'
-    model = ShopingCellModel
+    model = ShopCellModel
     context_object_name = 'items'
 
     @method_decorator(login_required)

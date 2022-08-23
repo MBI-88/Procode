@@ -1,4 +1,4 @@
-from .models import ProfileUserModel,ShopingCellModel
+from .models import ProfileUserModel,ShopCellModel
 from django.contrib.auth.models import User
 from mimesis import Person,Address,Hardware,Finance
 from mimesis.locales import Locale
@@ -50,7 +50,7 @@ class GeneratorDataBD(object):
                         self.phone_faker.cpu_model_code(),
                         self.phone_faker.cpu_frequency())
 
-                    ShopingCellModel.objects.create(
+                    ShopCellModel.objects.create(
                         owner_user=user,profile=user.profile,
                         model_name=self.phone_faker.phone_model(),
                         price=int(self.price_faker.price(minimum=1000,maximum=100000)),

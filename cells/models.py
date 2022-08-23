@@ -26,11 +26,11 @@ class ProfileUserModel(models.Model):
 
 # ************************************************* Shoping Model ***************************************************
 
-class ShopingCellModel(models.Model):
+class ShopCellModel(models.Model):
     """
     Tabla para el guardado de los articulos de venta
     """
-    owner_user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='shopingcell',on_delete=models.CASCADE)
+    owner_user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='shopcell',on_delete=models.CASCADE)
     profile = models.ForeignKey(ProfileUserModel,on_delete=models.CASCADE,null=True)
     model_name = models.CharField(max_length=150)
     slug = models.SlugField(max_length=150,blank=True,unique=True)

@@ -1,6 +1,6 @@
 from sys import maxsize
 from rest_framework import serializers
-from ..models import ProfileUserModel,ShopingCellModel
+from ..models import ProfileUserModel,ShopCellModel
 from django.contrib.auth.models import User
 import re
 
@@ -20,7 +20,7 @@ class ShopingCellModelListSerializer(serializers.Serializer):
         self.user = instance
         
     def create(self, validated_data:dict) -> object:
-        ShopingCellModel.objects.create(
+        ShopCellModel.objects.create(
             owner_user=self.user,
             profile=self.user.profile,
             model_name=validated_data['model_name'],
@@ -31,7 +31,7 @@ class ShopingCellModelListSerializer(serializers.Serializer):
         return validated_data
     
     def update(self, instance:object, validated_data:dict) -> object:
-        ShopingCellModel.objects.filter(pk=instance.pk).update(
+        ShopCellModel.objects.filter(pk=instance.pk).update(
             model_name=validated_data['model_name'],
             price=validated_data['price'],
             image=validated_data['image'],
