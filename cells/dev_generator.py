@@ -7,7 +7,7 @@ from django.db import Error,transaction
 
 # Clases
 
-class GeneratorDataBD(object):
+class GeneratorDataDB(object):
     person_faker = Person(locale=Locale.ES)
     address_faker = Address(locale=Locale.ES)
     phone_faker = Hardware()
@@ -18,7 +18,6 @@ class GeneratorDataBD(object):
         articules_per_users = number // 8
         password = "password01"
         text_phone:str
-        error_db = 0
         address:str
 
         for n in range(1,number):
@@ -53,14 +52,13 @@ class GeneratorDataBD(object):
                     ShopCellModel.objects.create(
                         owner_user=user,profile=user.profile,
                         model_name=self.phone_faker.phone_model(),
-                        price=int(self.price_faker.price(minimum=1000,maximum=100000)),
+                        price=int(self.price_faker.price(minimum=150,maximum=2000)),
                         description=text_phone)
 
             except Error:
-                error_db += 1
                 transaction.savepoint_rollback(point_db)
         
-        print("Generator successful! total errors {}".format(error_db))
+        print("Generator successful!")
 
             
 

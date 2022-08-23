@@ -1,5 +1,5 @@
 from django.test import TestCase
-from models import ProfileUserModel,ShopingCellModel
+from models import ProfileUserModel,ShopCellModel
 from django.contrib.auth.models import User
 
 # Test
@@ -47,15 +47,15 @@ class TestUserModel(TestCase):
     
     def test_shoppingcell(self) -> None:
         user1 = User.objects.get(username='TestUser1')
-        ShopingCellModel.objects.create(
+        ShopCellModel.objects.create(
             owner_user=user1,
             profile=user1.profile,
             model_name='Item test',
-            price=250.00,
+            price=250,
             image='',
             description='Item test case'
         )
-        self.assertEqual(user1.shopingcell.model_name,'Item test')
-        self.assertFalse(user1.shopingcell.price,300)
-        item = ShopingCellModel.objects.get(model_name='Item test')
+        self.assertEqual(user1.shopcell.model_name,'Item test')
+        self.assertFalse(user1.shopcell.price,300)
+        item = ShopCellModel.objects.get(model_name='Item test')
         self.assertFalse(item.owner_user.username,'TestUser2')
