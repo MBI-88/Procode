@@ -2,9 +2,10 @@ from django.test import TestCase
 from models import ProfileUserModel,ShopCellModel
 from django.contrib.auth.models import User
 
-# Test
+# Test Data base
 
 class TestUserModel(TestCase):
+    
     def setUp(self) -> None:
         User.objects.create(
             username='TestUser1',

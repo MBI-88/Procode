@@ -42,7 +42,7 @@ class UpdateUserForm(forms.Form):
     last_name = forms.CharField(max_length=100,required=True)
     email = forms.EmailField(max_length=25)
     phone = forms.CharField(max_length=8,required=True)
-    image = forms.ImageField()
+    image = forms.ImageField(allow_empty_file=True)
     address = forms.CharField(max_length=200,required=True)
 
     def clean_phone(self) -> str:
