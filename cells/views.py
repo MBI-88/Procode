@@ -287,7 +287,7 @@ class UpdateItem(View):
                 return redirect('cells:profile')
             messages.add_message(request,level=messages.WARNING,message='Errores en la modificación del articulo')
         else:
-            messages.add_message(request,level=messages.WARNING,message='Este no tu articulo')
+            messages.add_message(request,level=messages.WARNING,message='Este no es tu articulo')
         return render(request,self.template_name,{self.context_object_name:self.form_class})
         
 
@@ -317,7 +317,7 @@ class DeleteItem(View):
                 self.model.objects.filter(pk=kwargs['pk']).delete()
                 messages.add_message(request,level=messages.SUCCESS,message='Articulo eliminado con exito')
         else:
-            messages.add_message(request,level=messages.WARNING,message='Este no tu articulo')
+            messages.add_message(request,level=messages.WARNING,message='Este no es tu articulo')
         return redirect('cells:profile')
 
     

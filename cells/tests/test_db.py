@@ -46,7 +46,7 @@ class TestUserModel(TestCase):
         self.assertEqual(user1.profile.phone,'56634324')
         self.assertFalse(user2.profile.address,'Mi direccion user1')
     
-    def test_shoppingcell(self) -> None:
+    def test_shopgcell(self) -> None:
         user1 = User.objects.get(username='TestUser1')
         ShopCellModel.objects.create(
             owner_user=user1,

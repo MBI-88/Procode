@@ -7,6 +7,7 @@
         <!--Column 1-->
         <div class="col-lg-3 col-sm-6 col-md-3 col-g-3 p-2 me-0">
             {% if messages %}
+                <!--Message-->
                 {% for mess in messages %}
                     <div class="alert alert-{{mess.tags|lower}} success alert-dismissible fade show box-alert-transition" role="alert">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">

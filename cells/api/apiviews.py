@@ -21,7 +21,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.tokens import default_token_generator
 import re
 
-
 # Views
 # ****************************************** Login Views **************************************
 
