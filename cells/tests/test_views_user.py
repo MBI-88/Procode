@@ -11,12 +11,12 @@ class TestViewsUser(TestCase):
         self.user_client = Client(HTTP_USER_AGENT='Mozilla/5.0')
         self.user = User.objects.create(
             username='TestUser',first_name='UserFirst',last_name='UserLast',
-            password=User.set_password('password1'),email='testuser@example.com'
+            password='password1',email='testuser@example.com'
         )
         ProfileUserModel.objects.create(user=self.user,phone='58987848')
         self.user2 = User.objects.create(
             username='TestUser2',first_name='UserFirst2',last_name='UserLast2',
-            password=User.set_password('password1'),email='testuser2@example.com'
+            password='password1',email='testuser2@example.com'
         )
         ProfileUserModel.objects.create(user=self.user2,phone='5363324')
     
@@ -83,7 +83,7 @@ class TestViewsUser(TestCase):
         self.assertFalse(user_noActive.is_active)
 
     def test_profile_update(self) -> None:
-        request = self.user_client.post('/login/',data={'username':self.user.username,'password':self.user.password})
+        self.user_client.login(username=self.user.username,password=self.user.password)
         # True case
         request = self.user_client.get('/update/profile/')
         self.assertEqual(request.status_code,200)
@@ -105,7 +105,7 @@ class TestViewsUser(TestCase):
         # False case
         self.user.is_active = True
         self.user.save()
-        request = self.user_client.post('/login/',data={'username':self.user.username,'password':self.user.password})
+        self.user_client.login(username=self.user.username,password=self.user.password)
         request = self.user_client.post(
             '/update/profile/',
             data={
@@ -120,9 +120,8 @@ class TestViewsUser(TestCase):
         )
         self.assertEqual(request.status_code,200)
 
-    
     def test_create_item(self) -> None:
-        request = self.user_client.post('/login/',data={'username':self.user.username,'password':self.user.password})
+        self.user_client.login(username=self.user.username,passowrd=self.user.password)
         # True case
         request = self.user_client.get('/create/item/')
         self.assertEqual(request.status_code, 200)
@@ -138,13 +137,12 @@ class TestViewsUser(TestCase):
             }
         )
         self.assertEqual(request.status_code, 302)
-        request = self.user_client.get('/logout/')
+        request = self.user_client.get('/logout/') # Prube logout view
         self.assertEqual(request.status_code, 302)
 
     def test_update_item(self) -> None:
         item = ShopCellModel.objects.get(model_name='ItemTestCase')
-        request = self.user_client.post('/login/',
-                                            data={'username':self.user.username,'password':self.user.password})
+        self.user_client.login(username=self.user.username,password=self.user.password)
         # True case
         request = self.user_client.get('/update/item/'+item.pk+'/')
         self.assertEqual(request.status_code, 200)
@@ -160,12 +158,10 @@ class TestViewsUser(TestCase):
             }
         )
         self.assertEqual(request.status_code, 302)
-        request = self.user_client.get('/logout/')
-        self.assertEqual(request.status_code, 302)
+        self.user_client.logout()
 
         # False case
-        request = self.user_client.post('/login/',
-                            data={'username':self.user2.username,'password':self.user2.password})
+        self.user_client.login(username=self.user2.username,password=self.user2.password)
         request = self.user_client.post(
             '/update/item/'+item.pk+'/',
             data={
@@ -176,12 +172,10 @@ class TestViewsUser(TestCase):
             }
         )
         self.assertEqual(request.status_code, 200)
-        request = self.user_client.get('/logout/')
-        self.assertEqual(request.status_code, 302)
+        self.user_client.logout()
 
     def test_delete_item(self) -> None:
-        request = self.user_client.post('/login/',
-                                        data={'username':self.user.username,'password':self.user.password})
+        self.user_client.login(username=self.user.username,password=self.user.password)
         item = ShopCellModel.objects.create(
             owner_user=self.user,profile=self.user.profile,
             model_name='ItemTestCase-Delete',price=500,image='',description='Item test casde deleted'
@@ -194,22 +188,18 @@ class TestViewsUser(TestCase):
                             text='<form method="POST" id="deleteitem" action="" data-pk={} >'.format(item.pk))
         request = self.user_client.post('/delete/item/'+item.pk+'/',data={'delete':True})
         self.assertEqual(request.status_code, 302)
-        request = self.user_client.get('/logout/')
-        self.assertEqual(request.status_code, 302)
+        self.user_client.logout()
 
         # False case
-        request = self.user_client.post('/login/',
-                                        data={'username':self.user2.username,'password':self.user2.password})
+        self.user_client.login(username=self.user2.username,password=self.user2.password)
         item = ShopCellModel.objects.get(model_name='ItemTestCase Updated')
         request = self.user_client.post('/delete/item/'+item.pk+'/',data={'delete':True},follow=True)
         self.assertEqual(request.status_code, 200)
         self.assertContains(response=request,text='<!--Message-->',html=True)
-        request = self.user_client.get('/logout/')
-        self.assertEqual(request.status_code, 302)
+        self.user_client.logout()
 
     def test_change_password(self) -> None:
-        request = self.user_client.post('/login/',
-                                        data={'username':self.user.username,'password':self.user.password})
+        self.user_client.login(username=self.user.username,password=self.user.password)
         # True case
         request = self.user_client.get('/register/changepassword/')
         self.assertEqual(request.status_code, 200)
@@ -224,8 +214,7 @@ class TestViewsUser(TestCase):
         self.assertEqual(request.content, b'302')
 
         # False case
-        request = self.user_client.post('/login/',
-                                        data={'username':self.user2.username,'password':self.user2.password})
+        self.user_client.login(username=self.user2.username,password=self.user2.password)
         request = self.user_client.post('/register/changepassword/',
                                         data={
                                             'currentpassword':self.user2.password,
@@ -236,8 +225,7 @@ class TestViewsUser(TestCase):
         self.assertEqual(request.status_code, 200)
 
     def test_delete_user(self) -> None:
-        request = self.user_client.post('/login/',
-                                        data={'username':self.user2.username,'password':self.user2.password})
+        self.user_client.login(username=self.user2.username,password=self.user2.password)
         request = self.user_client.get('/delete/profile/')
         self.assertEqual(request.status_code, 200)
         self.assertContains(response=request,text='<form method="POST" action="" id="deleteprofile" >',html=True)

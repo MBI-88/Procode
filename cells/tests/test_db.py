@@ -9,14 +9,14 @@ class TestUserModel(TestCase):
     def setUp(self) -> None:
         User.objects.create(
             username='TestUser1',
-            password=User.set_password('password1'),
+            password='password1',
             first_name='UserModel1',
             last_name='Model1',
             email='testuser1@example.com'
         )
         User.objects.create(
             username='TestUser2',
-            password=User.set_password('password1'),
+            password='password1',
             first_name='UserModel2',
             last_name='Model2',
             email='testuser2@example.com'

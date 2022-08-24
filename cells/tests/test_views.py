@@ -1,4 +1,5 @@
 from django.test import TestCase, Client
+from models import ShopCellModel
 
 # Test view
 
@@ -30,4 +31,10 @@ class TestViews(TestCase):
         request = self.view_client.get('/who/')
         self.assertEqual(request.status_code, 200)
         self.assertContains(response=request,text='<!--Who are we-->',html=True)
+    
+    def test_show_items(self) -> None:
+        pass
+
+    def test_detail_item(self) -> None:
+        pass
     
