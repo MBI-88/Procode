@@ -54,7 +54,7 @@ function itemdetail(event){
        pk =  document.getElementById(event.target.id).dataset.pk
        
     }
-    goGet('../shoping/'+pk+'/');
+    goGet('../shopping/'+pk+'/');
 }
 
 

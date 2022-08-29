@@ -64,17 +64,11 @@ class ChangePasswordForm(forms.Form):
     newpassword = forms.CharField(widget=forms.PasswordInput,max_length=12,required=True)
     confirmpassword = forms.CharField(widget=forms.PasswordInput,max_length=12,required=True)
 
-    def clean_newpassword(self) -> str:
+    def clean(self) -> str:
         cd = self.cleaned_data
-        if cd['currentpassword'] == cd['newpassword']:
-            raise forms.ValidationError('La nueva clave es igual a la actual')        
-        return cd['newpassword']
-
-    def clean_confirmpassword(self) -> str:
-        cd = self.cleaned_data
-        if cd['newpassword'] != cd['confirmpassword']:
-            raise forms.ValidationError('Las claves no coinciden')
-        return cd['confirmpassword']
+        if cd['currentpassword'] != cd['newpassword'] and cd['newpassword'] == cd['confirmpassword']:
+            return cd 
+        raise forms.ValidationError('Claves erroneas')
 
 
 # Restore Password User

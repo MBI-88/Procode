@@ -487,6 +487,8 @@ class ChangePasswordProfile(View):
                 return HttpResponse('302')
             else:
                 messages.add_message(request,level=messages.WARNING,message='La clave actual no es válida')
+        else:
+            messages.add_message(request,level=messages.WARNING,message='Las claves no concuerdan')
         return render(request,self.template_name,{self.context_object_name:form})
 
 
