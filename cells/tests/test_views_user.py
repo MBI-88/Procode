@@ -1,6 +1,6 @@
-from django.test import TestCase, Client
+from django.test import TestCase,Client
 from django.contrib.auth.models import User
-from models import ShopCellModel,ProfileUserModel
+from cells.models import ShopCellModel,ProfileUserModel
 
         
 # Test User
@@ -8,53 +8,60 @@ from models import ShopCellModel,ProfileUserModel
 class TestViewsUser(TestCase):
 
     def setUp(self) -> None:
-        self.user_client = Client(HTTP_USER_AGENT='Mozilla/5.0')
-        self.user = User.objects.create(
-            username='TestUser',first_name='UserFirst',last_name='UserLast',
-            password='password1',email='testuser@example.com'
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0')
+        self.user1 = User.objects.create_user(
+            username='TestUser',first_name='Test',last_name='User',
+            email='testuser@example.com',password='password1'
         )
-        ProfileUserModel.objects.create(user=self.user,phone='58987848')
-        self.user2 = User.objects.create(
-            username='TestUser2',first_name='UserFirst2',last_name='UserLast2',
-            password='password1',email='testuser2@example.com'
+        ProfileUserModel.objects.create(user=self.user1,phone='58987848')
+
+        self.user2 = User.objects.create_user(
+            username='TestUser2',first_name='Tests',last_name='User',
+            email='testuser2@example.com',password='password1'
         )
         ProfileUserModel.objects.create(user=self.user2,phone='5363324')
+        
+        ShopCellModel.objects.create(
+            owner_user=self.user1,profile=self.user1.profile,
+            model_name='ItemTestCase-Delete',price=500,description='Item test casde deleted'
+        )
+        
+    def test_login_get(self) -> None:
+        response = self.client.get('/cells/login/')
+        self.assertContains(response,text='<!--Login-->',count=1)
     
-    def test_login(self) -> None:
-        # True case
-        request = self.user_client.get('/login/')
-        self.assertEqual(request.status_code,200)
-        self.assertContains(response=request,text="<form method='POST' id='login'>",html=True)
-        request = self.user_client.post('/login/',data={'username':self.user.username,'password':self.user.password})
-        self.assertEqual(request.content,b'302')
+    def test_login_post(self) -> None:
+        login = self.client.login(username=self.user1.username,password=self.user1.password)
+        self.assertTrue(login)
+        
+    def test_login_fail(self) -> None:
+        login = self.client.login(username='Empty',password='empty')
+        self.assertFalse(login)
 
-        # False case
-        request = self.user_client.post('/login/',data={'username':'XxX','password':'xXx1024'})
-        self.assertEqual(request.status_code,200)
-    
     def test_register(self) -> None:
-        # True case
-        request = self.user_client.get('/register/')
-        self.assertEqual(request.status_code,200)
-        self.assertContains(response=request,text="<form method='POST' id='register'>",html=True)
-        request = self.user_client.post(
-            '/register/',
+        response = self.client.get('/cells/register/')
+        self.assertContains(response,text="<!--Register-->",count=1)
+    
+    def test_register_post(self) -> None:
+        response = self.client.post(
+            '/cells/register/',
             data= {
                 'username':'UserTestCase',
                 'first_name':'Userfirst',
                 'last_name':'Userlast',
-                'password':'password1',
+                'password':'password01',
+                'password2':'password01',
                 'email':'usertestcase@example.com',
                 'phone':'54643424'
             }
         )
-        self.assertEqual(request.content,b'302')
+        self.assertEqual(response.content,b'302')
 
-        # False case
-        request = self.user_client.post(
-            '/register/',
+    def test_register_fail(self) -> None:
+        response = self.client.post(
+            '/cells/register/',
             data={
-                'username':self.user.username,
+                'username':'TestUser',
                 'first_name':'UserError',
                 'last_name':'UserErrorLong',
                 'password':'password1',
@@ -62,38 +69,39 @@ class TestViewsUser(TestCase):
                 'phone':'55652535'
             }
         )
-        self.assertEqual(request.status_code,200)
-
-        request = self.user_client.post(
-            '/register/',
+        self.assertEqual(response.status_code,200)
+        response = self.client.post(
+            '/cells/register/',
             data={
-                'username':'UserTestCase',
+                'username':'UserTestXX',
                 'first_name':'UserError',
                 'last_name':'UserErrorLong',
                 'password':'password1',
-                'email':self.user.email,
+                'email':'testuser@example.com',
                 'phone':'55652535'
             }
         )
-        self.assertEqual(request.status_code,200)
+        self.assertEqual(response.status_code,200)
     
     def test_user_active(self) -> None:
-        self.assertTrue(self.user.is_active)
-        user_noActive = User.objects.get(username='UserTestCase')
-        self.assertFalse(user_noActive.is_active)
-
+        user = User.objects.get(username='TestUser')
+        self.assertTrue(user.is_active)
+        user = User.objects.filter(username='UserTestCase').first()
+        # No active
+        self.assertIsNone(user)
+"""
     def test_profile_update(self) -> None:
-        self.user_client.login(username=self.user.username,password=self.user.password)
+        self.client.login(username='TestUser',password='password01')
         # True case
-        request = self.user_client.get('/update/profile/')
-        self.assertEqual(request.status_code,200)
-        self.assertContains(response=request,text='<form method="POST"  enctype="multipart/form-data" action="">')
-        request = self.user_client.post(
-            '/update/profile/',
+        user1 = User.objects.get(username='TestUser')
+        request = self.client.get('/cells/update/profile/')
+        self.assertContains(response=request,text='<!--Update profile-->',count=1)
+        request = self.client.post(
+            '/cells/update/profile/',
             data={
-                'username':self.user.username,
-                'first_name':self.user.first_name,
-                'last_name':self.user.last_name,
+                'username':user1.username,
+                'first_name':user1.first_name,
+                'last_name':user1.last_name,
                 'email':'usertestcase@example.com',
                 'phone':'58987842',
                 'image':'',
@@ -103,15 +111,15 @@ class TestViewsUser(TestCase):
         self.assertEqual(request.status_code,302)
 
         # False case
-        self.user.is_active = True
-        self.user.save()
-        self.user_client.login(username=self.user.username,password=self.user.password)
-        request = self.user_client.post(
-            '/update/profile/',
+        user1.is_active = True
+        user1.save()
+        self.client.login(username='TestUser',password='password01')
+        request = self.client.post(
+            '/cells/update/profile/',
             data={
-                'username':self.user.username,
-                'first_name':self.user.first_name,
-                'last_name':self.user.last_name,
+                'username':user1.username,
+                'first_name':user1.first_name,
+                'last_name':user1.last_name,
                 'email':'smart2055@yahoo.com', # E-mail is iqual to other e-mail in the data base
                 'phone':'58987842',
                 'image':'',
@@ -121,14 +129,12 @@ class TestViewsUser(TestCase):
         self.assertEqual(request.status_code,200)
 
     def test_create_item(self) -> None:
-        self.user_client.login(username=self.user.username,passowrd=self.user.password)
+        self.client.login(username='TestUser',password='password01')
         # True case
-        request = self.user_client.get('/create/item/')
-        self.assertEqual(request.status_code, 200)
-        self.assertContains(response=request,
-        text='<form method="POST" id="createitem" enctype="multipart/form-data" action="">',html=True)
-        request = self.user_client.post(
-            '/create/item/',
+        request = self.client.get('/cells/create/item/')
+        self.assertContains(response=request,text='<!--Create item-->',count=1)
+        request = self.client.post(
+            '/cells/create/item/',
             data={
                 'model_name':'ItemTestCase',
                 'price':200,
@@ -137,19 +143,18 @@ class TestViewsUser(TestCase):
             }
         )
         self.assertEqual(request.status_code, 302)
-        request = self.user_client.get('/logout/') # Prube logout view
+        request = self.client.get('/cells/logout/') # Prube logout view
         self.assertEqual(request.status_code, 302)
 
     def test_update_item(self) -> None:
         item = ShopCellModel.objects.get(model_name='ItemTestCase')
-        self.user_client.login(username=self.user.username,password=self.user.password)
+        pk = str(item.pk)
+        self.client.login(username='TestUser',password='password01')
         # True case
-        request = self.user_client.get('/update/item/'+item.pk+'/')
-        self.assertEqual(request.status_code, 200)
-        self.assertContains(response=request,
-            text='<form method="POST"  enctype="multipart/form-data" action="">',html=True)
-        request = self.user_client.post(
-            '/update/item/'+item.pk+'/',
+        request = self.client.get('/cells/update/item/'+pk+'/')
+        self.assertContains(response=request,text='<!--Update item-->',count=1)
+        request = self.client.post(
+            '/cells/update/item/'+pk+'/',
             data={
                 'model_name':'ItemTestCase Updated',
                 'price':300,
@@ -158,12 +163,12 @@ class TestViewsUser(TestCase):
             }
         )
         self.assertEqual(request.status_code, 302)
-        self.user_client.logout()
+        self.client.logout()
 
         # False case
-        self.user_client.login(username=self.user2.username,password=self.user2.password)
-        request = self.user_client.post(
-            '/update/item/'+item.pk+'/',
+        self.client.login(username='TestUser2',password='password01')
+        request = self.client.post(
+            '/cells/update/item/'+pk+'/',
             data={
                 'model_name':'ItemTestCase2 Updated',
                 'price':300,
@@ -172,79 +177,72 @@ class TestViewsUser(TestCase):
             }
         )
         self.assertEqual(request.status_code, 200)
-        self.user_client.logout()
+        self.client.logout()
 
     def test_delete_item(self) -> None:
-        self.user_client.login(username=self.user.username,password=self.user.password)
-        item = ShopCellModel.objects.create(
-            owner_user=self.user,profile=self.user.profile,
-            model_name='ItemTestCase-Delete',price=500,image='',description='Item test casde deleted'
-        )
-        
+        self.client.login(username='TestUser',password='password01')
+        item = ShopCellModel.objects.get(model_name='ItemTestCase-Delete')
+        pk = str(item.pk)
         # True case
-        request = self.user_client.get('/delete/item/'+item.pk+'/')
-        self.assertEqual(request.status_code, 200)
+        request = self.client.get('/cells/delete/item/'+pk+'/')
         self.assertContains(response=request,
-                            text='<form method="POST" id="deleteitem" action="" data-pk={} >'.format(item.pk))
-        request = self.user_client.post('/delete/item/'+item.pk+'/',data={'delete':True})
+                            text='<!--Delete item-->',count=1)
+        request = self.client.post('/cells/delete/item/'+pk+'/',data={'delete':True})
         self.assertEqual(request.status_code, 302)
-        self.user_client.logout()
+        self.client.logout()
 
         # False case
-        self.user_client.login(username=self.user2.username,password=self.user2.password)
+        self.client.login(username='TestUser2',password='password01')
         item = ShopCellModel.objects.get(model_name='ItemTestCase Updated')
-        request = self.user_client.post('/delete/item/'+item.pk+'/',data={'delete':True},follow=True)
-        self.assertEqual(request.status_code, 200)
-        self.assertContains(response=request,text='<!--Message-->',html=True)
-        self.user_client.logout()
+        pk = str(item.pk)
+        request = self.client.post('/cells/delete/item/'+pk+'/',data={'delete':True})
+        self.assertContains(response=request,text='<!--Message-->',count=1)
+        self.client.logout()
 
     def test_change_password(self) -> None:
-        self.user_client.login(username=self.user.username,password=self.user.password)
+        self.client.login(username='TestUser',password='password01')
         # True case
-        request = self.user_client.get('/register/changepassword/')
-        self.assertEqual(request.status_code, 200)
-        self.assertContains(response=request,text='<form method="POST" id="changepassword">',html=True)
-        request = self.user_client.post('/register/changepassword/',
+        request = self.client.get('/cells/register/changepassword/')
+        self.assertContains(response=request,text='<!--Change password-->',count=1)
+        request = self.client.post('/cells/register/changepassword/',
                                         data={
-                                            'currentpassword':self.user.password,
-                                            'newpassword':'password01',
-                                            'confirmpassword':'password01'
+                                            'currentpassword':'TestUser',
+                                            'newpassword':'password02',
+                                            'confirmpassword':'password02'
                                         }
                                     )
         self.assertEqual(request.content, b'302')
 
         # False case
-        self.user_client.login(username=self.user2.username,password=self.user2.password)
-        request = self.user_client.post('/register/changepassword/',
+        self.client.login(username='TestUser2',password='password01')
+        request = self.client.post('/cells/register/changepassword/',
                                         data={
-                                            'currentpassword':self.user2.password,
-                                            'newpassword':self.user2.password,
+                                            'currentpassword':'password01',
+                                            'newpassword':'password01',
                                             'confirmpassword':'password01'
                                         }
                                     )
         self.assertEqual(request.status_code, 200)
 
     def test_delete_user(self) -> None:
-        self.user_client.login(username=self.user2.username,password=self.user2.password)
-        request = self.user_client.get('/delete/profile/')
-        self.assertEqual(request.status_code, 200)
-        self.assertContains(response=request,text='<form method="POST" action="" id="deleteprofile" >',html=True)
-        request = self.user_client.post('/delete/profile/',data={'delete':True})
+        self.client.login(username='TestUser',password='password01')
+        request = self.client.get('/cells/delete/profile/')
+        self.assertContains(response=request,text='<!--Delete account-->',count=1)
+        request = self.client.post('/cells/delete/profile/',data={'delete':True})
         self.assertEqual(request.content, b'302')
     
     def test_restore_password(self) -> None:
         # True case
-        request = self.user_client.get('/restore/password/')
-        self.assertEqual(request.status_code, 200)
-        self.assertContains(response=request,text='<form method="POST" id="restorepassword">',html=True)
-        request = self.user_client.post('/restore/password/',data={'email':self.user.email})
+        request = self.client.get('/cells/restore/password/')
+        self.assertContains(response=request,text='<!--Restore password-->',count=1)
+        request = self.client.post('/cells/restore/password/',data={'email':'textuser@example.com'})
         self.assertEqual(request.content, b'302')
 
         # False case
-        request = self.user_client.post('/restore/password/',data={'email':'notexits@example.com'})
+        request = self.client.post('/cells/restore/password/',data={'email':'notexits@example.com'})
         self.assertEqual(request.status_code, 200)
 
-
+"""
 
 
 
