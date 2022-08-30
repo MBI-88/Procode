@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class TestUserModel(TestCase):
     
     def setUp(self) -> None:
-        self.user_db = User.objects.create(
+        self.user_db = User.objects.create_user(
             username='TestUser',password='password01',
             first_name='Test1',last_name='User1',email='testuser@example.com'
         )
@@ -24,7 +24,7 @@ class TestUserModel(TestCase):
             image='',
             description='Item test case'
         )
-        self.user_db2 = User.objects.create(
+        self.user_db2 = User.objects.create_user(
             username='TestUser2',
             password='password01',
             first_name='UserModel2',
