@@ -1,5 +1,4 @@
 {% load widget_tweaks %}
-<!--Register-->
 {% if messages %}
       {% for mess in messages %}
           <div class="alert alert-{{mess.tags|lower}} alert-dismissible fade show box-alert-transition" role="alert">
@@ -13,6 +12,7 @@
 {% endif %}
 
 <form method="POST" id="register">
+  <!--Register-->
     {% csrf_token %}
     <div class="row row-cols-1  container">
       <div class="col pb-2">

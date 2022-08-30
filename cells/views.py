@@ -80,7 +80,6 @@ class LoginUser(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            user = User.objects.get(username=cd['username'])
             user = authenticate(request,username=cd['username'],password=cd['password'])
             if user is not None:
                 login(request,user=user)
