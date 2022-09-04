@@ -30,6 +30,7 @@ class ViewUserTestCase(TestCase):
         )
         return super().setUpTestData()
 
+#****************************************** Test Register ***********************************************************
     def test_register(self) -> None:
         response = self.client.get('/cells/register/')
         self.assertContains(response,text='<!--Register-->',count=1)
@@ -45,20 +46,22 @@ class ViewUserTestCase(TestCase):
     
     def test_registe_post_fail(self) -> None:
         response = self.client.post('/cells/register/',data={
-            'username':'TestLogin1','first_name':'Test',
+            'username':self.user.username,'first_name':'Test',
             'last_name':'Register','password':'password1',
-            'password2':'password1','email':'testuser@example.com',
-            'phone':'54643424'
-        })
-        self.assertEqual(response.status_code,200)
-        response = self.client.post('/cells/register/',data={
-            'username':'Testnew','first_name':'Test',
-            'last_name':'Register','password':'password1',
-            'password2':'password1','email':'testlogin@example.com',
+            'password2':'password1','email':'testregisterfail@example.com',
             'phone':'54643424'
         })
         self.assertEqual(response.status_code,200)
 
+        response = self.client.post('/cells/register/',data={
+            'username':'TestRegisterFail','first_name':'Test',
+            'last_name':'Register','password':'password1',
+            'password2':'password1','email':self.user2.email,
+            'phone':'54643424'
+        })
+        self.assertEqual(response.status_code,200)
+
+#****************************************** Test Login **************************************************************
     def test_login(self) -> None:
         response = self.client.get('/cells/login/')
         self.assertContains(response,text='<!--Login-->',count=1)
@@ -75,7 +78,8 @@ class ViewUserTestCase(TestCase):
             'username':'NotExists','password':'12345',
         })
         self.assertContains(response,text='<!--Message error-->',count=1)
-    
+
+#********************************************* Test Create Item ********************************************************    
     def test_createitem(self) -> None:
         self.client.force_login(user=self.user)
         response = self.client.get('/cells/create/item/')
@@ -87,7 +91,8 @@ class ViewUserTestCase(TestCase):
                     'model_name':'TestModel3','price':250,'image':'','description':'Item test'
         })
         self.assertEqual(response.status_code,302)
-    
+
+#********************************************* Test Update item *******************************************************    
     def test_updateitem(self) -> None:
         self.client.force_login(user=self.user)
         pk = str(self.item1.pk)
@@ -109,7 +114,8 @@ class ViewUserTestCase(TestCase):
                     'model_name':self.item1.model_name,'price':150,'image':'','description':'Item changed'
         })
         self.assertContains(response,text='<!--Message-->',count=1)
-    
+
+#********************************************** Test Delete Item *******************************************************    
     def test_deleteitem(self) -> None:
         self.client.force_login(user=self.user2)
         pk = str(self.item2.pk)
@@ -128,11 +134,13 @@ class ViewUserTestCase(TestCase):
         response = self.client.post('/cells/delete/item/'+pk+'/',data={'delete':True},follow=True)
         self.assertContains(response,text='<!--Message-->',count=1)
 
+#********************************************* Test Profile ************************************************************
     def test_profile(self) -> None:
         self.client.force_login(user=self.user)
         response = self.client.get('/cells/profile/')
         self.assertContains(response,text='<!--User information-->',count=1)
-    
+
+#********************************************** Test Update Profile ****************************************************    
     def test_update_profile(self) -> None:
         self.client.force_login(user=self.user)
         response = self.client.get('/cells/update/profile/')
@@ -165,8 +173,7 @@ class ViewUserTestCase(TestCase):
         })
         self.assertContains(response,text='<!--Message-->',count=1)
 
-
-    
+#*********************************************** Test Change Password *************************************************
     def test_changepassword(self) -> None:
         self.client.force_login(user=self.user2)
         response = self.client.get('/cells/register/changepassword/')
@@ -190,7 +197,8 @@ class ViewUserTestCase(TestCase):
             'currentpassword':'12345','newpassword':'password01','confirmpassword':'password1'
         })
         self.assertContains(response,text='<!--Message-->',count=1)
-    
+
+#************************************************ Test Restore password *************************************************    
     def test_restore_password(self) -> None:
         response = self.client.get('/cells/restore/password/')
         self.assertContains(response,text='<!--Restore password-->',count=1)
@@ -207,6 +215,16 @@ class ViewUserTestCase(TestCase):
         })
         self.assertContains(response,text='<!--Message-->',count=1)
 
+#******************************************** Test Delete Profile *****************************************************
+    def test_deleteprofile(self) -> None:
+        self.client.force_login(user=self.user2)
+        response = self.client.get('/cells/delete/profile/')
+        self.assertContains(response,text='<!--Delete account-->',count=1)
+    
+    def test_deleteprofile_post(self) -> None:
+        self.client.force_login(user=self.user2)
+        response = self.client.post('/cells/delete/profile/',data={'delete':True})
+        self.assertEqual(response.content,b'302')
 
 
 

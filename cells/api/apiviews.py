@@ -1,5 +1,3 @@
-import email
-from urllib import request
 from rest_framework.views import APIView
 from ..models import ShopCellModel
 from .serializers import (ShopingCellModelListSerializer, UserChangePassSerializer,UserRegistrationSerializer,
@@ -35,16 +33,13 @@ class Login(ObtainAuthToken):
         if login_s.is_valid():
             user = login_s.validated_data['user']
             user_s = UserSerializer(user)
-            if user.is_active:
-                token,created = Token.objects.get_or_create(user=user)
-                if created:
-                   return Response(
+            token,created = Token.objects.get_or_create(user=user)
+            if created:
+                return Response(
                     {'token':token.key,'user':user_s.data,'message':'Login ok!'},status=status.HTTP_202_ACCEPTED)
-                else:
-                    token.delete()
-                    return Response({'error':'User session exists'},status=status.HTTP_409_CONFLICT)
-            else: 
-                return Response({'error':'User not actived'},status=status.HTTP_401_UNAUTHORIZED)
+            else:
+                token.delete()
+                return Response({'error':'User session exists'},status=status.HTTP_409_CONFLICT)
         return Response(data=login_s.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
@@ -54,23 +49,17 @@ class Logout(APIView):
     http_method_names = ['get']
     
     def get(self,request,*args, **kwargs) -> Response:
-        try:
-            token = Token.objects.get(key=request.auth)
-            if token is not None:
-                user = token.user
-                all_sessions = self.queryset.filter(expire_date__gte=datetime.now())
-                if all_sessions.exists():
-                    for session in all_sessions:
-                        session_data = session.get_decode()
-                        if user.id == int(session_data.get('_auth_user_id')):
-                            session.delete()
-                token.delete()
-                return Response({'Session':'Done!'},status=status.HTTP_200_OK)
-            return Response({'error':'Not token'},status=status.HTTP_406_NOT_ACCEPTABLE)
-        except:
-            return Response({'message':'Token not exists'},status=status.HTTP_404_NOT_FOUND)
+        token = Token.objects.get(key=request.auth)
+        user = token.user
+        all_sessions = self.queryset.filter(expire_date__gte=datetime.now())
+        for session in all_sessions:
+            session_data = session.get_decode()
+            if user.id == int(session_data.get('_auth_user_id')):
+                session.delete()
+        token.delete()
+        return Response({'Session':'Done!'},status=status.HTTP_200_OK)
+            
         
-
 # ***************************************** Register View *******************************************
 
 # Register (Register) ok
@@ -184,42 +173,38 @@ class ItemProfile(APIView):
     
     def post(self,request:str,*args, **kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
-        if token is not None:
-            user = token.user
-            data = self.serializer_class(data=request.data)
-            data.userinstance(user)
-            if data.is_valid():
-                data.save()
-                return Response({'message':'Item created!'},status=status.HTTP_201_CREATED)
-            return Response({'message':data.errors},status=status.HTTP_406_NOT_ACCEPTABLE)
-        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
+        user = token.user
+        data = self.serializer_class(data=request.data)
+        data.userinstance(user)
+        if data.is_valid():
+            data.save()
+            return Response({'message':'Item created!'},status=status.HTTP_201_CREATED)
+        return Response({'message':data.errors},status=status.HTTP_406_NOT_ACCEPTABLE)
+
     
     def put(self,request:str,*args, **kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
         pk = request.query_params.get('pk')
-        if token is not None and pk is not None:
-            user = token.user
-            user_item = self.queryset.get(pk=pk)
-            if user.username == user_item.owner_user.username:
-                data = self.serializer_class(instance=user_item,data=request.data)
-                if data.is_valid():
-                    data.save()
-                    return Response({'message':'Item updated!'},status=status.HTTP_202_ACCEPTED)
-                return Response({'message':data.errors},status=status.HTTP_406_NOT_ACCEPTABLE)
-            return Response({'message':'It\'s not your item'},status=status.HTTP_401_UNAUTHORIZED)
-        return Response({'message':'Not credentials or id didn\t send'},status=status.HTTP_401_UNAUTHORIZED)
+        user = token.user
+        user_item = self.queryset.get(pk=pk)
+        if user.username == user_item.owner_user.username:
+            data = self.serializer_class(instance=user_item,data=request.data)
+            if data.is_valid():
+                data.save()
+                return Response({'message':'Item updated!'},status=status.HTTP_202_ACCEPTED)
+            return Response({'message':data.errors},status=status.HTTP_406_NOT_ACCEPTABLE)
+        return Response({'message':'It\'s not your item'},status=status.HTTP_401_UNAUTHORIZED)
+    
     
     def delete(self,request:str,*args, **kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
         pk = request.query_params.get('pk')
-        if token is not None and pk is not None:
-            user = token.user
-            user_item = self.queryset.get(pk=pk)
-            if user.username == user_item.owner_user.username:
-                self.queryset.filter(pk=pk).delete()
-                return Response({'message':'Item deleted!'},status=status.HTTP_202_ACCEPTED)
-            return Response({'message':'It\'s not your item'},status=status.HTTP_401_UNAUTHORIZED)
-        return Response({'message':'Not credentials or id didn\'t send'},status=status.HTTP_401_UNAUTHORIZED)
+        user = token.user
+        user_item = self.queryset.get(pk=pk)
+        if user.username == user_item.owner_user.username:
+            self.queryset.filter(pk=pk).delete()
+            return Response({'message':'Item deleted!'},status=status.HTTP_202_ACCEPTED)
+        return Response({'message':'It\'s not your item'},status=status.HTTP_401_UNAUTHORIZED)
 
 
 # Show Items (Profile) ok

@@ -11,13 +11,20 @@ import re
 class ShopingCellModelListSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=False)
     model_name = serializers.CharField(max_length=150,required=True)
-    updated_date = serializers.CharField(required=False)
+    updated_date = serializers.DateTimeField(required=False)
     price = serializers.CharField(max_length=6,required=False)
     image = serializers.ImageField(allow_null=True) # validate on front end image type (jpg,png)
     description = serializers.CharField(max_length=1000,required=False,allow_null=True)
 
     def userinstance(self,instance:object) -> object:
         self.user = instance
+    
+    def validate_price(self,value:str) -> str:
+        try:
+            int(value)
+        except ValueError:
+            raise serializers.ValidationError('Price is not a number') 
+        return value
         
     def create(self, validated_data:dict) -> object:
         ShopCellModel.objects.create(

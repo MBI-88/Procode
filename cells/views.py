@@ -23,7 +23,7 @@ import re
 # Send Email
 def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> None:
     #thred = Thread(target=send_mail,args=[subject,message,'procode@gmail.com',
-                    #[recipient_list],True],name=name_thred)
+    #                [recipient_list],True],name=name_thred)
     #thred.start()
     pass
 
@@ -131,7 +131,7 @@ class Register(View):
                         'token': default_token_generator.make_token(new_user),
                         'protocol': request.scheme,
                     })
-                    #sendEmail(subject,message,cd['email'],new_user.username)
+                    sendEmail(subject,message,cd['email'],new_user.username)
                     messages.add_message(request,level=messages.SUCCESS,message='Registro completado.Siga el enlace enviado a su e-mail')  
                     # redireccion
                     return HttpResponse('302')
@@ -415,7 +415,7 @@ class UpdateProfile(View):
                     'token': default_token_generator.make_token(request.user),
                     'protocol': request.scheme,
                 })
-               # sendEmail(subject,message,cd['email'],cd['username'])
+                sendEmail(subject,message,cd['email'],cd['username'])
                 messages.add_message(request,level=messages.SUCCESS,message="Perfil actualizado siga el \
                     link en su e-mail")
                 # redireccion
@@ -482,7 +482,7 @@ class ChangePasswordProfile(View):
                     'token': default_token_generator.make_token(request.user),
                     'protocol': request.scheme,
                 })
-                #sendEmail(subject,message,request.user.email,request.user.username)
+                sendEmail(subject,message,request.user.email,request.user.username)
                 messages.add_message(request,level=messages.SUCCESS,message='Siga el enlace que se envio a su e-mail')
                 return HttpResponse('302')
             else:
@@ -522,7 +522,7 @@ class RestorePassword(View):
                     'protocol': request.scheme,
                     'password': 'password1',
                 })
-                #sendEmail(subject,message,cd['email'],user.username)
+                sendEmail(subject,message,cd['email'],user.username)
                 messages.add_message(request,level=messages.SUCCESS,message='Siga el enlace que se envio a su e-mail')
                 return HttpResponse('302')
             except:

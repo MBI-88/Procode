@@ -24,7 +24,7 @@ class UserRegistrationForm(forms.Form):
     def clean_password2(self) -> str:
         cd = self.cleaned_data
         if (cd['password'] != cd['password2']):
-            raise forms.ValidationError('Las claves no coinciden')
+            raise forms.ValidationError('Error keys')
         return cd['password2']
     
     def clean_phone(self) -> str:
@@ -32,7 +32,7 @@ class UserRegistrationForm(forms.Form):
         pattern = re.compile("^5[1-8]")   
         if (len(cd['phone']) == 8) and pattern.search(cd['phone']) :
             return cd['phone']
-        raise forms.ValidationError('El numero no coincide con el prefijo del sistema')
+        raise forms.ValidationError('Error phone number')
     
 
 # Update User Form
@@ -50,7 +50,7 @@ class UpdateUserForm(forms.Form):
         pattern = re.compile("^5[1-8]")   
         if (len(cd['phone']) == 8) and pattern.search(cd['phone']):
             return cd['phone']
-        raise forms.ValidationError('El numero no coincide con el prefijo del sistema')
+        raise forms.ValidationError('Error phone number')
 
 
 # Delete User Form
@@ -68,7 +68,7 @@ class ChangePasswordForm(forms.Form):
         cd = self.cleaned_data
         if cd['currentpassword'] != cd['newpassword'] and cd['newpassword'] == cd['confirmpassword']:
             return cd 
-        raise forms.ValidationError('Claves erroneas')
+        raise forms.ValidationError('Error keys')
 
 
 # Restore Password User
