@@ -1,23 +1,18 @@
 from .base_setting import *
 
-# User name: Procode password: pr0c0d3 email:procode@gmail.com
-DEBUG = True
-
-SECRET_KEY = 'django-insecure-tx^m7&!dk1pdfri*+roe+2-&#^^x-cph^aknzv60l9x&dwxbkc'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = '1025'
-
-# Database
+# Develop config
+DEBUG = config('DEBUG',cast=bool,default=True)
+SECRET_KEY = config('SECRET_KEY')
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT',cast=int)
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'develop.db',
+        'ENGINE': config('DB_ENGINE'),
+        'NAME': BASE_DIR / config('DB_NAME'),
     }
 }
 
-# Media file (user images, cells images,etc)
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media/') 
+MEDIA_URL = config('MEDIA_URL')
+MEDIA_ROOT = os.path.join(BASE_DIR,config('MEDIA_ROOT')) 
