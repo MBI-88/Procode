@@ -1,0 +1,11 @@
+[run]
+omit=
+    */__pycache__/*
+    */static/img/*
+    */migrations/* 
+    */settings/*
+    */tests/*
+    */__init__.py
+    */manage.py
+    */.gitignore
+    */*.md

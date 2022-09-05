@@ -1,9 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/cells/__pycache__/*
-/.vscode
-/Procode/__pycache__/*
+cells/__pycache__/*
+.vscode
+Procode/__pycache__/*
 
 # testing
 
