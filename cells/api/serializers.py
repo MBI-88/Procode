@@ -1,8 +1,8 @@
-from sys import maxsize
 from rest_framework import serializers
 from ..models import ProfileUserModel,ShopCellModel
 from django.contrib.auth.models import User
 import re
+from django.contrib.auth import authenticate
 
 # Serializer
 
@@ -147,17 +147,18 @@ class UserChangePassSerializer(serializers.Serializer):
         return attrs
     
     def update(self, instance:object, validated_data:dict) -> object:
-        instance.set_password(validated_data['newpassword'])
-        instance.is_active = False
-        instance.save()
-        return instance
-
+        if authenticate(username=instance.username,password=validated_data['currentpassword']) is not None:
+            instance.set_password(validated_data['newpassword'])
+            instance.is_active = False
+            instance.save()
+            return instance
+        raise serializers.ValidationError('Current password is not valid')
 
 class UserRestorePasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True,max_length=50)
 
     def update(self, instance:object, validated_data:dict) -> object:
         instance.is_active = False
-        instance.set_password('password1') # hacerlo mas fuerte para producción
+        instance.set_password('password01') # hacerlo mas fuerte para producción
         instance.save()
         return instance

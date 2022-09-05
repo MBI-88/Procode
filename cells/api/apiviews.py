@@ -113,9 +113,8 @@ class ShowItems(APIView):
             items = self.paginate_queryset(self.queryset.filter(model_name__icontains=search))
         else: items = self.paginate_queryset(self.queryset)
             
-        if items is not None:
-            serializer = self.serializer_class(items,many=True)
-            return self.get_paginated_response(serializer.data)
+        serializer = self.serializer_class(items,many=True)
+        return self.get_paginated_response(serializer.data)
             
     @property
     def paginator(self) -> object:
@@ -147,19 +146,21 @@ class DetailItem(APIView):
 
     def get(self,request:str, *args, **kwargs) -> Response:
         pk = kwargs['pk']
-        item = self.queryset.get(pk=pk)
-        user = {
-            'first_name':item.owner_user.first_name,
-            'last_name':item.owner_user.last_name,
-            'phone':item.profile.phone,
-        }
-        user = ProfileSerializer(user)
-        item = self.serializer_class(item)
-        data = {
-            'user_data':user.data,
-            'item_data':item.data,
-        }
-        return Response(data=data,status=status.HTTP_200_OK)
+        if pk:
+            item = self.queryset.get(pk=pk)
+            user = {
+                'first_name':item.owner_user.first_name,
+                'last_name':item.owner_user.last_name,
+                'phone':item.profile.phone,
+            }
+            user = ProfileSerializer(user)
+            item = self.serializer_class(item)
+            data = {
+                'user_data':user.data,
+                'item_data':item.data,
+            }
+            return Response(data=data,status=status.HTTP_200_OK)
+        return Response({'message':'Not id '},status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -216,19 +217,17 @@ class ShowItemProfile(ShowItems):
         pattern = re.compile("[a-zA-Z0-9\s]+")
         page = request.query_params.get('page')
         token = Token.objects.get(key=request.auth)
-        if token is not None:
-            user = token.user
-            try:
-                page = int(page)
-            except:
-                return Response({'message':'Page not integer'},status=status.HTTP_400_BAD_REQUEST)
-            if search is not None and pattern.search(search):
-                    items = self.paginate_queryset(self.queryset.filter(owner_user=user).filter(model_name__icontains=search))
-            else: items = self.paginate_queryset(self.queryset.filter(owner_user=user))
-            if items is not None:
-                serializer = self.serializer_class(items,many=True)
-                return self.get_paginated_response(serializer.data)
-        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
+        user = token.user
+        try:
+            page = int(page)
+        except:
+            return Response({'message':'Page not integer'},status=status.HTTP_400_BAD_REQUEST)
+        if search is not None and pattern.search(search):
+            items = self.paginate_queryset(self.queryset.filter(owner_user=user).filter(model_name__icontains=search))
+        else: items = self.paginate_queryset(self.queryset.filter(owner_user=user))
+
+        serializer = self.serializer_class(items,many=True)
+        return self.get_paginated_response(serializer.data)
 
 
 
@@ -240,52 +239,48 @@ class Profile(APIView):
     
     def get(self,request:str,*args,**kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
-        if token is not None:
-            user = token.user
-            user_data = {
-                'username':user.username,
-                'first_name':user.first_name,
-                'last_name':user.last_name,
-                'email':user.email,
-                'phone':user.profile.phone,
-                'created_date':user.profile.created_date,
-                'updated_date':user.profile.updated_date,
-                'image':user.profile.image,
-                'address':user.profile.address
-            }
-            user_data = self.serializer_class(user_data)
-            return Response(data=user_data.data,status=status.HTTP_200_OK)
-        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
+        user = token.user
+        user_data = {
+            'username':user.username,
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+            'email':user.email,
+            'phone':user.profile.phone,
+            'created_date':user.profile.created_date,
+            'updated_date':user.profile.updated_date,
+            'image':user.profile.image,
+            'address':user.profile.address
+        }
+        user_data = self.serializer_class(user_data)
+        return Response(data=user_data.data,status=status.HTTP_200_OK)
+        
 
     def put(self,request:str,*args, **kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
-        if token is not None:
-            user = token.user
-            user_s = self.serializer_class(instance=user,data=request.data)
-            if user_s.is_valid():
-                user_s.save()
-                token.delete()
-                subject = 'ProC0d3 Api Actualizacion de usuario de usuario' 
-                # pendiente a cambios en la dirección de retorno (espera por front end)
-                message = render_to_string('email/email_profile_api.html',{
-                    'domain': get_current_site(request),
-                    'user': user.username,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': default_token_generator.make_token(user),
-                    'protocol': request.scheme,
-                })
-                sendEmail(subject,message,user.email,user.username)
-                return Response({'message':'Profile updated'},status=status.HTTP_202_ACCEPTED) 
-            return Response({'error':user_s.errors},status=status.HTTP_406_NOT_ACCEPTABLE)   
-        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
+        user = token.user
+        user_s = self.serializer_class(instance=user,data=request.data)
+        if user_s.is_valid():
+            user_s.save()
+            token.delete()
+            subject = 'ProC0d3 Api Actualizacion de usuario de usuario' 
+            # pendiente a cambios en la dirección de retorno (espera por front end)
+            message = render_to_string('email/email_profile_api.html',{
+                'domain': get_current_site(request),
+                'user': user.username,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user),
+                'protocol': request.scheme,
+            })
+            sendEmail(subject,message,user.email,user.username)
+            return Response({'message':'Profile updated'},status=status.HTTP_202_ACCEPTED) 
+        return Response({'error':user_s.errors},status=status.HTTP_406_NOT_ACCEPTABLE)   
+        
     
     def delete(self,request:str,*args, **kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
-        if token is not None:
-            user = token.user
-            self.queryset.filter(username=user.username).delete()
-            return Response({'message':'User deleted!'},status=status.HTTP_202_ACCEPTED)
-        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
+        user = token.user
+        self.queryset.filter(username=user.username).delete()
+        return Response({'message':'User deleted!'},status=status.HTTP_202_ACCEPTED)
 
 
 
@@ -296,25 +291,24 @@ class ChangePassword(APIView):
 
     def put(self,request:str,*args, **kwargs) -> Response:
         token = Token.objects.get(key=request.auth)
-        if token is not None:
-            new_user = token.user
-            data = self.serializer_class(instance=new_user,data=request.data)
-            if data.is_valid():
-                data.save()
-                token.delete()
-                subject = 'ProC0d3 Api Registro de usuario' 
-                # pendiente a cambios en la dirección de retorno (espera por front end)
-                message = render_to_string('email/email_password_api.html',{
-                    'domain': get_current_site(request),
-                    'user': new_user.username,
-                    'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
-                    'token': default_token_generator.make_token(new_user),
-                    'protocol': request.scheme,
-                })
-                sendEmail(subject,message,new_user.email,new_user.username)
-                return Response({'message':'Accepted'},status=status.HTTP_200_OK)
-            return Response({'message':'Invalid data'},status=status.HTTP_406_NOT_ACCEPTABLE)
-        return Response({'message':'Not token'},status=status.HTTP_401_UNAUTHORIZED)
+        new_user = token.user
+        data = self.serializer_class(instance=new_user,data=request.data)
+        if data.is_valid():
+            data.save()
+            token.delete()
+            subject = 'ProC0d3 Api Registro de usuario' 
+            # pendiente a cambios en la dirección de retorno (espera por front end)
+            message = render_to_string('email/email_password_api.html',{
+                'domain': get_current_site(request),
+                'user': new_user.username,
+                'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
+                'token': default_token_generator.make_token(new_user),
+                'protocol': request.scheme,
+            })
+            sendEmail(subject,message,new_user.email,new_user.username)
+            return Response({'message':'Accepted'},status=status.HTTP_200_OK)
+        return Response({'message':'Invalid data'},status=status.HTTP_406_NOT_ACCEPTABLE)
+        
 
 
 # Profile Changed password (Profile) pendiente
@@ -348,7 +342,7 @@ class RestorePassword(APIView):
 
     def post(self,request:str,*args, **kwargs) -> Response:
         email = request.data['email'] # comprobar dato
-        if email is not None:
+        if email:
             user = self.queryset.filter(email=email).first()
             if user is not None:
                 data = self.serializer_class(instance=user,data=request.data)

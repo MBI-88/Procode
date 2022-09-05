@@ -3,6 +3,9 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from cells.models import ShopCellModel,ProfileUserModel
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
 
 # Test 
 
@@ -20,10 +23,9 @@ class UserApiTestCase(APITestCase):
             last_name='Login',email='testlogin2@example.com',
             password='12345'
         )
-
-        
+       
         self.user2_token,_ = Token.objects.get_or_create(user=self.user2)
-        
+         
         ProfileUserModel.objects.create(user=self.user,phone='56364624')
         ProfileUserModel.objects.create(user=self.user2,phone='53634324')
         
@@ -54,7 +56,7 @@ class UserApiTestCase(APITestCase):
         self.assertEqual(response.status_code,status.HTTP_409_CONFLICT)
  
 #*********************************** Test Logout **************************************************************
-    def test_logout(self) -> None:
+    def test_logout_get(self) -> None:
         user = User.objects.create_user(
             username='TestLogin3',first_name='Test',
             last_name='Login',email='testlogin3@example.com',
@@ -65,7 +67,7 @@ class UserApiTestCase(APITestCase):
         response = self.client_auth.get('/api/logout/')
         self.assertEqual(response.status_code,status.HTTP_200_OK)
     
-    def test_logout_fail(self) -> None:
+    def test_logout_get_fail(self) -> None:
         response = self.client.get('/api/logout/')
         self.assertEqual(response.status_code,status.HTTP_403_FORBIDDEN)
 
@@ -139,3 +141,100 @@ class UserApiTestCase(APITestCase):
         self.assertEqual(response.status_code,status.HTTP_401_UNAUTHORIZED)
 
 #************************************ Test Show Item *************************************************************
+    def test_showitemprofile_get(self) -> None:
+        self.client_auth.credentials(HTTP_AUTHORIZATION='Token ' + self.user2_token.key)
+        response = self.client_auth.get('/api/profile/show-items/?page=1&search='+self.item2.model_name)
+        self.assertEqual(response.status_code,status.HTTP_200_OK)
+    
+    def test_showitemprofile_get_fail(self) -> None:
+        self.client_auth.credentials(HTTP_AUTHORIZATION='Token ' )
+        response = self.client_auth.get('/api/profile/show-items/?page=1&search='+self.item2.model_name)
+        self.assertEqual(response.status_code,status.HTTP_401_UNAUTHORIZED)
+
+#************************************* Test Profile ****************************************************************
+    def test_profile_get(self) -> None:
+        self.client_auth.credentials(HTTP_AUTHORIZATION='Token ' + self.user2_token.key)
+        response = self.client_auth.get('/api/profile/')
+        self.assertEqual(response.status_code,status.HTTP_200_OK)
+    
+    def test_profile_put(self) -> None:
+        self.client_auth.credentials(HTTP_AUTHORIZATION='Token ' + self.user2_token.key)
+        response = self.client_auth.put('/api/profile/',data={
+            'username':'UserAPI2new','first_name':'UserAPI2','last_name':'new',
+            'email':'userapi2new@example.com','phone':'53634234','image':'','address':'User api 2 new'
+        })
+        self.assertEqual(response.status_code,status.HTTP_202_ACCEPTED)
+    
+    def test_profile_delete(self) -> None:
+        self.client_auth.credentials(HTTP_AUTHORIZATION='Token ' + self.user2_token.key)
+        response = self.client_auth.delete('/api/profile/')
+        self.assertEqual(response.status_code,status.HTTP_202_ACCEPTED)
+    
+    def test_profile_get_fail(self) -> None:
+        response = self.client.get('/api/profile/')
+        self.assertEqual(response.status_code,status.HTTP_403_FORBIDDEN)
+    
+    def test_profile_put_fail(self) -> None:
+        self.client_auth.credentials(HTTP_AUTHORIZATION='Token 8d878dfd9fd7f9d7f9d7ffde')
+        response = self.client_auth.get('/api/profile/',data={
+            'username':'UserAPI2new','first_name':'UserAPI2','last_name':'new',
+            'email':'userapi2new@example.com','phone':'53634234','image':'','address':'User api 2 new'
+        })
+        self.assertEqual(response.status_code,status.HTTP_403_FORBIDDEN)
+    
+    def test_profile_delete_fail(self) -> None:
+        self.client_auth.credentials(HTTP_AUTHORIZATION='Token ')
+        response = self.client_auth.delete('/api/profile/')
+        self.assertEqual(response.status_code,status.HTTP_403_FORBIDDEN)
+
+#*************************************** Test Change Password ****************************************************
+    def test_changepassword_put(self) -> None:
+        self.client_auth.credentials(HTTP_AUTHORIZATION='Token ' + self.user2_token.key)
+        response = self.client_auth.put('/api/profile/change-password/',data={
+            'currentpassword':'12345','newpassword':'password01','confirmpassword':'password01'
+        })
+        self.assertEqual(response.status_code,status.HTTP_200_OK)
+    
+    def test_changepassword_put_fail(self) -> None:
+        self.client_auth.credentials(HTTP_AUTHORIZATION='Token ' + self.user2_token.key)
+        response = self.client_auth.put('/api/profile/change-password/',data={
+            'currentpassword':'12345','newpassword':'password02','confirmpassword':'password01'
+        })
+        self.assertEqual(response.status_code,status.HTTP_406_NOT_ACCEPTABLE)
+    
+    def test_changepassword_put_fail2(self) -> None:
+        self.client_auth.credentials(HTTP_AUTHORIZATION='Token ' + self.user2_token.key)
+        response = self.client_auth.put('/api/profile/change-password/',data={
+            'currentpassword':'nada456','newpassword':'password02','confirmpassword':'password02'
+        })
+        self.assertEqual(response.status_code,status.HTTP_400_BAD_REQUEST)
+
+#********************************************* Test Restore Password *************************************************
+    def test_restorepassword_post(self) -> None:
+        response = self.client.post('/api/restore-password/',data={
+            'email':self.user.email
+        })
+        self.assertEqual(response.status_code,status.HTTP_202_ACCEPTED)
+    
+    def test_restorepassword_post_fail(self) -> None:
+        response = self.client.post('/api/restore-password/',data={
+            'email':'emptyuser@example.com'
+        })
+        self.assertEqual(response.status_code,status.HTTP_404_NOT_FOUND)
+    
+    def test_restorepassword_post_fail2(self) -> None:
+        response = self.client.post('/api/restore-password/',data={
+            'email':''
+        })
+        self.assertEqual(response.status_code,status.HTTP_406_NOT_ACCEPTABLE)
+
+#****************************************** Test Token link *********************************************************
+    def test_tokenlink_get(self) -> None:
+        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+        token = default_token_generator.make_token(self.user)
+        response = self.client.get('/api/profile/changed-password/'+uid+'/'+token+'/')
+        self.assertEqual(response.status_code,status.HTTP_202_ACCEPTED)
+    
+    def test_tokenlink_get_fail(self) -> None:
+        response = self.client.get('/api/profile/changed-password/56ff6drtr789rtdf/64fdfdfe6/')
+        self.assertEqual(response.status_code,status.HTTP_404_NOT_FOUND)
