@@ -1,6 +1,8 @@
 # dependencies
 .vscode/*
 .env
+cells/tests/*
+
 
 
 
