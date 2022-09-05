@@ -2,6 +2,9 @@
 
 # dependencies
 cells/__pycache__/*
+cells/tests/__pycache__/*
+cells/api/__pycache__/*
+cells/migrations/__pycache__/*
 .vscode
 Procode/__pycache__/*
 
