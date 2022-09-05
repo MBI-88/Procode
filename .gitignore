@@ -2,6 +2,8 @@
 .vscode/*
 .env
 cells/tests/*
+Procode/develop.db
+CoverageStatus/*
 
 
 
