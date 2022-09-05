@@ -1,0 +1,10 @@
+<address>
+    <h2>ProC0d3.Administración</h2>
+    <h3>{{ user }}, hizo petición de restablecimiento de credenciales</h3> <br>
+    <h4>Cambie la clave enviada una vez que tenga acceso a su perfil</h4> <br>
+    <h5>Clave: {{password}} </h5> <br>
+    <h4>Para completar este proceso debe hacer click en este enlace:
+       <a href="{{ protocol }}://{{ domain }}{% url 'cells_api:token_link_api' uidb64=uid token=token %}">Enlace</a>
+    </h4> <br>
+    <h5>Copyright © 2022 ProC0d3|Team</h5>
+</address>

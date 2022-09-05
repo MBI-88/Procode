@@ -8,9 +8,10 @@
   <link rel="shortcut icon" href=" {% static 'img/logo/logoproc0d3.ico' %}  " type="image/x-icon">
   <link rel="stylesheet" href=" {% static 'procodecss/bootstrap.min.css' %} ">
   <link rel="stylesheet" href=" {% static 'procodecss/main.css' %} ">
-  <title>ProC0d3 {% block title %}Sitio{% endblock title %}</title>
+  <title>ProC0d3 {% block title %}Comercio{% endblock title %}</title>
 </head>
 <body>
+  <!--Index-->
   <!--Modal-->
   <div class="modal fade" id="modalblock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable">
@@ -124,9 +125,20 @@
           </div>
       </div>
   </nav>
-
-  {% block content %}
-      <!--Presentation ProC0d3-->
+  
+{% block content %}
+    {% if messages %}
+      {% for mess in messages %}
+          <div class="alert alert-{{mess.tags|lower}} alert-dismissible fade show box-alert-transition" role="alert">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+              </svg>
+              {{ mess }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      {% endfor %}
+    {% endif %}
+      <!--ProC0d3 presentation-->
       <div class="row row-cols-lg-2  row-cols-g-2 row-cols-md-2 row-cols-sm-1 d-sm-block d-lg-flex d-md-flex">
         <div class="col-lg-5 col-g-5 col-sm-1  text-center">
             <svg viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg" class="img-fluid rounded w-75 procode-pres1" fill="currentColor" width="350" height="350" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -138,7 +150,7 @@
         </div>
       </div>
 
-      <!--Imagenes intermedias-->
+      <!--Images-->
       <div class="middle-bg-1" id="block-1" onmouseover=animationOne(event)>
         <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1">
           <div class="col-lg-5 col-g-5 col-sm-1 text-center">

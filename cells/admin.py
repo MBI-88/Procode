@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import ShopingCellModel,ProfileUserModel
+from .models import ShopCellModel,ProfileUserModel
 
 admin.site.site_header = 'ProC0d3 Admin Site'
 admin.site.index_title = 'ProC0d3 admin'
 
 # Register your models here.
 
-@admin.register(ShopingCellModel)
+@admin.register(ShopCellModel)
 class ShopingCellAdmin(admin.ModelAdmin):
     list_display = ['model_name','created_date','price','updated_date','slug']
     list_filter = ['updated_date']

@@ -54,7 +54,19 @@ function itemdetail(event){
        pk =  document.getElementById(event.target.id).dataset.pk
        
     }
-    goGet('../shoping/'+pk+'/');
+    goGet('../shopping/'+pk+'/');
+}
+
+
+function changepassword(event) {
+    document.getElementById('modaltitle').innerHTML = 'Cambio de clave'
+    goGet('../register/changepassword/')
+
+}
+
+function restorepassword(event) {
+    document.getElementById('modaltitle').innerHTML = 'Restablecimiento de Clave'
+    goGet('../restore/password/')
 }
 
 
