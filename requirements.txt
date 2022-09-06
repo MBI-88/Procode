@@ -29,7 +29,6 @@ django-taggit==3.0.0
 django-widget-tweaks==1.4.12
 djangorestframework==3.13.1
 easy-thumbnails==2.8.3
-Faker==14.0.0
 filelock==3.8.0
 hiredis==2.0.0
 hyperlink==21.0.0
