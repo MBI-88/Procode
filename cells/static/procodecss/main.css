@@ -10,17 +10,14 @@
 }
 
 
-.body-bg {
-     background: rgba(236, 236, 240, 0.868);
 
-}
 
 .footer-bg {
      background-color: #215f49;
 }
 
 .navbar-bg {
-     background-color: #101010;
+     background-color: #215f49;
 }
 
 .middle-bg-1 {
@@ -29,63 +26,50 @@
 }
 
 .middle-bg-2 {
+     z-index: 0;
      position: relative;
-     background: url('../img/img_presentation/havana-2774928_1920.jpg') 100rem center;
+     background: url('../img/img_presentation/intro-bg.jpg') 100rem ;
      height: 20rem;
 
 
 }
 
 .text-middle-2 {
+     z-index: -1;
      position: relative;
-     top: 0%;
-     animation: prosmiddle2 1s cubic-bezier(0.47, 0, 0.745, 0.715);
+     bottom: 0%;
+     animation: prosmiddle2 1.5s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 @keyframes prosmiddle2 {
      from {
-          top: -100%;
+          bottom: -50%;
      }
      to {
-          top: 1rem;
+          bottom: 1rem;
      }
 }
 
-
 .procode-pres1 {
+     z-index: -1;
      position: relative;
-     left: 0%;
-     animation: prosliding1 1s cubic-bezier(0.47, 0, 0.745, 0.715);
+     bottom: 0%;
+     animation: prosliding1 1.2s cubic-bezier(0.47, 0, 0.745, 0.715);
 
 }
 @keyframes prosliding1 {
      from {
-          left: -100%;
+          bottom: -100%;
      }
      to {
-          left: 1rem;
+          bottom: 1rem;
      }
      
-}
-
-.procode-pres2 {
-     right: 0%;
-     position: relative;
-     animation: prosliding2 1s cubic-bezier(0.47, 0, 0.745, 0.715);
-
-}
-@keyframes prosliding2 {
-     from {
-          right: -100%;
-     }
-     to {
-          right: 1rem;
-     }
 }
 
 .procode-pres3 {
      position: relative;
      left: 0%;
-     animation: prosliding3 1s cubic-bezier(0.47, 0, 0.745, 0.715);
+     animation: prosliding3 1.8s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 @keyframes prosliding3 {
      from {
@@ -97,25 +81,10 @@
      
 }
 
-.procode-pres4 {
-     position: relative;
-     right: 0%;
-     animation: prosliding4 1s cubic-bezier(0.47, 0, 0.745, 0.715);
-}
-@keyframes prosliding4 {
-     from {
-          right: -100%;
-     }
-     to {
-          right: 1rem;
-     }
-}
-
-
 .procode-pres5 {
      left: 0%;
      position: relative;
-     animation: prosliding5 1s cubic-bezier(0.47, 0, 0.745, 0.715);
+     animation: prosliding5 1.7s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 @keyframes prosliding5 {
      from {
@@ -128,9 +97,9 @@
 }
 
 .procode-pres6 {
-     position: relative;
      right: 0%;
-     animation: prosliding6 1s cubic-bezier(0.47, 0, 0.745, 0.715);
+     position: relative;
+     animation: prosliding6 1.7s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 @keyframes prosliding6 {
      from {
