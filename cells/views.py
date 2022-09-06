@@ -29,7 +29,6 @@ def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> Non
 
 # **************************************** Function Views ************************************************
 
-# Index
 def index(request:str) -> HttpResponse:
     """
     Index view 
@@ -58,6 +57,17 @@ def who(request:str) -> HttpResponse:
     """
     return render(request,'dashboard/cell_who.html')
 
+def page_400_bad_request(request:str,exception:object,template_name='errors/400.html') -> HttpResponse:
+    return render(request,template_name)
+
+def page_403_not_acces(request:str,exception:object,template_name='errors/403.html') -> HttpResponse:
+    return render(request,template_name)
+
+def page_404_not_found(request:str,exception:object,template_name='errors/404.html') -> HttpResponse:
+    return render(request,template_name)
+
+def page_500_error(request:str,template_name='errors/500.html') -> HttpResponse:
+    return render(request,template_name)
 
 # ********************************************* Login View ***********************************************
 
