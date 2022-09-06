@@ -22,6 +22,7 @@ import re
 
 # Send Email
 def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> None:
+<<<<<<< HEAD
     """Send email, send an email to user en case of changes in your account
 
     Args:
@@ -30,6 +31,8 @@ def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> Non
         recipient_list (str): recipient
         name_thred (str): name of the thred (It uses username)
     """
+=======
+>>>>>>> 29e02d4 (set send email)
     thred = Thread(target=send_mail,args=[subject,message,'procode@gmail.com',
                     [recipient_list],True],name=name_thred)
     thred.start()
