@@ -9,15 +9,22 @@
      transform: scale(1.05);
 }
 
-
-
-
 .footer-bg {
      background-color: #215f49;
 }
 
 .navbar-bg {
      background-color: #215f49;
+     width: 100%;
+     position: fixed;
+     z-index: 5;
+     
+}
+
+.navbar-onscroll {
+     width: 100%;
+     position: fixed;
+     z-index: 5;
 }
 
 .middle-bg-1 {
