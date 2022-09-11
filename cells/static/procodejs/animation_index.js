@@ -1,20 +1,31 @@
 'use strict'
 
 const dict = {
-    'block-1': document.getElementById('block-1').offsetTop,
+    'block-1': document.getElementById('mainSlider').offsetTop,
     'block-2': document.getElementById('block-2').offsetTop,
     'middle-block': document.getElementById('middle-block').offsetTop,
 }
-function animationOne(){ 
-    const element4 = document.getElementById('img-inter1')
-    element4.hidden = false
-    element4.className += ' procode-pres3'
+const flag = {
+    'flag-1': false,
+    'flag-2': false,
+    'flag-3': false,
+}
+const element4 = document.getElementById('img-inter1')
+const stringClass = 'image-carousel img-fluid rounded-pill w-75 h-75'
+
+function animationOne() {
+    for (let i = 0; i < element4.children.length; i++) {
+        const child = element4.children[i].children[0]
+        child.hidden = false
+        child.className += ' procode-pres3'
+    }
+
     const element3 = document.getElementById('text-inter1')
     element3.hidden = false
     element3.className += ' procode-pres3'
-    
+
 }
-function animationTwo(){
+function animationTwo() {
     const element3 = document.getElementById('text-inter2')
     element3.hidden = false
     element3.className += ' procode-pres5'
@@ -22,21 +33,44 @@ function animationTwo(){
     element4.hidden = false
     element4.className += ' procode-pres6'
 }
-function animationThree(){
+function animationThree() {
     const element = document.getElementById('text-bg-2')
     element.hidden = false
     element.className += ' text-middle-2'
 
 }
-window.addEventListener('scroll',e => {
-   if (dict["block-1"] - 500 < document.documentElement.scrollTop){
-    animationOne()
-   }
-   if (dict["block-2"] - 500 < document.documentElement.scrollTop){
-    animationTwo()
-   }
-   if (dict["middle-block"] - 700 < document.documentElement.scrollTop){
-    animationThree()
-   }
+
+
+const handleScroll = () => {
+    if (dict["block-1"] - 500 < document.documentElement.scrollTop && !flag['flag-1']) {
+        animationOne(flag['flag-1'])
+        flag['flag-1'] = true
+        for (let i = 0; i < element4.children.length; i++) {
+            const child = element4.children[i].children[0]
+            child.className = stringClass
+        }
+    }
+    if (dict["block-2"] - 500 < document.documentElement.scrollTop && !flag['flag-2']) {
+        animationTwo(flag['flag-2'])
+        flag['flag-2'] = true
+    }
+    if (dict["middle-block"] - 700 < document.documentElement.scrollTop && !flag['flag-3']) {
+        animationThree(flag['flag-3'])
+        flag['flag-3'] = true
+    }
+    if (flag['flag-1'] && flag['flag-2'] && flag['flag-3']) {
+        window.removeEventListener('scroll', handleScroll,false)
+    }
+}
+
+window.addEventListener('scroll', handleScroll)
+
+window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar')
+    if (navbar.offsetTop < document.documentElement.scrollTop) {
+        navbar.className = 'navbar navbar-expand-lg navbar-light navbar-onscroll'
+    }else{
+        navbar.className = 'navbar navbar-expand-lg navbar-light navbar-bg'
+    }
 })
 

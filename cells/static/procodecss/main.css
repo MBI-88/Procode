@@ -1,11 +1,52 @@
 /* Index */
-.zoon img  {
-     border-radius: 2px ;
+@font-face {
+     font-family: Inter;
+     font-weight: 100 900;
+     font-style: 0deg 10deg;
+     src: url('../fonts/Inter.var.woff2') format('woff2');
+}
+
+@font-face {
+     font-family: "Inter";
+     font-weight: 400;
+     font-display: 'swap';
+     font-style: normal;
+     src: url('../fonts/Inter-Regular.woff2') format('woff2') url('../fonts/Inter-Regular.woff') format('woff');
+}
+
+* {
+     font-family: Inter, sans-serif;
+}
+
+.procode-background {
+     z-index: -2;
+     background: url('../img/img_presentation/ecommerce-3546296.jpg') 99% no-repeat;
+     background-attachment: fixed;
+}
+
+.procode-title {
+     font-weight: 500;
+     font-family: 'Gill Sans';
+     font-style: 0 45;
+     font-size: 5rem;
+     color: hsl(300, 25%, 98%);
+     padding: 10% 0% 2% 0%;
+     
+}
+@media screen and (max-width: 720px) {
+     .procode-title {
+          font-size: 2.5rem;
+          padding-top: 40%;
+     }
+}
+
+.zoon img {
+     border-radius: 2px;
      overflow: hidden;
      transition: all ease-in-out 0.2s;
 }
- 
-.zoon :hover{
+
+.zoon :hover {
      transform: scale(1.05);
 }
 
@@ -14,28 +55,29 @@
 }
 
 .navbar-bg {
-     background-color: #215f49;
+     background: white;
      width: 100%;
      position: fixed;
      z-index: 5;
-     
+
 }
 
 .navbar-onscroll {
      width: 100%;
      position: fixed;
      z-index: 5;
+     background-color: transparent;
+     color: #f27405;
 }
 
 .middle-bg-1 {
-     background-color:#f27405;
-     
+     background-color: #f27405;
 }
 
 .middle-bg-2 {
-     z-index: 0;
-     position: relative;
-     background: url('../img/img_presentation/intro-bg.jpg') 100rem ;
+     z-index: -2;
+     background: url('../img/img_presentation/intro-bg.jpg') 100rem;
+     background-attachment: fixed;
      height: 20rem;
 
 
@@ -43,14 +85,15 @@
 
 .text-middle-2 {
      z-index: -1;
-     position: relative;
      bottom: 0%;
-     animation: prosmiddle2 1.5s cubic-bezier(0.47, 0, 0.745, 0.715);
+     animation: prosmiddle2 1.9s ease-in-out;
 }
+
 @keyframes prosmiddle2 {
      from {
           bottom: -50%;
      }
+
      to {
           bottom: 1rem;
      }
@@ -63,14 +106,16 @@
      animation: prosliding1 1.2s cubic-bezier(0.47, 0, 0.745, 0.715);
 
 }
+
 @keyframes prosliding1 {
      from {
           bottom: -100%;
      }
+
      to {
           bottom: 1rem;
      }
-     
+
 }
 
 .procode-pres3 {
@@ -78,64 +123,68 @@
      left: 0%;
      animation: prosliding3 1.8s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
+
 @keyframes prosliding3 {
      from {
           left: -100%;
      }
+
      to {
           left: 1rem;
      }
-     
+
 }
 
 .procode-pres5 {
      left: 0%;
      position: relative;
-     animation: prosliding5 1.7s cubic-bezier(0.47, 0, 0.745, 0.715);
+     animation: prosliding5 1.5s ease-out;
 }
+
 @keyframes prosliding5 {
      from {
           left: -100%;
      }
+
      to {
           left: 1rem;
      }
-     
+
 }
 
 .procode-pres6 {
      right: 0%;
      position: relative;
-     animation: prosliding6 1.7s cubic-bezier(0.47, 0, 0.745, 0.715);
+     animation: prosliding6 1.5s ease-out;
 }
+
 @keyframes prosliding6 {
      from {
           right: -100%;
      }
+
      to {
           right: 1rem;
      }
-     
+
 }
-
-
 
 
 /* Profile */
 
 .card-bg {
-     background:#4829b2;
+     background: #4829b2;
      border-radius: 3% 3% 0 0;
-     
+
 }
 
-#items-ajax{
+#items-ajax {
      border-radius: 5%;
      margin: solid 5%;
-     
+
 }
 
-.bg-profile{
+.bg-profile {
      background: #edf2f9;
 }
 
@@ -150,32 +199,33 @@
      animation: transLeft 2s cubic-bezier(0.165, 0.84, 0.44, 1);
 
 }
+
 @keyframes transLeft {
      from {
-          
+
           left: -100%;
      }
+
      to {
-          
+
           left: 1rem;
      }
-     
+
 }
 
 
 /* Shoping */
 
 .item-block {
-     overflow:scroll;
+     overflow: scroll;
      border: solid 5%;
      border-radius: 5px;
-     background:#c1d1e894;
+     background: #c1d1e894;
      height: 50rem;
 }
+
 .image-carousel {
-     height: 40rem;
-     width: 100rem;
-     image-resolution: from-image 300dpi;
+     image-resolution: from-image 100dpi;
      border-radius: 1%;
 }
 
@@ -185,8 +235,8 @@
 .whoare {
      background: url('../img/img_presentation/havana-4033111.jpg') 100rem center;
      position: relative;
-     
-     
+
+
 }
 
 .user {
@@ -198,14 +248,16 @@
      animation: usersliding 1s cubic-bezier(0.47, 0, 0.745, 0.715);
 
 }
+
 @keyframes usersliding {
      from {
           left: -100%;
      }
+
      to {
           left: 1rem;
      }
-     
+
 }
 
 
@@ -214,20 +266,22 @@
 .contact-user {
      height: 50em;
      position: relative;
-     background:#edf2f9;
+     background: #edf2f9;
      border-radius: 1%;
      margin: 2%;
      bottom: 0%;
      animation: contactsliding 1s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
+
 @keyframes contactsliding {
      from {
           bottom: -100%;
      }
+
      to {
           bottom: 1rem;
      }
-     
+
 }
 
 /* Info */
@@ -235,17 +289,19 @@
 .info {
      background: #c1d1e894;
      position: relative;
-     margin:8%;
+     margin: 8%;
      border-radius: 1%;
      right: 0%;
      animation: infosliding 1s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
+
 @keyframes infosliding {
      from {
           right: -100%;
      }
+
      to {
           right: 1rem;
      }
-     
+
 }
