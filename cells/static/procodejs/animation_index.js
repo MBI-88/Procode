@@ -17,12 +17,12 @@ function animationOne() {
     for (let i = 0; i < element4.children.length; i++) {
         const child = element4.children[i].children[0]
         child.hidden = false
-        child.className += ' procode-pres3'
+        child.classList.add('procode-pres3')
     }
 
     const element3 = document.getElementById('text-inter1')
     element3.hidden = false
-    element3.className += ' procode-pres3'
+    element3.classList.add('procode-pres3')
 
 }
 function animationTwo() {
@@ -31,12 +31,12 @@ function animationTwo() {
     element3.className += ' procode-pres5'
     const element4 = document.getElementById('img-inter2')
     element4.hidden = false
-    element4.className += ' procode-pres6'
+    element4.classList.add('procode-pres6')
 }
 function animationThree() {
     const element = document.getElementById('text-bg-2')
     element.hidden = false
-    element.className += ' text-middle-2'
+    element.classList.add('text-middle-2')
 
 }
 

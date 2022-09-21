@@ -19,9 +19,9 @@
 }
 
 .procode-background {
-     z-index: -2;
-     background: url('../img/img_presentation/ecommerce-3546296.jpg') 99% no-repeat;
-     background-attachment: fixed;
+     z-index: 0;
+     background: url('../img/img_presentation/ecommerce-3546296.jpg')  no-repeat center;
+
 }
 
 .procode-title {
@@ -31,13 +31,15 @@
      font-size: 5rem;
      color: hsl(300, 25%, 98%);
      padding: 10% 0% 2% 0%;
-     
+
 }
+
 @media screen and (max-width: 720px) {
      .procode-title {
           font-size: 2.5rem;
           padding-top: 40%;
      }
+      
 }
 
 .zoon img {
@@ -76,44 +78,42 @@
 
 .middle-bg-2 {
      z-index: -2;
-     background: url('../img/img_presentation/intro-bg.jpg') 100rem;
+     background: url('../img/img_presentation/intro-bg.jpg') no-repeat center;
      background-attachment: fixed;
      height: 20rem;
-
-
 }
 
 .text-middle-2 {
      z-index: -1;
-     bottom: 0%;
-     animation: prosmiddle2 1.9s ease-in-out;
+     animation: prosmiddle2 ease 1.9s;
+     animation-iteration-count: 1;
+     animation-fill-mode: forwards;
 }
 
 @keyframes prosmiddle2 {
-     from {
-          bottom: -50%;
+     0% {
+          opacity: 0;
      }
 
-     to {
-          bottom: 1rem;
+     100% {
+          opacity: 1;
      }
 }
 
 .procode-pres1 {
-     z-index: -1;
-     position: relative;
-     bottom: 0%;
-     animation: prosliding1 1.2s cubic-bezier(0.47, 0, 0.745, 0.715);
+     z-index: 0;
+     animation: appearTitle  ease 5s;
+     animation-iteration-count: 1;
+     animation-fill-mode: forwards;
 
 }
 
-@keyframes prosliding1 {
-     from {
-          bottom: -100%;
+@keyframes appearTitle {
+     0% {
+          opacity: 0;
      }
-
-     to {
-          bottom: 1rem;
+     100% {
+          opacity: 1;
      }
 
 }
@@ -121,50 +121,54 @@
 .procode-pres3 {
      position: relative;
      left: 0%;
-     animation: prosliding3 1.8s cubic-bezier(0.47, 0, 0.745, 0.715);
+     animation: prosliding3 ease 2s ;
+     animation-iteration-count: 1;
+     animation-fill-mode: forwards;
 }
 
 @keyframes prosliding3 {
-     from {
-          left: -100%;
+     0% {
+          opacity: 0;
      }
 
-     to {
-          left: 1rem;
+     100% {
+          opacity: 1;
      }
 
 }
 
 .procode-pres5 {
-     left: 0%;
      position: relative;
-     animation: prosliding5 1.5s ease-out;
+     animation: prosliding5 ease 2s;
+     animation-iteration-count: 1;
+     animation-fill-mode: forwards;
 }
 
 @keyframes prosliding5 {
-     from {
-          left: -100%;
+     0% {
+          opacity: 0;
      }
 
-     to {
-          left: 1rem;
+     100% {
+          opacity: 1;
      }
 
 }
 
 .procode-pres6 {
-     right: 0%;
      position: relative;
-     animation: prosliding6 1.5s ease-out;
+     animation: prosliding6 ease 4s;
+     animation-iteration-count: 1;
+     animation-fill-mode: forwards;
 }
 
 @keyframes prosliding6 {
-     from {
-          right: -100%;
+     0% {
+          opacity: 0;
      }
 
-     to {
-          right: 1rem;
+     100% {
+          opacity: 1;
      }
 
 }
@@ -224,11 +228,14 @@
      height: 50rem;
 }
 
-.image-carousel {
-     image-resolution: from-image 100dpi;
-     border-radius: 1%;
+.img-bg {
+     background: url('../img/img_presentation/friends-3175059_1920.jpg')  no-repeat center;
 }
 
+.element-centered {
+     display: block;
+     align-items: center;
+}
 
 /* Who we are */
 
