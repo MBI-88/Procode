@@ -41,7 +41,6 @@ function deleteitem(event) {
 
 function deleteprofile(event) {
     document.getElementById('modaltitle').innerHTML = 'Eliminar cuenta'
-
     goGet('../delete/profile/');
 }
 
@@ -72,5 +71,12 @@ function restorepassword(event) {
 
 
 
+// Navbar scroll event
+
+window.addEventListener('scroll', async () => {
+    const navbar = document.getElementById('navbar')
+    navbar.className = navbar.offsetTop < document.documentElement.scrollTop ?
+        'navbar navbar-expand-lg navbar-light navbar-onscroll' : 'navbar navbar-expand-lg navbar-light navbar-bg'
+})
 
 

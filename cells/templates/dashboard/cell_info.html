@@ -2,26 +2,30 @@
 {% block title %}Información{% endblock title %}
 
 {% block content %}
-    <!--Info-->
-    <div class="container-center text-center info">
-        <div class="container p-4" id="block-1" onmouseover=animationOne()>
-            <h3 class="bi-type-h3">Recuento</h3>
-            <p class="text-body" id="text-inter1" hidden>
-                {% lorem 3 b random %}
-            </p>
-        </div>
-        <div class="container p-4" id="block-2" onmouseover=animationTwo()>
-            <h3 class="bi-type-h3">Acuerdos</h3>
-            <p class="text-body" id="text-inter2" hidden>
-                {% lorem 3 b random %}
-            </p>
-
-        </div>
-        <div class="container p-4" id="middle-block" onmouseover=animationThree()>
-            <h3 class="bi-type-h3">Porque elegirnos</h3>
-            <p class="text-body" id="text-bg-2" hidden>
-                {% lorem 3 b random %}
-            </p>
-        </div>
+<!--Info-->
+<div style="height: 5rem;"></div>
+<div class="container-center text-center info">
+    <div class="container p-4 block-effect-1">
+        <h3 class="bi-type-h3">Recuento</h3>
+        <p class="text-body">
+            {% lorem 3 b random %}
+        </p>
     </div>
+    <div class="container p-4 block-effect-2">
+        <h3 class="bi-type-h3">Acuerdos</h3>
+        <p class="text-body">
+            {% lorem 3 b random %}
+        </p>
+
+    </div>
+    <div class="container p-4 block-effect-3">
+        <h3 class="bi-type-h3">Porque elegirnos</h3>
+        <p class="text-body">
+            {% lorem 3 b random %}
+        </p>
+    </div>
+</div>
+<div style="height: 10rem;"></div>
 {% endblock content %}
+{% block script %}
+{% endblock script %}

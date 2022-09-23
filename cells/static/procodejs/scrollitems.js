@@ -1,7 +1,8 @@
 /*Evento scroll en la tienda */
 let page = 1
 let empty_page = false
-let blocke_request = false
+let block_request = false
+document.getElementById('id-search').focus()
 
 function GetFetch(page,search){
     fetch('?page='+page+'&search='+search,{
@@ -19,21 +20,21 @@ function GetFetch(page,search){
             empty_page = true
         }
         else{
-            blocke_request = false
+            block_request = false
             document.getElementById('items-ajax').insertAdjacentHTML('beforeend',html)
         }
     })
 }
 
-function scrollInf(){
+async function scrollInf(){
     const search = new String(document.getElementById('id-search').value)
     const itemsajax = document.getElementById('items-ajax')
     const margin = itemsajax.clientHeight - window.innerHeight - 500
     let search_valid = ''
     if (search.length >= 3) {search_valid = search.toString()}
     
-    if (itemsajax.scrollHeight > margin && empty_page == false && blocke_request == false){
-        blocke_request = true
+    if (itemsajax.scrollHeight > margin && empty_page == false && block_request == false){
+        block_request = true
         page += 1
         GetFetch(page,search_valid)
         

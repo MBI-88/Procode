@@ -13,7 +13,7 @@
 </main>
 <div style="height:5rem;"></div>
 <!--Carousel-Partners-->
-<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+<div id="carouselPartners" class="carousel carousel-dark slide" data-bs-ride="carousel">
     <div class="carousel-inner text-center">
         <div class="carousel-item active" data-bs-interval="10000">
             <img src=" {% static 'img/carousel_partners/ALCATEL.jpg' %} " class="img-fluid" alt="...">
@@ -55,11 +55,11 @@
             <img src="{% static 'img/carousel_partners/ZTE.jpg' %}" class="img-fluid" alt="...">
         </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselPartners" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden" style="color:#4e4e4e ;">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselPartners" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden" style="color:#4e4e4e ;">Next</span>
     </button>
@@ -82,13 +82,38 @@
         {% include 'dashboard/items_ajax.html' %}
     </div>
 </div>
-<div style="height: 10rem;"></div>
+
+<div style="height:5rem;"></div>
+
+<!--Sponsors-->
+<div id="carouselSpnsors" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="carousel-inner text-center h-25" style="background-color:#f9f9f9 ;">
+        <div class="carousel-item active">
+            <img src=" {% static 'img/carousel_sponsors/sponsor-img1.jpg' %} " class="img-fluid" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'img/carousel_sponsors/sponsor-img2.jpg' %}" class="img-fluid" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'img/carousel_sponsors/sponsor-img3.jpg' %}" class="img-fluid" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'img/carousel_sponsors/sponsor-img4.jpg' %}" class="img-fluid" alt="...">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselSpnsors" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden" style="color:#4e4e4e ;">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselSpnsors" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden" style="color:#4e4e4e ;">Next</span>
+    </button>
+</div>
+<div style="height: 15rem;"></div>
 
 {% endblock content %}
 
-
 {% block script %}
 <script src=" {% static 'procodejs/scrollitems.js' %} "></script>
-<script src=" {% static 'procodejs/selectorGet.js' %} "></script>
-<script src=" {% static 'procodejs/selectorPost.js' %} "></script>
 {% endblock script %}

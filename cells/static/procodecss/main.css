@@ -1,26 +1,22 @@
 /* Index */
-@font-face {
-     font-family: Inter;
-     font-weight: 100 900;
-     font-style: 0deg 10deg;
-     src: url('../fonts/Inter.var.woff2') format('woff2');
+* {}
+
+body,
+html {
+     box-sizing: border-box;
+     font-family: sans-serif;
+     scroll-behavior: smooth;
 }
 
-@font-face {
-     font-family: "Inter";
-     font-weight: 400;
-     font-display: 'swap';
-     font-style: normal;
-     src: url('../fonts/Inter-Regular.woff2') format('woff2') url('../fonts/Inter-Regular.woff') format('woff');
+*::after,
+*::before {
+     box-sizing: inherit;
 }
 
-* {
-     font-family: Inter, sans-serif;
-}
 
 .procode-background {
-     z-index: 0;
-     background: url('../img/img_presentation/ecommerce-3546296.jpg')  no-repeat center;
+     background: url('../img/img_presentation/wallpaperAzul2560x1440.jpg') no-repeat center;
+     box-shadow: 0px -2px 5px whitesmoke inset;
 
 }
 
@@ -39,7 +35,7 @@
           font-size: 2.5rem;
           padding-top: 40%;
      }
-      
+
 }
 
 .zoon img {
@@ -78,9 +74,9 @@
 
 .middle-bg-2 {
      z-index: -2;
+     height: 40rem;
      background: url('../img/img_presentation/intro-bg.jpg') no-repeat center;
      background-attachment: fixed;
-     height: 20rem;
 }
 
 .text-middle-2 {
@@ -101,8 +97,7 @@
 }
 
 .procode-pres1 {
-     z-index: 0;
-     animation: appearTitle  ease 5s;
+     animation: appearTitle ease 5s;
      animation-iteration-count: 1;
      animation-fill-mode: forwards;
 
@@ -112,6 +107,7 @@
      0% {
           opacity: 0;
      }
+
      100% {
           opacity: 1;
      }
@@ -121,7 +117,7 @@
 .procode-pres3 {
      position: relative;
      left: 0%;
-     animation: prosliding3 ease 2s ;
+     animation: prosliding3 ease 2s;
      animation-iteration-count: 1;
      animation-fill-mode: forwards;
 }
@@ -229,20 +225,25 @@
 }
 
 .img-bg {
-     background: url('../img/img_presentation/friends-3175059_1920.jpg')  no-repeat center;
+     background: url('../img/img_presentation/friends-3175059_1920.jpg') no-repeat center;
 }
 
-.element-centered {
-     display: block;
-     align-items: center;
-}
+
 
 /* Who we are */
 
 .whoare {
-     background: url('../img/img_presentation/havana-4033111.jpg') 100rem center;
-     position: relative;
+     animation: effectBlur ease 1s 1;
+}
 
+@keyframes effectBlur {
+     from {
+          filter: blur(2rem);
+     }
+
+     to {
+          filter: blur(0rem);
+     }
 
 }
 
@@ -251,42 +252,48 @@
      border-radius: 1%;
      position: relative;
      margin: 5%;
-     left: 0%;
-     animation: usersliding 1s cubic-bezier(0.47, 0, 0.745, 0.715);
+     animation: usersliding ease 2s;
 
 }
 
 @keyframes usersliding {
-     from {
-          left: -100%;
+     0% {
+          opacity: 0;
+          ;
      }
 
-     to {
-          left: 1rem;
+     100% {
+          opacity: 1;
      }
 
+}
+/* Crear evento de aparicion  */
+.img-bg-who {
+     height: 40rem;
+     background: url('../img/img_presentation/venue-bg.jpg') no-repeat center;
+     background-attachment: fixed;
+     
 }
 
 
 /* Contact */
 
 .contact-user {
-     height: 50em;
+     height: 40em;
      position: relative;
-     background: #edf2f9;
+     background: url('../img/img_presentation/Contact-bg.jpg') no-repeat center;
      border-radius: 1%;
      margin: 2%;
-     bottom: 0%;
-     animation: contactsliding 1s cubic-bezier(0.47, 0, 0.745, 0.715);
+     animation: contactsliding ease 4s;
 }
 
 @keyframes contactsliding {
-     from {
-          bottom: -100%;
+     0% {
+          opacity: 0;
      }
 
-     to {
-          bottom: 1rem;
+     100% {
+          opacity: 1;
      }
 
 }
@@ -298,17 +305,61 @@
      position: relative;
      margin: 8%;
      border-radius: 1%;
-     right: 0%;
-     animation: infosliding 1s cubic-bezier(0.47, 0, 0.745, 0.715);
+     animation: infosliding ease 1s 1;
 }
 
 @keyframes infosliding {
-     from {
-          right: -100%;
+     0% {
+          opacity: 0;
      }
 
-     to {
-          right: 1rem;
+     100% {
+          opacity: 1;
+     }
+
+}
+
+.block-effect-1 {
+     animation: effect1 ease 3s 1;
+}
+
+@keyframes effect1 {
+     0% {
+          opacity: 0;
+     }
+
+     100% {
+          opacity: 1;
+     }
+
+}
+
+.block-effect-2 {
+     animation: effect2 ease 5s 1;
+}
+
+@keyframes effect2 {
+     0% {
+          opacity: 0;
+     }
+
+     100% {
+          opacity: 1;
+     }
+}
+
+.block-effect-3 {
+     animation: effect3 ease 7s 1;
+
+}
+
+@keyframes effect3 {
+     0% {
+          opacity: 0;
+     }
+
+     100% {
+          opacity: 1;
      }
 
 }

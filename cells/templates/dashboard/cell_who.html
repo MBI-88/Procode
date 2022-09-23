@@ -3,43 +3,130 @@
 {% load static %}
 
 {% block content %}
-    <!--Who are we-->
-    <div class="container-center text-center p-2 whoare">
-        <h3 class="bi-type-h3 text-white">Equipo de Pr0c0d3</h3>
-        <div class="user w-auto">
-            <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1">
-              <div class="col-lg-5 col-g-5 col-sm-1 text-center">
-                <h6 class="h6-h-100 text-white p-lg-5 pt-2">
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
-                     Debitis consectetur reprehenderit quam quis dolore consequatur, <br>
-                     labore ducimus voluptatum quae tempora eligendi illo sit aperiam <br>
-                     assumenda nisi incidunt doloremque vitae odio. <br>
-                  </p>
-                </h6>
-    
-              </div>
-              <div class="col-lg-7 col-g-5 col-sm-1 text-center  p-lg-5 p-sm-4 p-md-3 pb-2">
-                <img src=" {% static 'img/img_presentation/image-0.jpg' %} " alt="" class="img-fluid rounded-circle w-25">
-              </div>
-            </div>
+<!--Who are we-->
+<div class="row row-cols-1">
+  <div class="text-center procode-background" style="height: 30rem">
+    <h1 class="procode-title  procode-pres1">© PR0C0D3|Quienes Somos</h1>
+  </div>
+</div>
+<div style="height: 5rem;"></div>
+
+<div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1 whoare" style="height: 45rem;">
+  <div class="col-lg-7 col-g-5 col-sm-1 text-center p-lg-5 p-sm-4 p-md-3 pb-2">
+    <img src=" {% static 'img/img_presentation/Team-procode.jpg' %} " alt="" class="img-fluid rounded-circle w-75">
+  </div>
+  <div class="col-lg-5 col-g-5 col-sm-1 p-lg-5 text-center">
+    <h5 class="h5-h-100 text-dark" style="padding-top: 2rem;">
+      <p>
+        Lorem ipsum dolor sit amet consectetur, <br>
+        adipisicing elit. Earum beatae sint velit <br>
+        asperiores debitis reprehenderit consectetur facilis. <br>
+        Facere laudantium maiores debitis repudiandae similique <br>
+        quisquam nisi praesentium labore iure, quo tempora. <br>
+        asperiores debitis reprehenderit consectetur facilis. <br>
+        Facere laudantium maiores debitis repudiandae similique <br>
+        quisquam nisi praesentium labore iure, quo tempora. <br>
+        asperiores debitis reprehenderit consectetur facilis. <br>
+        Facere laudantium maiores debitis repudiandae similique <br>
+        quisquam nisi praesentium labore iure, quo tempora. <br>
+      </p>
+    </h5>
+  </div>
+</div>
+<div style="height: 5rem;"></div>
+<div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1 middle-bg-1" style="height: 23rem">
+  <div class="col-lg-5 col-g-5 col-sm-1 text-center">
+    <h5 class="h5-h-100 text-light" style="padding-top: 1rem;">
+      <p>Team</p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
+        Debitis consectetur reprehenderit quam quis dolore consequatur, <br>
+        labore ducimus voluptatum quae tempora eligendi illo sit aperiam <br>
+        Debitis consectetur reprehenderit quam quis dolore consequatur, <br>
+        labore ducimus voluptatum quae tempora eligendi illo sit aperiam <br>
+      </p>
+    </h5>
+  </div>
+  <div class="col-lg-7 col-g-5 col-sm-1 text-center  p-lg-5 p-sm-5 p-md-3 pb-3">
+    <div id="mainSlider" class="carousel slide carousel-fade pt-2 pb-2" data-bs-ride="carousel">
+      <div class="carousel-inner" id="img-inter1">
+        <div class="carousel-item active">
+          <img src=" {% static 'img/img_presentation/program-img1.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
         </div>
-        <div class="user w-auto">
-            <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1">
-              <div class="col-lg-5 col-g-5 col-sm-1 text-center">
-                <h6 class="h6-h-100 text-white p-lg-5 pt-2">
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
-                     Debitis consectetur reprehenderit quam quis dolore consequatur, <br>
-                     labore ducimus voluptatum quae tempora eligendi illo sit aperiam <br>
-                     assumenda nisi incidunt doloremque vitae odio. <br>
-                  </p>
-                </h6>
-    
-              </div>
-              <div class="col-lg-7 col-g-5 col-sm-1 text-center  p-lg-5 p-sm-4 p-md-3 pb-2">
-                <img src=" {% static 'img/img_presentation/image-0.jpg' %} " alt="" class="img-fluid rounded-circle w-25">
-              </div>
-            </div>
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/program-img2.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
         </div>
-        
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/program-img3.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
+        </div>
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/program-img4.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
+        </div>
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/program-img5.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
+        </div>
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/program-img6.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
+        </div>
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/program-img7.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
+        </div>
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/program-img8.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
+        </div>
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/program-img9.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
+        </div>
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/speakers-img1.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
+        </div>
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/speakers-img2.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
+        </div>
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/speakers-img3.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
+        </div>
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/speakers-img4.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
+        </div>
+        <div class="carousel-item">
+          <img src=" {% static 'img/img_presentation/speakers-img5.jpg' %} " class="img-fluid rounded-pill w-50 h-50"
+            alt="">
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+<div style="height: 20rem;"></div>
+<div class="container-fluid img-bg-who">
+  <div style="height: 35rem;">
+    <h5 class="h5-h-100 text-black-50 text-start " style="padding-top: 5rem;">
+      <p>
+        Lorem ipsum dolor sit amet consectetur, <br>
+        adipisicing elit. Earum beatae sint velit <br>
+        asperiores debitis reprehenderit consectetur facilis. <br>
+        Facere laudantium maiores debitis repudiandae similique <br>
+        quisquam nisi praesentium labore iure, quo tempora. <br>
+        asperiores debitis reprehenderit consectetur facilis. <br>
+        Facere laudantium maiores debitis repudiandae similique <br>
+        quisquam nisi praesentium labore iure, quo tempora. <br>
+        asperiores debitis reprehenderit consectetur facilis. <br>
+      </p>
+    </h5>
+  </div>
+</div>
+
+<div style="height: 40rem;"></div>
 {% endblock content %}
