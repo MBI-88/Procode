@@ -2,63 +2,60 @@
 
 // Commun Variables
 const dict = {
-    'block-1': document.getElementById('mainSlider').offsetTop,
+    'block-1': document.getElementById('block-1').offsetTop,
     'block-2': document.getElementById('block-2').offsetTop,
-    'middle-block': document.getElementById('middle-block').offsetTop,
+    'block-3': document.getElementById('block-3').offsetTop,
 }
 const flag = {
     'flag-1': false,
     'flag-2': false,
     'flag-3': false,
 }
-const element4 = document.getElementById('img-inter1')
+const elementCarousel = document.getElementById('img-inter1')
 const stringClass = 'image-carousel img-fluid rounded-pill w-75 h-75'
 
 // Animations
 function animationOne() {
-    for (let i = 0; i < element4.children.length; i++) {
-        const child = element4.children[i].children[0]
+    elementCarousel.children[0].children[0].className = stringClass + ' procode-pres2'
+    elementCarousel.children[0].children[0].hidden = false
+    for (let i = 1; i < elementCarousel.children.length; i++) {
+        const child = elementCarousel.children[i].children[0]
+        child.className = stringClass
         child.hidden = false
-        child.classList.add('procode-pres3')
     }
-
-    const element3 = document.getElementById('text-inter1')
-    element3.hidden = false
-    element3.classList.add('procode-pres3')
-
+    const element = document.getElementById('text-inter1')
+    element.classList.add('procode-pres2')
+    element.hidden = false
 }
 function animationTwo() {
-    const element3 = document.getElementById('text-inter2')
-    element3.hidden = false
-    element3.className += ' procode-pres5'
-    const element4 = document.getElementById('img-inter2')
-    element4.hidden = false
-    element4.classList.add('procode-pres6')
+    const element = document.getElementById('text-bg-2')
+    element.classList.add('procode-pres3')
+    element.hidden = false
 }
 function animationThree() {
-    const element = document.getElementById('text-bg-2')
+    const element = document.getElementById('text-inter2')
+    element.classList.add('procode-pres4')
     element.hidden = false
-    element.classList.add('text-middle-2')
 
+    const element2 = document.getElementById('img-inter2')
+    element2.classList.add('procode-pres4')
+    element2.hidden = false
 }
 
 // Wrappers
 
 const handleScroll = async () => {
-    if (dict["block-1"] - 500 < document.documentElement.scrollTop && !flag['flag-1']) {
-        animationOne(flag['flag-1'])
+    if (dict["block-1"] - 700 < document.documentElement.scrollTop && !flag['flag-1']) {
+        animationOne()
         flag['flag-1'] = true
-        for (let i = 0; i < element4.children.length; i++) {
-            const child = element4.children[i].children[0]
-            child.className = stringClass
-        }
     }
-    if (dict["block-2"] - 500 < document.documentElement.scrollTop && !flag['flag-2']) {
-        animationTwo(flag['flag-2'])
+    if (dict["block-2"] - 700 < document.documentElement.scrollTop && !flag['flag-2']) {
+        animationTwo()
         flag['flag-2'] = true
+        elementCarousel.children[0].children[0].classList.remove('procode-pres2')
     }
-    if (dict["middle-block"] - 700 < document.documentElement.scrollTop && !flag['flag-3']) {
-        animationThree(flag['flag-3'])
+    if (dict["block-3"] - 700 < document.documentElement.scrollTop && !flag['flag-3']) {
+        animationThree()
         flag['flag-3'] = true
     }
     if (flag['flag-1'] && flag['flag-2'] && flag['flag-3']) {

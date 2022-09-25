@@ -1,10 +1,14 @@
 /* Index */
-* {}
-
-body,
-html {
+* {
      box-sizing: border-box;
-     font-family: sans-serif;
+}
+
+html,
+body {
+     margin: 0;
+     padding: 0;
+     font-size: 16px;
+     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
      scroll-behavior: smooth;
 }
 
@@ -15,8 +19,8 @@ html {
 
 
 .procode-background {
-     background: url('../img/img_presentation/wallpaperAzul2560x1440.jpg') no-repeat center;
-     box-shadow: 0px -2px 5px whitesmoke inset;
+     background: url('../img/img_presentation/smartphone-3139219.jpg') no-repeat center;
+     box-shadow: inset 0px -2px 5px whitesmoke;
 
 }
 
@@ -79,23 +83,6 @@ html {
      background-attachment: fixed;
 }
 
-.text-middle-2 {
-     z-index: -1;
-     animation: prosmiddle2 ease 1.9s;
-     animation-iteration-count: 1;
-     animation-fill-mode: forwards;
-}
-
-@keyframes prosmiddle2 {
-     0% {
-          opacity: 0;
-     }
-
-     100% {
-          opacity: 1;
-     }
-}
-
 .procode-pres1 {
      animation: appearTitle ease 5s;
      animation-iteration-count: 1;
@@ -114,15 +101,31 @@ html {
 
 }
 
+.procode-pres2 {
+     animation: prosliding2 ease 2s;
+     animation-iteration-count: 1;
+     animation-fill-mode: forwards;
+}
+
+@keyframes prosliding2 {
+     0% {
+          filter: blur(1.5rem);
+     }
+
+     100% {
+          filter: blur(0rem);
+     }
+
+}
+
 .procode-pres3 {
-     position: relative;
-     left: 0%;
-     animation: prosliding3 ease 2s;
+     z-index: -1;
+     animation: prosmiddle3 ease 1.9s;
      animation-iteration-count: 1;
      animation-fill-mode: forwards;
 }
 
-@keyframes prosliding3 {
+@keyframes prosmiddle3 {
      0% {
           opacity: 0;
      }
@@ -130,35 +133,15 @@ html {
      100% {
           opacity: 1;
      }
-
 }
 
-.procode-pres5 {
-     position: relative;
-     animation: prosliding5 ease 2s;
+.procode-pres4 {
+     animation: prosliding4 ease 2s;
      animation-iteration-count: 1;
      animation-fill-mode: forwards;
 }
 
-@keyframes prosliding5 {
-     0% {
-          opacity: 0;
-     }
-
-     100% {
-          opacity: 1;
-     }
-
-}
-
-.procode-pres6 {
-     position: relative;
-     animation: prosliding6 ease 4s;
-     animation-iteration-count: 1;
-     animation-fill-mode: forwards;
-}
-
-@keyframes prosliding6 {
+@keyframes prosliding4 {
      0% {
           opacity: 0;
      }
@@ -267,14 +250,47 @@ html {
      }
 
 }
+
 /* Crear evento de aparicion  */
 .img-bg-who {
      height: 40rem;
      background: url('../img/img_presentation/venue-bg.jpg') no-repeat center;
      background-attachment: fixed;
-     
+
 }
 
+.text-who-apper {
+     opacity: 1;
+     animation: apperText ease 1s 1;
+
+}
+
+@keyframes apperText {
+     0% {
+          opacity: 0;
+     }
+
+     100% {
+          opacity: 1;
+     }
+
+}
+
+.text-who-hidde {
+     opacity: 0;
+     animation: hiddeText ease .2s 1;
+}
+
+@keyframes hiddeText {
+     0% {
+          opacity: 1;
+     }
+
+     100% {
+          opacity: 0;
+     }
+
+}
 
 /* Contact */
 

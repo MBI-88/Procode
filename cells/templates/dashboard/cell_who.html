@@ -9,14 +9,13 @@
     <h1 class="procode-title  procode-pres1">© PR0C0D3|Quienes Somos</h1>
   </div>
 </div>
-<div style="height: 5rem;"></div>
-
+<div style="height: 10rem;"></div>
 <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1 whoare" style="height: 45rem;">
   <div class="col-lg-7 col-g-5 col-sm-1 text-center p-lg-5 p-sm-4 p-md-3 pb-2">
     <img src=" {% static 'img/img_presentation/Team-procode.jpg' %} " alt="" class="img-fluid rounded-circle w-75">
   </div>
   <div class="col-lg-5 col-g-5 col-sm-1 p-lg-5 text-center">
-    <h5 class="h5-h-100 text-dark" style="padding-top: 2rem;">
+    <h5 class="h5-h-100 text-black-50" style="padding-top: 2rem;">
       <p>
         Lorem ipsum dolor sit amet consectetur, <br>
         adipisicing elit. Earum beatae sint velit <br>
@@ -33,7 +32,7 @@
     </h5>
   </div>
 </div>
-<div style="height: 5rem;"></div>
+<div style="height: 25rem;"></div>
 <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1 middle-bg-1" style="height: 23rem">
   <div class="col-lg-5 col-g-5 col-sm-1 text-center">
     <h5 class="h5-h-100 text-light" style="padding-top: 1rem;">
@@ -113,7 +112,7 @@
 <div class="container-fluid img-bg-who">
   <div style="height: 35rem;">
     <h5 class="h5-h-100 text-black-50 text-start " style="padding-top: 5rem;">
-      <p>
+      <p id="text-who" class="text-who-hidde">
         Lorem ipsum dolor sit amet consectetur, <br>
         adipisicing elit. Earum beatae sint velit <br>
         asperiores debitis reprehenderit consectetur facilis. <br>
@@ -130,3 +129,15 @@
 
 <div style="height: 40rem;"></div>
 {% endblock content %}
+{% block script %}
+  <script>
+    'use strict'
+    const scrollText = async () => {
+      let textBlock = document.getElementById('text-who')
+      textBlock.className = (textBlock.offsetTop - 700 < document.documentElement.scrollTop && 
+      document.documentElement.scrollTop < textBlock.offsetTop - 150) ? 'text-who-apper':'text-who-hidde'
+    }
+
+    window.addEventListener('scroll', scrollText)
+  </script>
+{% endblock script %}
