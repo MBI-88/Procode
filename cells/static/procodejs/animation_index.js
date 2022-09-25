@@ -12,15 +12,14 @@ const flag = {
     'flag-3': false,
 }
 const elementCarousel = document.getElementById('img-inter1')
-const stringClass = 'image-carousel img-fluid rounded-pill w-75 h-75'
 
 // Animations
 function animationOne() {
-    elementCarousel.children[0].children[0].className = stringClass + ' procode-pres2'
+    elementCarousel.children[0].children[0].className = 'image-carousel img-fluid rounded-pill w-75 h-75 procode-pres2'
     elementCarousel.children[0].children[0].hidden = false
     for (let i = 1; i < elementCarousel.children.length; i++) {
         const child = elementCarousel.children[i].children[0]
-        child.className = stringClass
+        child.className = 'image-carousel img-fluid rounded-pill w-75 h-75'
         child.hidden = false
     }
     const element = document.getElementById('text-inter1')
