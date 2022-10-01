@@ -1,40 +1,46 @@
 {% for item in items %}
-    <div class="col-lg-5 col-md-8 col-g-3 col-sm-6">
-        <div class="text-black">
-          <div class="container d-lg-flex d-g-flex d-md-flex d-sm-block p-4">
-            <div class="col-lg-3 col-md-8 col-sm-6">
-              <img src="/media/{{ item.image }} " class="card-img-top img-fluid p-1 rounded" alt="No existe imagen">
-            </div>
+<div class="col-lg-5 col-md-8 col-g-3 col-sm-6">
+  <div class="text-black">
+    <div class="container d-lg-flex d-g-flex d-md-flex d-sm-block p-4">
+      <div class="col-lg-3 col-md-8 col-sm-6">
+        <img src="/media/{{ item.image }} " class="card-img-top img-fluid p-1 rounded" alt="No existe imagen">
+      </div>
 
-            <div class="col-lg-0 col-md-12 col-sm-6 pb-4">
-              <div class="card-body w-75  p-sm-0 p-lg-1 p-g-1 p-md-2">
-                <h5 class="card-title"> {{ item.model_name }} </h5>
-                <p class="card-text">Actualizado: {{ item.updated_date }}</p>
-                <p class="card-text">Precio: {{ item.price }} cup</p>
-                <p class="card-text">Descripción:
-                  <div style="overflow:scroll ;height: 5em; border:1px;border-radius:5%;"> {{ item.description }}</div> 
-                </p>
-              </div>
-               <ul class="nav d-lg-flex d-g-flex d-sm-block">
-                <li class="nav-item p-2">
-                  <a href=" {% url 'cells:update_item' item.pk %} " class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                      <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-                      <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-                    </svg>
-                    Actualizar</a>
-                </li>
-                <li class="nav-item p-2">
-                  <button class="btn btn-primary" id="deleteitem-{{ item.pk }}" data-pk="{{ item.pk }}" data-bs-toggle="modal" data-bs-target="#modalblock" onclick=deleteitem(event)>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-recycle" viewBox="0 0 16 16">
-                      <path d="M9.302 1.256a1.5 1.5 0 0 0-2.604 0l-1.704 2.98a.5.5 0 0 0 .869.497l1.703-2.981a.5.5 0 0 1 .868 0l2.54 4.444-1.256-.337a.5.5 0 1 0-.26.966l2.415.647a.5.5 0 0 0 .613-.353l.647-2.415a.5.5 0 1 0-.966-.259l-.333 1.242-2.532-4.431zM2.973 7.773l-1.255.337a.5.5 0 1 1-.26-.966l2.416-.647a.5.5 0 0 1 .612.353l.647 2.415a.5.5 0 0 1-.966.259l-.333-1.242-2.545 4.454a.5.5 0 0 0 .434.748H5a.5.5 0 0 1 0 1H1.723A1.5 1.5 0 0 1 .421 12.24l2.552-4.467zm10.89 1.463a.5.5 0 1 0-.868.496l1.716 3.004a.5.5 0 0 1-.434.748h-5.57l.647-.646a.5.5 0 1 0-.708-.707l-1.5 1.5a.498.498 0 0 0 0 .707l1.5 1.5a.5.5 0 1 0 .708-.707l-.647-.647h5.57a1.5 1.5 0 0 0 1.302-2.244l-1.716-3.004z"/>
-                    </svg>
-                    Eliminar
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
+      <div class="col-lg-0 col-md-12 col-sm-6 pb-4">
+        <div class="card-body w-75  p-sm-0 p-lg-1 p-g-1 p-md-2">
+          <h5 class="card-title"> {{ item.model_name }} </h5>
+          <p class="card-text">Actualizado: {{ item.updated_date }}</p>
+          <p class="card-text">Precio: {{ item.price }} cup</p>
+          <p class="card-text">Descripción:
+          <div style="overflow:scroll ;height: 5em; border:1px;border-radius:5%;"> {{ item.description }}</div>
+          </p>
         </div>
+        <ul class="nav d-lg-flex d-g-flex d-sm-block">
+          <li class="nav-item p-2">
+            <a href=" {% url 'cells:update_item' item.pk %} " class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-gear"
+                viewBox="0 0 16 16">
+                <path
+                  d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                <path
+                  d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+              </svg>
+              Actualizar</a>
+          </li>
+          <li class="nav-item p-2">
+            <button class="btn btn-primary" id="delete-{{ item.pk }}" data-pk="{{item.pk}}" data-bs-toggle="modal"
+               data-bs-target="#modalblock">
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-recycle"
+                viewBox="0 0 16 16">
+                <path
+                  d="M9.302 1.256a1.5 1.5 0 0 0-2.604 0l-1.704 2.98a.5.5 0 0 0 .869.497l1.703-2.981a.5.5 0 0 1 .868 0l2.54 4.444-1.256-.337a.5.5 0 1 0-.26.966l2.415.647a.5.5 0 0 0 .613-.353l.647-2.415a.5.5 0 1 0-.966-.259l-.333 1.242-2.532-4.431zM2.973 7.773l-1.255.337a.5.5 0 1 1-.26-.966l2.416-.647a.5.5 0 0 1 .612.353l.647 2.415a.5.5 0 0 1-.966.259l-.333-1.242-2.545 4.454a.5.5 0 0 0 .434.748H5a.5.5 0 0 1 0 1H1.723A1.5 1.5 0 0 1 .421 12.24l2.552-4.467zm10.89 1.463a.5.5 0 1 0-.868.496l1.716 3.004a.5.5 0 0 1-.434.748h-5.57l.647-.646a.5.5 0 1 0-.708-.707l-1.5 1.5a.498.498 0 0 0 0 .707l1.5 1.5a.5.5 0 1 0 .708-.707l-.647-.647h5.57a1.5 1.5 0 0 0 1.302-2.244l-1.716-3.004z" />
+              </svg>
+              Eliminar
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
+</div>
 {% endfor %}

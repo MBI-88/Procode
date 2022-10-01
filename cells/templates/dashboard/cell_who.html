@@ -130,14 +130,16 @@
 <div style="height: 40rem;"></div>
 {% endblock content %}
 {% block script %}
-  <script>
-    'use strict'
-    const scrollText = async () => {
-      let textBlock = document.getElementById('text-who')
-      textBlock.className = (textBlock.offsetTop - 700 < document.documentElement.scrollTop && 
-      document.documentElement.scrollTop < textBlock.offsetTop - 150) ? 'text-who-apper':'text-who-hidde'
-    }
+<script src=" {% static 'procodejs/selectorGet.js' %} "></script>
+<script src=" {% static 'procodejs/selectorPost.js' %} "></script>
+<script>
+  'use strict'
+  const scrollText = async () => {
+    let textBlock = document.getElementById('text-who')
+    textBlock.className = (textBlock.offsetTop - 700 < document.documentElement.scrollTop &&
+      document.documentElement.scrollTop < textBlock.offsetTop - 150) ? 'text-who-apper' : 'text-who-hidde'
+  }
 
-    window.addEventListener('scroll', scrollText)
-  </script>
+  window.addEventListener('scroll', scrollText)
+</script>
 {% endblock script %}

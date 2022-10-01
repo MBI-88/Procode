@@ -1,4 +1,5 @@
 {% extends 'cell_index.html' %}
+{% load static %}
 {% block title %}Contactos{% endblock title %}
 
 {% block content %}
@@ -12,4 +13,6 @@
 {% endblock content %}
 
 {% block script %}
+<script src=" {% static 'procodejs/selectorGet.js' %} "></script>
+<script src=" {% static 'procodejs/selectorPost.js' %} "></script>
 {% endblock script %}

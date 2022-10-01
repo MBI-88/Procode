@@ -156,7 +156,7 @@ body {
 /* Profile */
 
 .card-bg {
-     background: #4829b2;
+     background: #0b5ed7;
      border-radius: 3% 3% 0 0;
 
 }
@@ -168,11 +168,12 @@ body {
 }
 
 .bg-profile {
-     background: #edf2f9;
+     background-image:url('../img/img_presentation/Background-Users.jpg');
+     background-position: fixed;
 }
 
 .bg-verticalsearch {
-     background: #211e4d;
+     background: #1b1384;
      border-radius: 0% 0% 3% 3%;
 }
 

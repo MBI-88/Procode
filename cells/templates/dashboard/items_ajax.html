@@ -9,8 +9,8 @@
         Precio: {{ item.price }} cup<br>
         Actualizado: {{ item.updated_date|timesince }}. <br>
     </address>
-    <button class="btn btn-primary btn-fluid" id="item-{{ item.pk }}" data-pk="{{ item.pk }}" data-bs-toggle="modal"
-        data-bs-target="#modalblock" onclick=itemdetail(event)>
+    <button class="btn btn-primary btn-fluid" id="detail-{{ item.pk }}" data-pk="{{item.pk}}" data-bs-toggle="modal"
+         data-bs-target="#modalblock">
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
             class="bi bi-info-circle-fill" viewBox="0 0 16 16">
             <path

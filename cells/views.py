@@ -22,6 +22,14 @@ import re
 
 # Send Email
 def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> None:
+    """Send email, send an email to user en case of changes in your account
+
+    Args:
+        subject (str): subject
+        message (dict): message
+        recipient_list (str): recipient
+        name_thred (str): name of the thred (It uses username)
+    """
     thred = Thread(target=send_mail,args=[subject,message,'procode@gmail.com',
                     [recipient_list],True],name=name_thred)
     thred.start()
@@ -30,30 +38,46 @@ def sendEmail(subject:str,message:dict,recipient_list:str,name_thred:str) -> Non
 # **************************************** Function Views ************************************************
 
 def index(request:str) -> HttpResponse:
-    """
-    Index view 
-    methods: request.GET
+    """Index (home)
+
+    Args:
+        request (str): HTTP request
+
+    Returns:
+        HttpResponse: HTTP response
     """
     return render(request,'cell_index.html')
 
 def contact(request:str) -> HttpResponse:
-    """
-    Contact view
-    methods: request.GET
+    """Contact (links)
+
+    Args:
+        request (str): HTTP request
+
+    Returns:
+        HttpResponse: HTTP response
     """
     return render(request,'dashboard/cell_contact.html')
 
 def info(request:str) -> HttpResponse:
-    """
-    Info view
-    methods: request.GET
+    """Information for the user
+
+    Args:
+        request (str): HTTP request
+
+    Returns:
+        HttpResponse: HTTP response
     """
     return render(request,'dashboard/cell_info.html')
 
 def who(request:str) -> HttpResponse:
-    """
-    Who view
-    methods: request.GET
+    """Who we are 
+
+    Args:
+        request (str): HTTP request
+
+    Returns:
+        HttpResponse: HTTP response
     """
     return render(request,'dashboard/cell_who.html')
 
@@ -73,10 +97,13 @@ def page_500_error(request:str,template_name='errors/500.html') -> HttpResponse:
 
 # Login (Register)
 class LoginUser(View):
-    """
-    LoginUser view
-    methods: request.GET, request.POST
-    View's son
+    """Login view 
+
+    Args:
+        View (object): View class
+
+    Returns:
+        _type_: HTTP response
     """
     template_name = 'accounts/registration/login.html'
     form_class = LoginForm
@@ -102,10 +129,13 @@ class LoginUser(View):
 
 # Register (Register)
 class Register(View):
-    """
-    RegisterUser view
-    methods: request.GET, request.POST
-    View's son
+    """Register view
+
+    Args:
+        View (object): View class
+
+    Returns:
+        _type_: HTTP response
     """
     template_name = 'accounts/registration/register.html'
     form_class = UserRegistrationForm
@@ -155,9 +185,15 @@ class Register(View):
 
 # Registration succefull  (Register)
 def tokenLinkRecived(request:str,uidb64:bytes,token:str) -> HttpResponse:
-    """
-    registrationUserDone view
-    methods: request.GET
+    """Token link recived
+
+    Args:
+        request (str): HTTP request
+        uidb64 (bytes): urls base 64 encoder
+        token (str): _description_
+
+    Returns:
+        HttpResponse: HTTP response
     """
     try:
         pk = force_str(urlsafe_base64_decode(uidb64))
@@ -177,10 +213,13 @@ def tokenLinkRecived(request:str,uidb64:bytes,token:str) -> HttpResponse:
 
 # List Items (Dashboard)
 class ShowItems(View):
-    """
-    ShowItems view
-    methods: request.GET, request.AJAX
-    View's son
+    """Show items
+
+    Args:
+        View (object): View class
+
+    Returns:
+        _type_: HTTP response
     """
     template_name = 'dashboard/cell_items.html'
     model = ShopCellModel
@@ -212,10 +251,13 @@ class ShowItems(View):
 
 # Detail Items (Dashboard)
 class DetailItem(View): 
-    """
-    DetailItem view
-    method: request.GET
-    View's son
+    """Detail item 
+
+    Args:
+        View (object): View class
+
+    Returns:
+        _type_: HTTP response
     """
     template_name = 'dashboard/item_detail.html'
     model = ShopCellModel
@@ -231,10 +273,13 @@ class DetailItem(View):
 
 # Create Item (Profile)
 class CreateItem(View):
-    """
-    CreateItem view
-    methods: request.GET, request.POST
-    View's son
+    """Create item
+
+    Args:
+        View (object): View class
+
+    Returns:
+        _type_: HTTP response
     """
     template_name = 'accounts/profile/create_item.html'
     model = ShopCellModel
@@ -264,10 +309,13 @@ class CreateItem(View):
 
 # Update Item (Profile)
 class UpdateItem(View):
-    """
-    UpdateItem view
-    methods: request.GET, reques.POST
-    View's son
+    """Update item
+
+    Args:
+        View (object): View class
+
+    Returns:
+        _type_: HTTP response
     """
     template_name = 'accounts/profile/update_item.html'
     model = ShopCellModel
@@ -304,10 +352,13 @@ class UpdateItem(View):
 
 # Delete Item (Profile)
 class DeleteItem(View):  
-    """
-    DeletItem view
-    methods: request.GET, request.POST
-    View's son
+    """Delete item
+
+    Args:
+        View (object): View class
+
+    Returns:
+        _type_: HTTP response
     """
     template_name = 'accounts/profile/delete_item.html'
     model = ShopCellModel
@@ -335,10 +386,13 @@ class DeleteItem(View):
 
 # Profile (Profile)
 class Profile(View):
-    """
-    ProfileUser view
-    methods: request.GET, request.POST
-    View's son
+    """Profile
+
+    Args:
+        View (object): View class
+
+    Returns:
+        _type_: HTTP response
     """
     template_name = 'accounts/profile/cell_profile.html'
     model = ShopCellModel
@@ -371,10 +425,13 @@ class Profile(View):
 
 # Profile Update (Profile)
 class UpdateProfile(View):
-    """
-    UpdateProfile view
-    methods: request.GET, request.POST
-    View's son
+    """Update profile
+
+    Args:
+        View (object): View class
+
+    Returns:
+        _type_: HTTP response
     """
     template_name = 'accounts/profile/update_profile.html'
     form_class = UpdateUserForm
@@ -438,10 +495,13 @@ class UpdateProfile(View):
 
 # Profile Delete (Profile)
 class DeleteProfile(View):
-    """
-    DeleteProfile view
-    methods: request.GET, request.POST
-    View's son
+    """Delete profile
+
+    Args:
+        View (object): View class
+
+    Returns:
+        _type_: HTTP response
     """
     template_name = 'accounts/profile/delete_account.html'
     model = User
@@ -465,6 +525,14 @@ class DeleteProfile(View):
 
 # Profile Canche password (Profile)
 class ChangePasswordProfile(View):
+    """Change password profile
+
+    Args:
+        View (object): View class
+
+    Returns:
+        _type_: HTTP response
+    """
     form_class = ChangePasswordForm
     context_object_name = 'form'
     template_name = 'accounts/registration/change_password.html'
@@ -504,6 +572,14 @@ class ChangePasswordProfile(View):
 
 # Restore Password (Profile)
 class RestorePassword(View):
+    """Restore password
+
+    Args:
+        View (object): View class
+
+    Returns:
+        _type_: HTTP response
+    """
     form_class = RestorePassowrdForm
     template_name = 'accounts/registration/restore_password.html'
     context_object_name = 'form'

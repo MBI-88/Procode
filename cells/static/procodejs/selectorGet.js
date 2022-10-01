@@ -1,7 +1,10 @@
 'use strict'
 
-function goGet(urlget) {
-    fetch(urlget, {
+const detail = /^detail/
+const del = /^delete/
+
+async function goGet(urlget) {
+    await fetch(urlget, {
         method: 'GET',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -15,58 +18,53 @@ function goGet(urlget) {
         .then(html => {
             document.getElementById('body-content').innerHTML = html
 
-
-        }).catch(reject => console.log(reject))
+        }).catch(reject => reject)
 }
 
-function login(event) {
+async function login() {
     document.getElementById('modaltitle').innerHTML = 'Entrar'
-    goGet('../login/');
+    await goGet('../login/')
 }
 
-function register(event) {
+async function register() {
     document.getElementById('modaltitle').innerHTML = 'Registrarse'
-    goGet('../register/');
+    await goGet('../register/')
 }
 
-function deleteitem(event) {
+async function deleteitem(event) {
     const pk = event.target.dataset.pk
     document.getElementById('modaltitle').innerHTML = 'Borrar articulo'
-    document.getElementById('body-content').innerHTML = 'Error'
     while (pk === undefined) {
         pk = document.getElementById(event.target.id).dataset.pk
     }
-    goGet('../delete/item/' + pk + '/');
+    await goGet('../delete/item/' + pk + '/')
 }
 
-function deleteprofile(event) {
+async function deleteprofile() {
     document.getElementById('modaltitle').innerHTML = 'Eliminar cuenta'
-    goGet('../delete/profile/');
+    await goGet('../delete/profile/');
 }
 
-
-function itemdetail(event) {
+async function itemdetail(event) {
     // Union item-{{pk }} forman el id
     const pk = event.target.dataset.pk
     document.getElementById('modaltitle').innerHTML = 'Articulo'
-    document.getElementById('body-content').innerHTML = 'Error'
     while (pk === undefined) {
         pk = document.getElementById(event.target.id).dataset.pk
-
     }
-    goGet('../shopping/' + pk + '/');
+    await goGet('../shopping/' + pk + '/')
 }
 
 
-function changepassword(event) {
+async function changepassword() {
     document.getElementById('modaltitle').innerHTML = 'Cambio de clave'
-    goGet('../register/changepassword/')
+    await goGet('../register/changepassword/')
 
 }
 
-function restorepassword(event) {
+async function restorepassword() {
     document.getElementById('modaltitle').innerHTML = 'Restablecimiento de Clave'
-    goGet('../restore/password/')
+    await goGet('../restore/password/')
 }
 
 
@@ -80,3 +78,27 @@ window.addEventListener('scroll', async () => {
 })
 
 
+window.addEventListener('show.bs.modal', event => {
+    var step = false
+    window.addEventListener('click', e => {
+        const target = e.target
+        if (target.tagName === 'BUTTON' ){
+            if (del.test(target.id)) deleteitem(e)
+            if (detail.test(target.id)) itemdetail(e)
+            if (target.id === 'deleteprofile') deleteprofile()
+            if (target.id === 'restorepassword') restorepassword() 
+            if (target.id === 'changepassword') changepassword()
+            if (target.id === 'login') login()
+            if (target.id === 'register') register()
+        }
+        else {
+            step = true
+        }
+
+    })
+    step ? event.preventDefault(): console.log(step)
+
+    document.getElementById('modaltitle').innerHTML = ''
+    document.getElementById('body-content').innerHTML = ''
+    window.removeEventListener('click', e => { })
+})
