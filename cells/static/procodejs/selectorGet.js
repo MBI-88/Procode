@@ -31,11 +31,11 @@ async function register() {
     await goGet('../register/')
 }
 
-async function deleteitem(event) {
-    const pk = event.target.dataset.pk
+async function deleteitem(target) {
+    const pk = target.dataset.pk
     document.getElementById('modaltitle').innerHTML = 'Borrar articulo'
     while (pk === undefined) {
-        pk = document.getElementById(event.target.id).dataset.pk
+        pk = document.getElementById(target.id).dataset.pk
     }
     await goGet('../delete/item/' + pk + '/')
 }
@@ -45,12 +45,12 @@ async function deleteprofile() {
     await goGet('../delete/profile/');
 }
 
-async function itemdetail(event) {
+async function itemdetail(target) {
     // Union item-{{pk }} forman el id
-    const pk = event.target.dataset.pk
+    const pk = target.dataset.pk
     document.getElementById('modaltitle').innerHTML = 'Articulo'
     while (pk === undefined) {
-        pk = document.getElementById(event.target.id).dataset.pk
+        pk = document.getElementById(target.id).dataset.pk
     }
     await goGet('../shopping/' + pk + '/')
 }
@@ -77,27 +77,35 @@ window.addEventListener('scroll', async () => {
         'navbar navbar-expand-lg navbar-light navbar-onscroll' : 'navbar navbar-expand-lg navbar-light navbar-bg'
 })
 
+const handleSelect = (target) => {
+    if (del.test(target.id)) deleteitem(target)
+    if (detail.test(target.id)) itemdetail(target)
+    if (target.id === 'deleteprofile') deleteprofile()
+    if (target.id === 'restorepassword') restorepassword()
+    if (target.id === 'changepassword') changepassword()
+    if (target.id === 'login') login()
+    if (target.id === 'register') register()
+
+
+}
 
 window.addEventListener('show.bs.modal', event => {
-    var step = false
     window.addEventListener('click', e => {
         const target = e.target
-        if (target.tagName === 'BUTTON' ){
-            if (del.test(target.id)) deleteitem(e)
-            if (detail.test(target.id)) itemdetail(e)
-            if (target.id === 'deleteprofile') deleteprofile()
-            if (target.id === 'restorepassword') restorepassword() 
-            if (target.id === 'changepassword') changepassword()
-            if (target.id === 'login') login()
-            if (target.id === 'register') register()
+        switch (target.tagName) {
+            case "BUTTON":
+                handleSelect(target)
+                break;
+            case "svg":
+                const targetSvg =  target.parentNode
+                handleSelect(targetSvg)
+                break;
+            case "path":
+                const targetPath = target.parentNode.parentNode
+                handleSelect(targetPath)
+                break;
         }
-        else {
-            step = true
-        }
-
     })
-    step ? event.preventDefault(): console.log(step)
-
     document.getElementById('modaltitle').innerHTML = ''
     document.getElementById('body-content').innerHTML = ''
     window.removeEventListener('click', e => { })

@@ -2,7 +2,7 @@
 let page = 1
 let empty_page = false
 let block_request = false
-setTimeout(() => document.getElementById('id-search').focus(),2000 )
+setTimeout(() => document.getElementById('id-search').focus(),3000 )
 
 function GetFetch(page,search){
     fetch('?page='+page+'&search='+search,{
