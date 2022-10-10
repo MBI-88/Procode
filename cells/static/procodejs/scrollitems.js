@@ -9,7 +9,7 @@ function GetFetch(page,search){
         method: 'GET',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'text/html; char set=UTF-8',
+            'Content-Type': 'text/html; charset=UTF-8',
         },
         mode: 'same-origin',
         cache: 'default',
