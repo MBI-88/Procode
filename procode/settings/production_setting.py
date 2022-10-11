@@ -1,4 +1,5 @@
 from .base_setting import *
+import dj_database_url
 
 # Production config
 
