@@ -3,6 +3,7 @@
 .env
 Procode/develop.db
 CoverageStatus/*
+.coverage
 
 
 
