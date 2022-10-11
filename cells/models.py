@@ -22,7 +22,8 @@ class ProfileUserModel(models.Model):
     
     def __str__(self) -> str:
         return f'Profile for user {self.user.username}'
-    
+
+   
 
 # ************************************************* Shoping Model ***************************************************
 
@@ -56,4 +57,6 @@ class ShopCellModel(models.Model):
         if not self.slug:
             self.slug = slugify(self.model_name +'-'+ str(self.owner_user.username))
         super().save(*args,**kwargs)
+
+
 
