@@ -3,9 +3,8 @@
   <div class="text-black">
     <div class="container d-lg-flex d-g-flex d-md-flex d-sm-block p-4">
       <div class="col-lg-3 col-md-8 col-sm-6">
-        <img src="/media/{{ item.image }} " class="card-img-top img-fluid p-1 rounded" alt="No existe imagen">
+        <img src="{{ item.image.url }} " class="card-img-top img-fluid p-1 rounded" alt="{{item.image.name}}">
       </div>
-
       <div class="col-lg-0 col-md-12 col-sm-6 pb-4">
         <div class="card-body w-75  p-sm-0 p-lg-1 p-g-1 p-md-2">
           <h5 class="card-title"> {{ item.model_name }} </h5>
