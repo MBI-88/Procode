@@ -12,6 +12,7 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS',default=True,cast=bool)
 EMAIL_USE_SSL = config('EMAIL_USE_SSL',default=True,cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS',cast=lambda v:[s.strip() for s in v.split(',')])
 
 DATABASES = {
     'default': {

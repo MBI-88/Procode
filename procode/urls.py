@@ -9,7 +9,9 @@ urlpatterns = [
     path('cells/',include('cells.urls',namespace='cells')),
     path('api/',include('cells.api.urls',namespace='cells_api')), 
 ] 
-urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
 handler400 = 'cells.views.page_400_bad_request'
 handler403 = 'cells.views.page_403_not_acces'
