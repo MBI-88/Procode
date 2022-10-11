@@ -1,8 +1,5 @@
 # dependencies
 .vscode/
-procode/develop.db
-procode/settings/production_setting.py
-procode/media/
 coverage/
 .coverage
 .coveragerc
