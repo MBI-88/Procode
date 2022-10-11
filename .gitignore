@@ -1,7 +1,7 @@
 # dependencies
 .vscode/*
 procode/develop.db
-CoverageStatus/*
+coverage/
 .coverage
 .coveragerc 
 
