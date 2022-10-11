@@ -7,9 +7,9 @@ from django.conf.urls import handler403,handler500,handler404,handler400
 urlpatterns = [
     path('pr0c0d3-admin/', admin.site.urls),
     path('cells/',include('cells.urls',namespace='cells')),
-    path('api/',include('cells.api.urls',namespace='cells_api')),
-    
-] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    path('api/',include('cells.api.urls',namespace='cells_api')), 
+] 
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
 handler400 = 'cells.views.page_400_bad_request'
 handler403 = 'cells.views.page_403_not_acces'
