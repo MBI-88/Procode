@@ -1,18 +1,22 @@
 from .base_setting import *
 
 # Develop config
-DEBUG = config('DEBUG',cast=bool,default=True)
-SECRET_KEY = config('SECRET_KEY')
-EMAIL_BACKEND = config('EMAIL_BACKEND')
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT',cast=int)
+DEBUG = True
+SECRET_KEY = 'django-Secure-tx^m9&!dk1pdfri*+R03+28-&#^^x-cph^aknzv60l9x&dwxbkc'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST='localhost'
+EMAIL_PORT='1025'
+EMAIL_HOST_USER=''
+EMAIL_HOST_PASSWORD=''
+ALLOWED_HOSTS='*'
+
 
 DATABASES = {
     'default': {
-        'ENGINE': config('DB_ENGINE'),
-        'NAME': BASE_DIR / config('DB_NAME'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'develop.db',
     }
 }
 
-MEDIA_URL = config('MEDIA_URL')
-MEDIA_ROOT = os.path.join(BASE_DIR,config('MEDIA_ROOT')) 
+MEDIA_URL='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media/') 

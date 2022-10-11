@@ -5,8 +5,6 @@ from decouple import config
 # User name: Procode password: ZeusH4cker01* email:wh1t3h4k3r@gmail.com
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS',cast=lambda v:[s.strip() for s in v.split(',')])
-
 # Application definition
 
 INSTALLED_APPS = [
