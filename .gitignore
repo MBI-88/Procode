@@ -2,6 +2,9 @@
 .vscode/
 .env
 procode/develop.db
+procode/media/
+procode/settings/develop_setting.py
+manage.py
 coverage/
 .coverage
 .coveragerc

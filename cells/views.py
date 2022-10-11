@@ -103,10 +103,6 @@ def page_404_not_found(request: str, exception: object, template_name='errors/40
 
 def page_500_error(request: str, template_name='errors/500.html') -> HttpResponse:
     return render(request, template_name)
-<<<<<<< HEAD
-=======
-
->>>>>>> production
 
 # ********************************************* Login View ***********************************************
 
