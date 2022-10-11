@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',
     'cells.apps.CellsConfig',
     'widget_tweaks',
     'rest_framework',
@@ -49,7 +50,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000','http://localhost:8000'
+    'http://localhost:3000','http://localhost:8000','.herokuapp.com'
 )
 
 ROOT_URLCONF = 'Procode.urls'
