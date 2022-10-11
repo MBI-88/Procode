@@ -16,11 +16,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
+=======
+    'whitenoise.runserver_nostatic',
+>>>>>>> production
     'cells.apps.CellsConfig',
     'widget_tweaks',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+<<<<<<< HEAD
+=======
+    
+>>>>>>> production
 ]
 
 REST_FRAMEWORK = {
@@ -38,13 +46,20 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+<<<<<<< HEAD
     'whitenoise.middleware.WhiteNoiseMiddleware',
+=======
+>>>>>>> production
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+<<<<<<< HEAD
+=======
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+>>>>>>> production
     
 ]
 
