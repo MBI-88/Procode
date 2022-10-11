@@ -1,6 +1,8 @@
 # dependencies
-.vscode/*
+.vscode/
 procode/develop.db
+procode/settings/develop_setting.py
+procode/media/
 coverage/
 .coverage
 .coveragerc 
