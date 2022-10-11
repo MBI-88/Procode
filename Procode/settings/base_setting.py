@@ -110,10 +110,3 @@ LOGOUT_URL = 'cells:logout'
 
 PASSWORD_RESET_TIMEOUT_DAYS = 86400 #s
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
