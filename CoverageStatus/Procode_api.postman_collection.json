@@ -1,0 +1,561 @@
+{
+	"info": {
+		"_postman_id": "206019e7-ba13-4d6f-b961-d93bdcb653f3",
+		"name": "Procode_api",
+		"description": "This is the test of Procode api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Show_items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/show-items/?page=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"show-items",
+						""
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "Ark8725",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "password01",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token d8bdd4d0a286e9575db6959acbbbe2dc745b6d2c",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/profile/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"profile",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update_Profile",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token d8bdd4d0a286e9575db6959acbbbe2dc745b6d2c",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "bra_2047",
+							"type": "default"
+						},
+						{
+							"key": "first_name",
+							"value": "Brain",
+							"type": "default"
+						},
+						{
+							"key": "last_name",
+							"value": "Smith Kurt",
+							"type": "default"
+						},
+						{
+							"key": "email",
+							"value": "bra2047@example.com",
+							"type": "default"
+						},
+						{
+							"key": "phone",
+							"value": "52624232",
+							"type": "default"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/MBI/Pictures/Saved Pictures/Python.png"
+						},
+						{
+							"key": "address",
+							"value": "Alamar zona 6 edif C-40 apt 12",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/profile/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"profile",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token d8bdd4d0a286e9575db6959acbbbe2dc745b6d2c",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/logout/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"logout",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "Ark8725",
+							"type": "default"
+						},
+						{
+							"key": "first_name",
+							"value": "Adrian",
+							"type": "default"
+						},
+						{
+							"key": "last_name",
+							"value": "Figueredo Fonseca",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "password01",
+							"type": "default"
+						},
+						{
+							"key": "password2",
+							"value": "password01",
+							"type": "default"
+						},
+						{
+							"key": "email",
+							"value": "figueredof@example.com",
+							"type": "default"
+						},
+						{
+							"key": "phone",
+							"value": "55654525",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/register/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete_Profile",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token d0a6523d54610d8993853449c96096852901e74a",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/profile/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"profile",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Profile_showitems",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 5fb9e8e8f3e31f373cfd4101dab72ca6875aa4fb",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/profile/show-items/?page=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"profile",
+						"show-items",
+						""
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Detail_item",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/detail/item/5568/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"detail",
+						"item",
+						"5568",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item_Profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 5fb9e8e8f3e31f373cfd4101dab72ca6875aa4fb",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "model_name",
+							"value": "Samsung Galaxy S 20",
+							"type": "default"
+						},
+						{
+							"key": "price",
+							"value": "300",
+							"type": "default"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/MBI/Documents/APPS/carousel_phones/images.jpeg"
+						},
+						{
+							"key": "description",
+							"value": "Nuevo de paquete con garantia ",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/item-profile/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"item-profile",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item_Profile",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 5fb9e8e8f3e31f373cfd4101dab72ca6875aa4fb",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "model_name",
+							"value": "Samsung Galaxy S 21",
+							"type": "default"
+						},
+						{
+							"key": "price",
+							"value": "300",
+							"type": "default"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/MBI/Documents/APPS/carousel_phones/images.jpeg"
+						},
+						{
+							"key": "description",
+							"value": "Nueva version del Samsung Galaxy",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/item-profile/?pk=5629",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"item-profile",
+						""
+					],
+					"query": [
+						{
+							"key": "pk",
+							"value": "5629"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Item_Profile",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 5fb9e8e8f3e31f373cfd4101dab72ca6875aa4fb",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/item-profile/?pk=5629",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"item-profile",
+						""
+					],
+					"query": [
+						{
+							"key": "pk",
+							"value": "5629"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change_password",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 252bdb3918fc46bd18dc206ab9dfb5afc9091c1c",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "currentpassword",
+							"value": "password01",
+							"type": "default"
+						},
+						{
+							"key": "newpassword",
+							"value": "password02",
+							"type": "default"
+						},
+						{
+							"key": "confirmpassword",
+							"value": "password02",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/profile/change-password/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"profile",
+						"change-password",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Restore_password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "bra2047@example.com",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/restore-password/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"restore-password",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

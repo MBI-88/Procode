@@ -1,9 +1,10 @@
 # dependencies
 .vscode/*
 .env
-Procode/develop.db
-CoverageStatus/*
+procode/develop.db
+CoverageStauts
 .coverage
+.coveragerc
 
 
 
