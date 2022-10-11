@@ -101,15 +101,9 @@ urllib3==1.26.11
 w3lib==2.0.1
 webencodings==0.5.1
 Werkzeug==2.2.2
-<<<<<<< HEAD
 zope.interface==5.4.0
 gunicorn
 psycopg2
 dj-database-url
 python-decouple
 whitenoise
-=======
-whitenoise==6.2.0
-zipp==3.8.1
-zope.interface==5.4.0
->>>>>>> production
