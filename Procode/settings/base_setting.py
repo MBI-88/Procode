@@ -108,3 +108,5 @@ LOGOUT_URL = 'cells:logout'
 # Time delay
 
 PASSWORD_RESET_TIMEOUT_DAYS = 86400 #s
+
+
