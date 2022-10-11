@@ -1,1 +1,1 @@
-web: gunicorn Procode.wsgi --log-file -
+web: gunicorn procode.wsgi --log-file -
