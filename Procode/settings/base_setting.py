@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'whitenoise.runserver_nostatic',
 ]
 
 REST_FRAMEWORK = {
