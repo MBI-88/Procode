@@ -1,9 +1,16 @@
 from django.urls import path
 from django.contrib.auth.views import LogoutView
 from . import views
+from django.contrib.sitemaps.views import sitemap
+from .sitemap import StaticViewSitemap
 
 app_name = 'cells'
 
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    
+}
 # urlpatterns
 
 urlpatterns = [ 
@@ -25,4 +32,5 @@ urlpatterns = [
     path('contact/',views.contact,name='contact'),
     path('info/',views.info,name='info'),
     path('who/',views.who,name='who'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
 ]

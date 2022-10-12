@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'whitenoise.runserver_nostatic',
+    'django.contrib.sitemaps',
     
 ]
 
@@ -125,3 +126,5 @@ LOGOUT_URL = 'cells:logout'
 
 PASSWORD_RESET_TIMEOUT_DAYS = 86400 #s
 
+# Site framework
+SITE_ID = 1
