@@ -75,6 +75,7 @@ class Register(APIView):
         if data.is_valid():
             data.save()
             new_user = self.queryset.get(username=request.data['username'])
+            #new_user.is_active = False
             subject = 'ProC0d3 Api Registro de usuario' 
             # pendiente a cambios en la dirección de retorno (espera por front end)
             message = render_to_string('email/email_register_api.html',{
@@ -84,7 +85,7 @@ class Register(APIView):
                 'token': default_token_generator.make_token(new_user),
                 'protocol': request.scheme,
             })
-            sendEmail(subject,message,new_user.email,new_user.username)
+            #sendEmail(subject,message,new_user.email,new_user.username)
             return Response(data={'message':'Registration done'},status=status.HTTP_201_CREATED)
         return Response(data=data.errors,status=status.HTTP_406_NOT_ACCEPTABLE)
 
@@ -262,6 +263,7 @@ class Profile(APIView):
         if user_s.is_valid():
             user_s.save()
             token.delete()
+            #user.is_active = False
             subject = 'ProC0d3 Api Actualizacion de usuario de usuario' 
             # pendiente a cambios en la dirección de retorno (espera por front end)
             message = render_to_string('email/email_profile_api.html',{
@@ -271,7 +273,7 @@ class Profile(APIView):
                 'token': default_token_generator.make_token(user),
                 'protocol': request.scheme,
             })
-            sendEmail(subject,message,user.email,user.username)
+            #sendEmail(subject,message,user.email,user.username)
             return Response({'message':'Profile updated'},status=status.HTTP_202_ACCEPTED) 
         return Response({'error':user_s.errors},status=status.HTTP_406_NOT_ACCEPTABLE)   
         
@@ -296,6 +298,7 @@ class ChangePassword(APIView):
         if data.is_valid():
             data.save()
             token.delete()
+            #new_user.is_active = False
             subject = 'ProC0d3 Api Registro de usuario' 
             # pendiente a cambios en la dirección de retorno (espera por front end)
             message = render_to_string('email/email_password_api.html',{
@@ -305,7 +308,7 @@ class ChangePassword(APIView):
                 'token': default_token_generator.make_token(new_user),
                 'protocol': request.scheme,
             })
-            sendEmail(subject,message,new_user.email,new_user.username)
+            #sendEmail(subject,message,new_user.email,new_user.username)
             return Response({'message':'Accepted'},status=status.HTTP_200_OK)
         return Response({'message':'Invalid data'},status=status.HTTP_406_NOT_ACCEPTABLE)
         
@@ -348,6 +351,7 @@ class RestorePassword(APIView):
                 data = self.serializer_class(instance=user,data=request.data)
                 if data.is_valid():
                     data.save()
+                    #user.is_active = False
                     subject = 'ProC0d3 Api Registro de usuario' 
                     # pendiente a cambios en la dirección de retorno (espera por front end)
                     message = render_to_string('email/email_restored_api.html',{
@@ -358,7 +362,7 @@ class RestorePassword(APIView):
                         'protocol': request.scheme,
                         'password': 'password1',
                     })
-                    sendEmail(subject,message,user.email,user.username)
+                    #sendEmail(subject,message,user.email,user.username)
                     return Response({'message':'Accepted'},status=status.HTTP_202_ACCEPTED)
             else:
                 return Response({'message':'User not exists'},status=status.HTTP_404_NOT_FOUND)

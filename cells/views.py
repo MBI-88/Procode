@@ -168,9 +168,9 @@ class Register(View):
             if not self.model.objects.filter(email=cd['email']).exists():
                 new_user = self.model()
                 new_user.username = cd['username']
-                new_user.is_active = False
                 new_user.set_password(cd['password'])
                 new_user.first_name = cd['first_name']
+                #new_user.is_active = False
                 new_user.last_name = cd['last_name']
                 new_user.email = cd['email']
                 # email_sender
@@ -187,9 +187,9 @@ class Register(View):
                         'token': default_token_generator.make_token(new_user),
                         'protocol': request.scheme,
                     })
-                    sendEmail(subject, message, cd['email'], new_user.username)
+                    #sendEmail(subject, message, cd['email'], new_user.username)
                     messages.add_message(
-                        request, level=messages.SUCCESS, message='Registro completado.Siga el enlace enviado a su e-mail')
+                        request, level=messages.SUCCESS, message='Registro completado.')
                     # redireccion
                     return HttpResponse('302')
                 except:
@@ -484,7 +484,7 @@ class UpdateProfile(View):
             request.user.username = cd['username']
             request.user.first_name = cd['first_name']
             request.user.last_name = cd['last_name']
-            request.user.is_active = False
+            #request.user.is_active = False
             if request.user.email == cd['email']:
                 pass
             else:
@@ -509,9 +509,8 @@ class UpdateProfile(View):
                     'token': default_token_generator.make_token(request.user),
                     'protocol': request.scheme,
                 })
-                sendEmail(subject, message, cd['email'], cd['username'])
-                messages.add_message(request, level=messages.SUCCESS, message="Perfil actualizado siga el \
-                    link en su e-mail")
+                #sendEmail(subject, message, cd['email'], cd['username'])
+                messages.add_message(request, level=messages.SUCCESS, message="Perfil actualizado.")
                 # redireccion
                 return redirect('cells:logout')
             except:
@@ -576,7 +575,7 @@ class ChangePasswordProfile(View):
             cd = form.cleaned_data
             if authenticate(request, username=request.user.username, password=cd['currentpassword']) is not None:
                 request.user.set_password(cd['newpassword'])
-                request.user.is_active = False
+                #request.user.is_active = False
                 request.user.save()
                 # email
                 subject = 'ProC0d3 Cambio de password de usuario'
@@ -587,10 +586,9 @@ class ChangePasswordProfile(View):
                     'token': default_token_generator.make_token(request.user),
                     'protocol': request.scheme,
                 })
-                sendEmail(subject, message, request.user.email,
-                          request.user.username)
+                #sendEmail(subject, message, request.user.email, request.user.username)
                 messages.add_message(
-                    request, level=messages.SUCCESS, message='Siga el enlace que se envio a su e-mail')
+                    request, level=messages.SUCCESS, message='Clave cambiada con exito')
                 return HttpResponse('302')
             else:
                 messages.add_message(
@@ -626,10 +624,10 @@ class RestorePassword(View):
             cd = form.cleaned_data
             try:
                 user = self.model.objects.get(email=cd['email'])
-                user.is_active = False
+                #user.is_active = False
                 # hacerlo mas fuerte para producción
-                user.set_password('password1')
-                user.save()
+                #user.set_password('password1')
+                #user.save()
                 # email
                 subject = 'ProC0d3 Restablecimiento de credenciales'
                 message = render_to_string('email/email_restored.html', {
@@ -640,9 +638,9 @@ class RestorePassword(View):
                     'protocol': request.scheme,
                     'password': 'password1',
                 })
-                sendEmail(subject, message, cd['email'], user.username)
+                #sendEmail(subject, message, cd['email'], user.username)
                 messages.add_message(
-                    request, level=messages.SUCCESS, message='Siga el enlace que se envio a su e-mail')
+                    request, level=messages.SUCCESS, message='Funcionalidad no implementada')
                 return HttpResponse('302')
             except:
                 messages.add_message(request, level=messages.WARNING,
