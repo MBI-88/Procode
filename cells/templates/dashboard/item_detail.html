@@ -1,6 +1,6 @@
 <!--Detail item-->
 <div class="container-fluid text-center p-4 item-block">
-  <img src=" {% if itemcell.image.url %}{{ itemcell.image.url }} {% else %} '' {% endif %} " class="img-fluid rounded-3 w-50" alt="No picture">
+  <img src=" {% if itemcell.image %}{{ itemcell.image.url }} {% else %} '' {% endif %} " class="img-fluid rounded-3 w-50" alt="No picture">
   <address class="text-start pt-2">
     <h5 class="card-title">Actualizado: {{ itemcell.updated_date|timesince }} <br></h5>
     <p class="card-text">Modelo: {{ itemcell.model_name }} <br></p>
