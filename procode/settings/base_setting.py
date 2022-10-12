@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 from decouple import config
 
-# User name: Procode password: ZeusH4cker01* email:wh1t3h4k3r@gmail.com
+# User name: ZeusPr0c0d3 password: ZeusH4cker01*    email:wh1t3h4k3r@gmail.com
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Application definition
