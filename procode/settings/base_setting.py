@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 from decouple import config
+import cloudinary
+import cloudinary_storage
 
 # User name: Procode password: pr0c0d3 email:procode@gmail.com
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,12 +16,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
     'cells.apps.CellsConfig',
     'widget_tweaks',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
     'whitenoise.runserver_nostatic',
+    
 ]
 
 REST_FRAMEWORK = {
@@ -83,6 +88,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = 'static/'
+
+# Cloudinary stuff
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUD_NAME', default=""),
+    'API_KEY': config('API_KEY', default=""),
+    'API_SECRET': config('API_SECRET', default=""),
+    'MEDIA_TAG': config('MEDIA_TAG',default=""),
+    'STATIC_IMAGES_EXTENSIONS': config('STATIC_IMAGES_EXTENSIONS', lambda v:[s.strip() for s in v.split(',')])
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Internationalization
 
