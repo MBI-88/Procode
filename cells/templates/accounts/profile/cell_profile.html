@@ -29,8 +29,8 @@
                 <div
                     class="row row-cols-lg-2 row-cols-md-1 row-cols-sm-1 g-0 card-bg d-md-block d-sm-block d-lg-flex d-g-flex">
                     <div class="col-lg-4 col-sm-1 col-md-8">
-                        <img src="{{ user.profile.image.url }}"
-                            class="img-fluid rounded-circle p-lg-1 p-g-2 p-md-3 p-sm-5" alt="{{user.profile.image.name}}">
+                        <img src=" {% if user.profile.image %} {{ user.profile.image.url }} {% else %} '' {% endif %}"
+                            class="img-fluid rounded-circle p-lg-1 p-g-2 p-md-3 p-sm-5" alt="No picture">
                     </div>
                     <div class="col-lg-8 col-sm-1 col-md-8">
                         <div class="card-body  ">
