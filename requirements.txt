@@ -34,6 +34,7 @@ django-filter==22.1
 django-taggit==3.0.0
 django-widget-tweaks==1.4.12
 djangorestframework==3.13.1
+docutils==0.19
 easy-thumbnails==2.8.3
 EditorConfig==0.12.3
 filelock==3.8.0
