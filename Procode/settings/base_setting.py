@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'whitenoise.runserver_nostatic',
     'django.contrib.sitemaps',
+    'django.contrib.admindocs',
     
 ]
 

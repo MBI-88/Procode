@@ -3,11 +3,20 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import handler403,handler500,handler404,handler400
+from cells.sitemap import StaticViewSitemap
+from django.contrib.sitemaps.views import sitemap
+
+# sitemap
+sitemaps = {
+    'static': StaticViewSitemap,
+}
 
 urlpatterns = [
     path('pr0c0d3-admin/', admin.site.urls),
     path('cells/',include('cells.urls',namespace='cells')),
     path('api/',include('cells.api.urls',namespace='cells_api')), 
+    path('', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
 ] 
 
 if settings.DEBUG:
