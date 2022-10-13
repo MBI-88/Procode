@@ -24,6 +24,14 @@ import re
 
 # Login (Register) ok
 class Login(ObtainAuthToken):
+    """_summary_
+
+    Args:
+        ObtainAuthToken (_type_): Session Token for login
+
+    Returns:
+        _type_: Response json
+    """
     authentication_classes = ()
     permission_classes = ()
     http_method_names = ['post']
@@ -45,6 +53,14 @@ class Login(ObtainAuthToken):
 
 # Logout (Register) ok
 class Logout(APIView):
+    """_summary_
+
+    Args:
+        APIView (_type_): Log out 
+
+    Returns:
+        _type_: Response Json
+    """
     queryset = Session.objects.all()
     http_method_names = ['get']
     
@@ -64,6 +80,14 @@ class Logout(APIView):
 
 # Register (Register) ok
 class Register(APIView):
+    """_summary_
+
+    Args:
+        APIView (_type_): Resgister user only (post method)
+
+    Returns:
+        _type_: Response json
+    """
     authentication_classes = ()
     permission_classes = ()
     http_method_names = ['post']
@@ -94,6 +118,14 @@ class Register(APIView):
 
 # List Items (Dashboard) ok
 class ShowItems(APIView):
+    """_summary_
+
+    Args:
+        APIView (_type_): Show items only (get method)
+
+    Returns:
+        _type_: Response json
+    """
     authentication_classes = ()
     permission_classes = ()
     queryset = ShopCellModel.objects.all()
@@ -139,6 +171,14 @@ class ShowItems(APIView):
 
 # Detail item (Dashboar) ok
 class DetailItem(APIView):
+    """_summary_
+
+    Args:
+        APIView (_type_): Deail item only (get method)
+
+    Returns:
+        _type_: Response json
+    """
     authentication_classes = ()
     permission_classes = ()
     queryset = ShopCellModel.objects.all()
@@ -169,6 +209,14 @@ class DetailItem(APIView):
 
 # Create Item (Profile) ok
 class ItemProfile(APIView):
+    """_summary_
+
+    Args:
+        APIView (_type_): Item of user only (post,delete,put method)
+
+    Returns:
+        _type_: Response json
+    """
     serializer_class = ShopingCellModelListSerializer
     queryset = ShopCellModel.objects.all()
     http_method_names = ['post','put','delete']
@@ -211,6 +259,14 @@ class ItemProfile(APIView):
 
 # Show Items (Profile) ok
 class ShowItemProfile(ShowItems):
+    """_summary_
+
+    Args:
+        ShowItems (_type_): Show item of users only (get method)
+
+    Returns:
+        _type_: Response json
+    """
     authentication_classes = (TokenAuthentication,)
 
     def get(self, request: str, *args, **kwargs) -> Response:
@@ -234,6 +290,14 @@ class ShowItemProfile(ShowItems):
 
 # Profile (Profile) ok
 class Profile(APIView):
+    """_summary_
+
+    Args:
+        APIView (_type_): User profile only (get,put,delete method)
+
+    Returns:
+        _type_: Response json
+    """
     serializer_class = UserUpdateSerializer
     http_method_names = ['get','put','delete']
     queryset = User.objects.all()
@@ -288,6 +352,14 @@ class Profile(APIView):
 
 # Profile Change password (Profile) ok
 class ChangePassword(APIView):
+    """_summary_
+
+    Args:
+        APIView (_type_): Change user password only (put method)
+
+    Returns:
+        _type_: Response json
+    """
     http_method_names = ['put']
     serializer_class = UserChangePassSerializer
 
@@ -316,6 +388,14 @@ class ChangePassword(APIView):
 
 # Profile Changed password (Profile) pendiente
 class TokenLinkRecived(APIView):
+    """_summary_
+
+    Args:
+        APIView (_type_): Token recived only (get method)
+
+    Returns:
+        _type_: Response json
+    """
     http_method_names = ['get']
     authentication_classes = ()
     permission_classes = ()
@@ -337,6 +417,14 @@ class TokenLinkRecived(APIView):
 
 # Profile Restore password (Profile) ok
 class RestorePassword(APIView):
+    """_summary_
+
+    Args:
+        APIView (_type_): Restore user password only (post method)
+
+    Returns:
+        _type_: Response json
+    """
     http_method_names = ['post']
     queryset = User.objects.all()
     authentication_classes = ()

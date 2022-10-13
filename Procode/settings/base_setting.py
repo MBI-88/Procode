@@ -4,7 +4,7 @@ from decouple import config
 import cloudinary
 import cloudinary_storage
 
-
+# User name: Procode password: pr0c0d3 email:wh1t3h4k3r@gmail.com
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Application definition
@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'whitenoise.runserver_nostatic',
+    'django.contrib.sitemaps',
+    'django.contrib.admindocs',
     
 ]
 
@@ -125,3 +127,5 @@ LOGOUT_URL = 'cells:logout'
 
 PASSWORD_RESET_TIMEOUT_DAYS = 86400 #s
 
+# Site framework
+SITE_ID = 1
