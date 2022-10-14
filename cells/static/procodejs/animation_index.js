@@ -9,17 +9,12 @@ const flag = {
     'flag-1': false,
     'flag-2': false,
 }
-const elementCarousel = document.getElementById('img-inter1')
 
 // Animations
 function animationOne() {
-    elementCarousel.children[0].children[0].className = 'image-carousel img-fluid rounded-pill w-75 h-75 procode-pres2'
-    elementCarousel.children[0].children[0].hidden = false
-    for (let i = 1; i < elementCarousel.children.length; i++) {
-        const child = elementCarousel.children[i].children[0]
-        child.className = 'image-carousel img-fluid rounded-pill w-75 h-75'
-        child.hidden = false
-    }
+    const imageproductivity = document.getElementById('img-inter1')
+    imageproductivity.classList.add('procode-pres2')
+    imageproductivity.hidden = false
     const element = document.getElementById('text-inter1')
     element.classList.add('procode-pres2')
     element.hidden = false
