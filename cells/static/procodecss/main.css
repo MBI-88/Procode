@@ -21,7 +21,7 @@ body {
 
 .procode-background {
      background: url('../img/img_presentation/smartphone-3139219.jpg') no-repeat center;
-     box-shadow: inset 0px -2px 5px whitesmoke;
+     box-shadow: 1px 2px 10px rgba(68, 67, 67, 0.744);
 
 }
 
@@ -79,8 +79,8 @@ body {
 
 .middle-bg-2 {
      z-index: -2;
-     height: 40rem;
-     background: url('../img/img_presentation/intro-bg.jpg') no-repeat center;
+     height: 60rem;
+     background: url('../img/img_presentation/servers.jpg') no-repeat center;
      background-attachment: fixed;
 }
 

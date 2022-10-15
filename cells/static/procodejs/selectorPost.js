@@ -38,11 +38,8 @@ function postSelector(event){
         case 'restorepassword':
             goPost(postselect,'../restore/password/', '../index/');
             break;
-        case 'deleteprofile':
-            goPost(postselect,'/delete/profile/','../index/');
-            break;
         case 'deleteitem':
-            goPost(postselect,'/delete/item/'+postselect.dataset.pk+'/','../profile/')
+            goPost(postselect,`../delete/item/${postselect.dataset.pk}/`,'../profile/')
     }
 }
 

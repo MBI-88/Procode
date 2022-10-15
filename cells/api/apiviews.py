@@ -181,14 +181,14 @@ class DetailItem(APIView):
     """
     authentication_classes = ()
     permission_classes = ()
-    queryset = ShopCellModel.objects.all()
+    queryset = ShopCellModel
     serializer_class = ShopingCellModelListSerializer
     http_method_names = ['get']
 
     def get(self,request:str, *args, **kwargs) -> Response:
         pk = kwargs['pk']
         if pk:
-            item = self.queryset.get(pk=pk)
+            item = self.queryset.objects.select_related('profile__user').get(pk=pk)
             user = {
                 'first_name':item.owner_user.first_name,
                 'last_name':item.owner_user.last_name,
@@ -218,7 +218,7 @@ class ItemProfile(APIView):
         _type_: Response json
     """
     serializer_class = ShopingCellModelListSerializer
-    queryset = ShopCellModel.objects.all()
+    queryset = ShopCellModel
     http_method_names = ['post','put','delete']
     
     def post(self,request:str,*args, **kwargs) -> Response:
@@ -236,8 +236,8 @@ class ItemProfile(APIView):
         token = Token.objects.get(key=request.auth)
         pk = request.query_params.get('pk')
         user = token.user
-        user_item = self.queryset.get(pk=pk)
-        if user.username == user_item.owner_user.username:
+        user_item = self.queryset.objects.select_related('profile__user').get(pk=pk)
+        if user.username == user_item.profile.user.username:
             data = self.serializer_class(instance=user_item,data=request.data)
             if data.is_valid():
                 data.save()
@@ -250,9 +250,9 @@ class ItemProfile(APIView):
         token = Token.objects.get(key=request.auth)
         pk = request.query_params.get('pk')
         user = token.user
-        user_item = self.queryset.get(pk=pk)
-        if user.username == user_item.owner_user.username:
-            self.queryset.filter(pk=pk).delete()
+        user_item = self.queryset.objects.select_related('profile__user').get(pk=pk)
+        if user.username == user_item.profile.user.username:
+            self.queryset.objects.filter(pk=pk).delete()
             return Response({'message':'Item deleted!'},status=status.HTTP_202_ACCEPTED)
         return Response({'message':'It\'s not your item'},status=status.HTTP_401_UNAUTHORIZED)
 

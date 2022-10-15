@@ -284,7 +284,7 @@ class DetailItem(View):
 
     def get(self, request: str, *args, **kwargs) -> HttpResponse:
         pk = kwargs['pk']
-        item = self.model.objects.get(pk=pk)
+        item = self.model.objects.select_related('profile__user').get(pk=pk)
         return render(request, self.template_name, {self.context_object_name: item})
 
 
@@ -315,7 +315,7 @@ class CreateItem(View):
         form = self.form_class(request.POST, files=request.FILES)
         if form.is_valid():
             cd = form.cleaned_data
-            self.model.objects.create(owner_user=request.user, profile=request.user.profile,
+            self.model.objects.create(profile=request.user.profile,
                                       model_name=cd['model_name'], price=cd['price'],
                                       image=cd['image'], description=cd['description']
                                       )
@@ -355,8 +355,8 @@ class UpdateItem(View):
 
     @method_decorator(login_required)
     def post(self, request: str, *args, **kwargs) -> HttpResponse:
-        user_item = self.model.objects.get(pk=kwargs['pk'])
-        if request.user.username == user_item.owner_user.username:
+        user_item = self.model.objects.select_related('profile__user').get(pk=kwargs['pk'])
+        if request.user.username == user_item.profile.user.username:
             form = self.form_class(
                 request.POST, files=request.FILES, instance=user_item)
             if form.is_valid():
@@ -396,8 +396,8 @@ class DeleteItem(View):
     @method_decorator(login_required)
     def post(self, request: str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
-        user_item = self.model.objects.get(pk=kwargs['pk'])
-        if request.user.username == user_item.owner_user.username:
+        user_item = self.model.objects.select_related('profile__user').get(pk=kwargs['pk'])
+        if request.user.username == user_item.profile.user.username:
             if form.is_valid():
                 self.model.objects.filter(pk=kwargs['pk']).delete()
                 messages.add_message(
@@ -405,7 +405,7 @@ class DeleteItem(View):
         else:
             messages.add_message(
                 request, level=messages.WARNING, message='Este no es tu articulo')
-        return redirect('cells:profile')
+        return HttpResponse('302')
 
 
 # Profile (Profile)
@@ -430,10 +430,10 @@ class Profile(View):
         # Sanetizando busqueda
         pattern = re.compile("[a-zA-Z0-9\s]+")
         if search is not None and pattern.search(search):
-            items = self.model.objects.filter(
-                owner_user=request.user).filter(model_name__icontains=search)
+            items = self.model.objects.select_related('profile__user').filter(
+                profile=request.user.profile).filter(model_name__icontains=search)
         else:
-            items = self.model.objects.filter(owner_user=request.user)
+            items = self.model.objects.select_related('profile__user').filter(profile=request.user.profile)
         paginator = Paginator(items, 15)
         try:
             items = paginator.page(page)

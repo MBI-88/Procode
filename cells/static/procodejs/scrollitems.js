@@ -32,7 +32,6 @@ async function scrollInf(){
     const margin = itemsajax.clientHeight - window.innerHeight - 500
     let search_valid = ''
     if (search.length >= 3) {search_valid = search.toString()}
-    
     if (itemsajax.scrollHeight > margin && empty_page == false && block_request == false){
         block_request = true
         page += 1
@@ -48,7 +47,6 @@ function takeKeypress(event){
     empty_page = false
     page = 1
     GetFetch(page,search.toString())
-    
     if (event.code == 'Backspace' && search.length == 1) {
         location.reload()
     }

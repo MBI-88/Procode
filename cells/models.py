@@ -31,8 +31,7 @@ class ShopCellModel(models.Model):
     """
     Tabla para el guardado de los articulos de venta
     """
-    owner_user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='shopcell',on_delete=models.CASCADE)
-    profile = models.ForeignKey(ProfileUserModel,on_delete=models.CASCADE,null=True)
+    profile = models.ForeignKey(ProfileUserModel,on_delete=models.CASCADE,null=True,related_name='shopcell')
     model_name = models.CharField(max_length=150)
     slug = models.SlugField(max_length=150,blank=True,unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -55,7 +54,7 @@ class ShopCellModel(models.Model):
 
     def save(self,*args, **kwargs) -> None:
         if not self.slug:
-            self.slug = slugify(self.model_name +'-'+ str(self.owner_user.username))
+            self.slug = slugify(self.model_name +'-'+ str(self.profile.user.username))
         super().save(*args,**kwargs)
 
 

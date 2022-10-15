@@ -52,7 +52,7 @@ async function itemdetail(target) {
     while (pk === undefined) {
         pk = document.getElementById(target.id).dataset.pk
     }
-    await goGet('../shopping/' + pk + '/')
+    await goGet('../shopping/'+ pk +'/')
 }
 
 
@@ -66,7 +66,6 @@ async function restorepassword() {
     document.getElementById('modaltitle').innerHTML = 'Restablecimiento de Clave'
     await goGet('../restore/password/')
 }
-
 
 
 // Navbar scroll event
@@ -85,8 +84,6 @@ const handleSelect = (target) => {
     if (target.id === 'changepassword') changepassword()
     if (target.id === 'login') login()
     if (target.id === 'register') register()
-
-
 }
 
 window.addEventListener('show.bs.modal', event => {
