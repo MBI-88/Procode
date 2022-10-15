@@ -251,9 +251,10 @@ class ShowItems(View):
         # Sanetizando la busqueda
         pattern = re.compile("[a-zA-Z0-9\s]+")
         if search is not None and pattern.search(search):
-            items = self.model.objects.filter(model_name__icontains=search)
+            items = self.model.objects.defer(
+                'created_date','description','slug').filter(model_name__icontains=search)
         else:
-            items = self.model.objects.all()
+            items = self.model.objects.defer('created_date','description','slug').all()
         paginator = Paginator(items, 15)
         try:
             items = paginator.page(page)
@@ -284,7 +285,7 @@ class DetailItem(View):
 
     def get(self, request: str, *args, **kwargs) -> HttpResponse:
         pk = kwargs['pk']
-        item = self.model.objects.select_related('profile__user').get(pk=pk)
+        item = self.model.objects.select_related('profile__user').defer('created_date','slug').get(pk=pk)
         return render(request, self.template_name, {self.context_object_name: item})
 
 
@@ -355,7 +356,8 @@ class UpdateItem(View):
 
     @method_decorator(login_required)
     def post(self, request: str, *args, **kwargs) -> HttpResponse:
-        user_item = self.model.objects.select_related('profile__user').get(pk=kwargs['pk'])
+        user_item = self.model.objects.select_related('profile__user').defer(
+            'model_name','image','description','price','created_date','slug','updated_date').get(pk=kwargs['pk'])
         if request.user.username == user_item.profile.user.username:
             form = self.form_class(
                 request.POST, files=request.FILES, instance=user_item)
@@ -396,7 +398,8 @@ class DeleteItem(View):
     @method_decorator(login_required)
     def post(self, request: str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
-        user_item = self.model.objects.select_related('profile__user').get(pk=kwargs['pk'])
+        user_item = self.model.objects.select_related('profile__user').defer(
+            'model_name','image','description','price','created_date','slug','updated_date').get(pk=kwargs['pk'])
         if request.user.username == user_item.profile.user.username:
             if form.is_valid():
                 self.model.objects.filter(pk=kwargs['pk']).delete()
@@ -430,10 +433,12 @@ class Profile(View):
         # Sanetizando busqueda
         pattern = re.compile("[a-zA-Z0-9\s]+")
         if search is not None and pattern.search(search):
-            items = self.model.objects.select_related('profile__user').filter(
+            items = self.model.objects.select_related('profile__user').defer(
+                'description','slug','created_date').filter(
                 profile=request.user.profile).filter(model_name__icontains=search)
         else:
-            items = self.model.objects.select_related('profile__user').filter(profile=request.user.profile)
+            items = self.model.objects.select_related('profile__user').defer(
+                'description','slug','created_date').filter(profile=request.user.profile)
         paginator = Paginator(items, 15)
         try:
             items = paginator.page(page)

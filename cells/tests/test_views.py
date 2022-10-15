@@ -14,7 +14,7 @@ class TestViews(TestCase):
         )
         ProfileUserModel.objects.create(user=self.user,phone='54642434')
         ShopCellModel.objects.create(
-            owner_user=self.user,profile=self.user.profile,
+            profile=self.user.profile,
             model_name='Item test view',price='200'
         )
     

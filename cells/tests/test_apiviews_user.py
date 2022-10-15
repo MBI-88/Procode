@@ -29,10 +29,10 @@ class UserApiTestCase(APITestCase):
         ProfileUserModel.objects.create(user=self.user,phone='56364624')
         ProfileUserModel.objects.create(user=self.user2,phone='53634324')
         
-        self.item1 = ShopCellModel.objects.create(owner_user=self.user,profile=self.user.profile,
+        self.item1 = ShopCellModel.objects.create(profile=self.user.profile,
             model_name='TestModel1',price=300,description='User test 1'
         )
-        self.item2 = ShopCellModel.objects.create(owner_user=self.user2,profile=self.user2.profile,
+        self.item2 = ShopCellModel.objects.create(profile=self.user2.profile,
             model_name='TestModel2',price=300,description='User test 2'
         )
 

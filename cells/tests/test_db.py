@@ -17,7 +17,6 @@ class TestUserModel(TestCase):
             address='Mi direccion user1'
         )
         self.item = ShopCellModel.objects.create(
-            owner_user=self.user_db,
             profile=self.user_db.profile,
             model_name='Samsung Test',
             price=250,
@@ -48,5 +47,5 @@ class TestUserModel(TestCase):
         self.assertNotEqual(user2.profile.address,'Mi direccion user1')
     
     def test_shopcell(self) -> None:
-        self.assertNotEqual(self.item.owner_user.username,'TestUser2')
+        self.assertNotEqual(self.item.profile.user.username,'TestUser2')
        

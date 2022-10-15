@@ -28,7 +28,6 @@ class ShopingCellModelListSerializer(serializers.Serializer):
         
     def create(self, validated_data:dict) -> object:
         ShopCellModel.objects.create(
-            owner_user=self.user,
             profile=self.user.profile,
             model_name=validated_data['model_name'],
             price=validated_data['price'],
@@ -123,8 +122,8 @@ class UserUpdateSerializer(serializers.Serializer):
 
 class ProfileSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=50,required=True)
-    last_name = serializers.CharField(max_length=100,required=True)
     phone = serializers.CharField(max_length=8,required=True)
+    email = serializers.EmailField(max_length=50,required=True)
 
 
 

@@ -26,10 +26,10 @@ class ViewUserTestCase(TestCase):
         ProfileUserModel.objects.create(user=cls.user,phone='56364624')
         ProfileUserModel.objects.create(user=cls.user2,phone='53634324')
 
-        cls.item1 = ShopCellModel.objects.create(owner_user=cls.user,profile=cls.user.profile,
+        cls.item1 = ShopCellModel.objects.create(profile=cls.user.profile,
             model_name='TestModel1',price=300,description='User test 1'
         )
-        cls.item2 = ShopCellModel.objects.create(owner_user=cls.user2,profile=cls.user2.profile,
+        cls.item2 = ShopCellModel.objects.create(profile=cls.user2.profile,
             model_name='TestModel2',price=300,description='User test 2'
         )
         return super().setUpTestData()
@@ -130,13 +130,13 @@ class ViewUserTestCase(TestCase):
         self.client.force_login(user=self.user2)
         pk = str(self.item2.pk)
         response = self.client.post('/cells/delete/item/'+pk+'/',data={'delete':True})
-        self.assertEqual(response.status_code,302)
+        self.assertEqual(response.content,b'302')
     
     def test_deleteitem_post_fail(self) -> None:
         self.client.force_login(user=self.user2)
         pk = str(self.item1.pk)
         response = self.client.post('/cells/delete/item/'+pk+'/',data={'delete':True},follow=True)
-        self.assertContains(response,text='<!--Message-->',count=1)
+        self.assertEqual(response.content,b'302')
 
 #********************************************* Test Profile ************************************************************
     def test_profile(self) -> None:
