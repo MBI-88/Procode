@@ -46,3 +46,11 @@ const handleScroll = async () => {
 
 window.addEventListener('scroll', handleScroll)
 
+const scrollText = async () => {
+    let textBlock = document.getElementById('text-who')
+    textBlock.className = (textBlock.offsetTop - 700 < document.documentElement.scrollTop &&
+        document.documentElement.scrollTop < textBlock.offsetTop - 150) ? 
+        'text-who-apper fs-4 fw-lighter' : 'text-who-hidde fs-4 fw-lighter'
+}
+
+window.addEventListener('scroll', scrollText)

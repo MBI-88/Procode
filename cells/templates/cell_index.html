@@ -37,7 +37,7 @@
       <div class="container-fluid">
         <a class="navbar-brand" href=" {% url 'cells:index' %} " data-bs-toogle="tooltip" data-bs-html="true"
           title="Home">
-          <img src=" {% static 'img/logo/logoIco.png' %} " alt="LOGO" class="rounded-circle" width="40">
+          <img src=" {% static 'img/logo/logoIco.png' %} " alt="LOGO" class="rounded-circle" width="40" loading="lazy">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
           aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,41 +55,6 @@
                 </svg>
                 <b> Tienda</b>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-dark  active" data-bs-toogle="tooltip" data-bs-html="true" title="Contactos"
-                href=" {% url 'cells:contact' %} ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="" class="bi bi-envelope"
-                  viewBox="0 0 16 16">
-                  <path
-                    d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
-                </svg>
-                <b> Contactos</b>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-dark  active" data-bs-toogle="tooltip" data-bs-html="true" title="Información"
-                href=" {% url 'cells:info' %} ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="" class="bi bi-info-circle"
-                  viewBox="0 0 16 16">
-                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                  <path
-                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                </svg>
-                <b> Información</b>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-dark  active" data-bs-toogle="tooltip" data-bs-html="true" title="Quienes somos"
-                href=" {% url 'cells:who' %} ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="" class="bi bi-question-octagon"
-                  viewBox="0 0 16 16">
-                  <path
-                    d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z" />
-                  <path
-                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
-                </svg>
-                <b> Acerca</b></a>
             </li>
             <li class="nav-item">
               {% if user.is_authenticated %}
@@ -114,7 +79,6 @@
               {% endif %}
             </li>
           </ul>
-
           <div class="navbar-nav">
             {% if user.is_authenticated %}
             <ul>
@@ -184,64 +148,163 @@
     </div>
     <div style="height: 10rem;"></div>
     <!--Images-->
-    <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1 middle-bg-1 shadow" style="height: 23rem"
-      id="block-1">
-      <div class="col-lg-5 col-g-5 col-sm-1 text-center">
-        <h5 class="h5-h-100 text-light text-wrap" style="padding-top: 3rem;" id="text-inter1" hidden>
-          <p>Trabajo y eficiencia nos caracteriza.
-            Nos enfocamos en los pequeños detalles.
-            Creemos que los pequeños dellates son la clave
-            para construir grandes proyectos.
-            Pr0c0d3 es un equipo de profesiones enfocado el.
-            mejoramiento tecnológico.
-          </p>
-        </h5>
-      </div>
-      <div class="col-lg-7 col-g-5 col-sm-1 text-center  p-lg-5 p-sm-5 p-md-3 pb-3">
-        <img src="{% static 'img/img_presentation/working.jpg' %}" alt="" class="img-thumbnail rounded-circle h-75 shadow" id="img-inter1" hidden>
+    <div class="middle-bg-1 shadow" style="height: 23rem">
+      <div class="d-lg-flex d-md-block d-sm-block" id="block-1">
+        <div class="text-center pb-3">
+          <h5 class="h5-h-100 text-light text-wrap p-4" id="text-inter1" hidden>
+            <p class="fs-5 fw-lighter pt-4">
+              Trabajo y eficiencia nos caracteriza.
+              Nos enfocamos en los pequeños detalles.
+              Creemos que los pequeños dellates son la clave
+              para construir grandes proyectos.
+              Pr0c0d3 es un equipo de profesionales enfocados en el.
+              mejoramiento tecnológico.
+            </p>
+          </h5>
+        </div>
+        <div class="text-center p-sm-4">
+          <img src="{% static 'img/img_presentation/working.jpg' %}" alt=""
+            class="img-thumbnail rounded-circle w-75 shadow" id="img-inter1" loading="lazy" hidden>
+        </div>
       </div>
     </div>
     <div style="height: 25rem;"></div>
-    <div class="middle-bg-2" style="height: 35rem;" id="block-2">
-      <h5 class="h5-h-100 text-light text-center text-wrap" style="padding-top: 5rem;" id="text-bg-2" hidden>
-        <p>
-          La calidad es un punto crusial para
+    <div class="middle-bg-2 p-3" style="height: 35rem;" id="block-2">
+      <h5 class="h5-h-100 text-light text-center text-wrap p-4" id="text-bg-2" hidden>
+        <p class=" fs-4 fw-lighter ">
+          La calidad es un punto crucial para
           que un buen proyecto cumpla sus objetivos.
           Nos aseguramos que tu negocio cumpla los standares
           de seguridad y calidad. Capacitamos a los clientes en materias
           tecnológicas, brindamos soporte en diseño e infraestructura.
-          Usamos las tecnologías más demandas en el mercado.
-          Hacemos un analisis de sus necesidades y trazamos las metas
+          Usamos las tecnologías más demandadas en el mercado.
+          Hacemos un análisis de sus necesidades y trazamos las metas
           para que su proyecto cobre vida lo antes posible.
-          Cuente con Pr0c0d3 en temas de  seguridad, diseño e infraestructura.
+          Cuente con Pr0c0d3 para temas de seguridad, diseño e infraestructura.
         </p>
       </h5>
     </div>
-    <div style="height: 10rem;"></div>
-    <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1" style="height: 45rem;" id="block-3">
-      <div class="col-lg-5 col-g-5 col-sm-1 p-lg-5 text-center">
-        <h5 class="h5-h-100 text-black-50 text-wrap p-sm-5" style="padding-top: 2rem;" id="text-inter2">
-          <p>
-            Nuestros servicios cuentan con la mejor relación calidad-precio.
-            Usted puede tener la seguridad que busca y la confianza
-            eligiendonos como parte de su equipo de trabajo
-            La productividad y el compromiso forma parte 
-            de lo que somos como equipo.
-            Trabajamos para clientes de cualquier lugar
-            del mundo. Estamos abiertos a nuevos retos.
-            Amamos los desafios, vemos en ellos la oportunidad 
-            de crecimiento profesional.
-            Tu negocio esta segurio con Pr0c0d3, el resto va 
-            por nuestra cuenta 
+    <div style="height: 5rem;"></div>
+    <div class="ps-4 pe-4">
+      <div class="container d-lg-flex d-md-block d-sm-block align-items-center gap-2 border-1 rounded-4 
+    shadow layout-reverse p-4">
+        <div class="text-center">
+          <h5 class="h5-h-100 text-black-50 text-wrap p-1 mt-3">
+            <p class="fs-5 fw-light">
+              Nuestros servicios cuentan con la mejor relación calidad-precio.
+              Usted puede tener la seguridad que busca y la confianza
+              eligiendonos como parte de su equipo de trabajo
+              La productividad y el compromiso forma parte
+              de lo que somos como equipo.
+              Trabajamos para clientes de cualquier lugar
+              del mundo. Estamos abiertos a nuevos retos.
+              Amamos los desafios, vemos en ellos la oportunidad
+              de crecimiento profesional.
+              Tu negocio esta segurio con Pr0c0d3, el resto va
+              por nuestra cuenta
+            </p>
+          </h5>
+        </div>
+        <div class="text-center">
+          <img src=" {% static 'img/img_presentation/services.jpg' %} " alt=""
+            class="img-thumbnail rounded-circle w-75 shadow " loading="lazy">
+        </div>
+      </div>
+      <div style="height: 3rem;"></div>
+      <div class="container d-lg-flex d-md-block d-sm-block align-items-center gap-2 border-1 rounded-4 shadow p-4">
+        <div class="text-center">
+          <img src=" {% static 'img/img_presentation/team-procode.jpg' %} " alt=""
+            class="img-thumbnail rounded-circle w-75 shadow" loading="lazy">
+        </div>
+        <div class="text-center">
+          <h5 class="h5-h-100 text-black-50 text-wrap p-1 mt-3">
+            <p class="fs-5 fw-light">
+              Somos un equipo multidisciplinario,
+              nos une la pasión por el trabajo.
+              Tenemos años de formación en desarrollo web.
+              Dominamos los protocolos de comunicacion y la
+              ciberseguridad de las aplicaciones.
+              Hacemos un análisis detallado de las métricas de tu sitio.
+              Creamos aplicaciones a tu media.
+              Capacitamos a tus miembros.
+              Brindamos acesoria técnica.
+              Nos efocamos en los detalles.
+            </p>
+          </h5>
+        </div>
+      </div>
+    </div>
+    <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1 middle-bg-1 shadow"
+      style="height: 23rem;margin-top: 10rem;">
+      <div class="col-lg-5 col-g-5 col-sm-1 text-center pb-5">
+        <h5 class="h5-h-100 text-light text-wrap p-4">
+          <p class="fs-5 fw-lighter pt-4">
+            Trabajamos con tecnologías emergentes.
+            Nos mantenemos al tanto de los últimos acontecimientos y
+            necesidad de nuestros usuarios. Brindamos servicios
+            de infraestructura, configuracion e instalación.
           </p>
         </h5>
       </div>
-      <div class="col-lg-7 col-g-5 col-sm-1 text-center p-lg-5 p-sm-4 p-md-3 pb-2">
-        <img src=" {% static 'img/img_presentation/services.jpg' %} " alt="" class="img-fluid rounded-circle h-75 shadow"
-          id="img-inter2">
+      <div class="col-lg-7 col-g-5 col-sm-1 text-center  p-lg-5 p-sm-5 p-md-3 pb-3">
+        <div id="mainSlider" class="carousel slide carousel-fade pt-2 pb-2" data-bs-ride="carousel">
+          <div class="carousel-inner" id="img-inter1">
+            <div class="carousel-item active">
+              <img src=" {% static 'img/technology/angular-logo.jpg' %} " class="img-thumbnail rounded-pill w-25 h-25"
+                alt="" loading="lazy">
+            </div>
+            <div class="carousel-item">
+              <img src=" {% static 'img/technology/bootstrap-logo.jpg' %} " class="img-thumbnail rounded-pill w-25"
+                alt="" loading="lazy">
+            </div>
+            <div class="carousel-item">
+              <img src=" {% static 'img/technology/django-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt="" loading="lazy">
+            </div>
+            <div class="carousel-item">
+              <img src=" {% static 'img/technology/fastapi-logo.jpg' %} " class="img-thumbnail rounded-pill w-25"
+                alt="" loading="lazy">
+            </div>
+            <div class="carousel-item">
+              <img src=" {% static 'img/technology/ionic-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt="" loading="lazy">
+            </div>
+            <div class="carousel-item">
+              <img src=" {% static 'img/technology/javascript-logo.jpg' %} " class="img-thumbnail rounded-pill w-25"
+                alt="" loading="lazy">
+            </div>
+            <div class="carousel-item">
+              <img src=" {% static 'img/technology/node-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt="" loading="lazy">
+            </div>
+            <div class="carousel-item">
+              <img src=" {% static 'img/technology/python-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt="" loading="lazy">
+            </div>
+            <div class="carousel-item">
+              <img src=" {% static 'img/technology/react-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt="" loading="lazy">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div style="height: 10rem;"></div>
+
+    <div style="height: 20rem;"></div>
+    <div class="container-fluid img-bg-who">
+      <div>
+        <h5 class="text-black-50 text-start pt-5">
+          <p id="text-who" class="text-who-hidde">
+            Trabajamos con un contrato donde el cliente<br>
+            es la prioridad principal, nuestro objetivo es hacer cumplir<br>
+            tu sueños. Lograr una buena reseña y posicionamiento,<br>
+            es nuestro objetivo laboral.<br>
+            ¿Que tenemos de diferente ? Somos a demas <br>
+            de desarrolladores, especialistas en redes e <br>
+            infraestructura. Estamos formados por especialistas <br>
+            en varias ramas de las tecnologias web.<br>
+          </p>
+        </h5>
+      </div>
+    </div>
+    <div style="height: 20rem;"></div>
+
+
     {% endblock content %}
   </main>
 
@@ -256,24 +319,31 @@
 
   <!--Footer-->
   <footer class="footer-bg card-footer pt-5">
-    <div class="container-sm text-light abs-center pb-4 ">
-      <div class="row row-cols-1 pb-3 pt-5 text-center">
-        <div class="col">
-          <h6 class="h6 fw-bold">URLS</h6>
+    <div class="container-fluid text-light pb-5 ">
+      <div class="container d-lg-flex d-md-block d-sm-block pb-5 pt-5 gap-5 align-content-center">
+        <div>
+          <h5 class="h5 fw-bold">Links</h5>
           <ul class="d-block list-unstyled ">
             <li><a href="{% url 'cells:index' %}" class="text-white nav-link text-light  active">Casa</a></li>
             <li><a href="{% url 'cells:dashboar_list' %}" class="text-white nav-link text-light  active">Tienda</a></li>
-            <li><a href=" {% url 'cells:info' %} " class="text-white nav-link text-light  active">Información</a></li>
-            <li><a href=" {% url 'cells:contact' %} " class="text-white nav-link text-light  active">Contactos</a></li>
-            <li><a href=" {% url 'cells:who' %} " class="text-white nav-link text-light  active">Acerca</a></li>
+          </ul>
+        </div>
+        <div style="width: 5rem; height: 2rem; "></div>
+        <div>
+          <h5 class="h5 fw-bold">Contactos</h5>
+          <ul class="d-block list-unstyled ">
+            <li><a href="mailto:ingmbi8807@gmail.com"
+                class="text-white nav-link text-light  active">ingmbi8807@gmail.com </a></li>
+            <li><a href="mailto:yasmaniarmas1995@gmail.com"
+                class="text-white nav-link text-light  active">yasmaniarmas1995@gmail.com</a></li>
           </ul>
         </div>
       </div>
       <p class="text-center font-monospace fw-bold fs-5">Copyright © 2022 ProC0d3 |Team </p>
-      <div class="container-sm text-center">
-        <div class="row  d-inline-flex">
+      <div class="container text-center">
+        <div class="d-inline-flex  gap-5">
 
-          <div class="col">
+          <div>
             <a href="#">
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-facebook"
                 viewBox="0 0 16 16">
@@ -283,7 +353,7 @@
             </a>
           </div>
 
-          <div class="col">
+          <div>
             <a href="#">
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-twitter"
                 viewBox="0 0 16 16">
@@ -293,7 +363,7 @@
             </a>
           </div>
 
-          <div class="col">
+          <div>
             <a href="#">
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-linkedin"
                 viewBox="0 0 16 16">

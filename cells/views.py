@@ -53,42 +53,6 @@ def index(request: str) -> HttpResponse:
     return render(request, 'cell_index.html')
 
 
-def contact(request: str) -> HttpResponse:
-    """Contact (links)
-
-    Args:
-        request (str): HTTP request
-
-    Returns:
-        HttpResponse: HTTP response
-    """
-    return render(request, 'dashboard/cell_contact.html')
-
-
-def info(request: str) -> HttpResponse:
-    """Information for the user
-
-    Args:
-        request (str): HTTP request
-
-    Returns:
-        HttpResponse: HTTP response
-    """
-    return render(request, 'dashboard/cell_info.html')
-
-
-def who(request: str) -> HttpResponse:
-    """Who we are 
-
-    Args:
-        request (str): HTTP request
-
-    Returns:
-        HttpResponse: HTTP response
-    """
-    return render(request, 'dashboard/cell_who.html')
-
-
 def page_400_bad_request(request: str, exception: object, template_name='errors/400.html') -> HttpResponse:
     return render(request, template_name)
 

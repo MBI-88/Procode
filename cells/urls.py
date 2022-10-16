@@ -22,7 +22,4 @@ urlpatterns = [
     path('profile/',views.Profile.as_view(),name='profile'),
     path('update/profile/',views.UpdateProfile.as_view(),name='update_profile'),
     path('delete/profile/',views.DeleteProfile.as_view(),name='delete_profile'),
-    path('contact/',views.contact,name='contact'),
-    path('info/',views.info,name='info'),
-    path('who/',views.who,name='who'),
 ]

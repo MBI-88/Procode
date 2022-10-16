@@ -3,14 +3,10 @@
      box-sizing: border-box;
      margin: 0;
      padding: 0;
-}
-
-
-html,
-body {
      font-size: 15px;
      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
      scroll-behavior: smooth;
+
 }
 
 *::after,
@@ -23,6 +19,13 @@ body {
      background: url('../img/img_presentation/smartphone-3139219.jpg') no-repeat center;
      box-shadow: 1px 2px 10px rgba(68, 67, 67, 0.744);
 
+}
+@media screen and (max-width: 70rem) {
+     .procode-background {
+          background: url('../img/img_presentation/smartphone-3139219.jpg') 50% center;
+          box-shadow: 1px 2px 10px rgba(68, 67, 67, 0.744);
+     
+     }
 }
 
 .procode-title {
@@ -73,15 +76,30 @@ body {
      color: #f27405;
 }
 
+@media screen  and (max-width: 70rem){
+     .navbar-onscroll {
+          background: #fffA;
+     }
+}
+
 .middle-bg-1 {
      background-color: #f27405;
 }
 
 .middle-bg-2 {
      z-index: -2;
-     height: 60rem;
+     height: 20rem;
      background: url('../img/img_presentation/servers.jpg') no-repeat center;
      background-attachment: fixed;
+}
+
+@media screen and (max-width: 70rem) {
+     .middle-bg-2 {
+          z-index: -2;
+          height: 60rem;
+          background: url('../img/img_presentation/servers.jpg') 45% center;
+          background-attachment: fixed;
+     }
 }
 
 .procode-pres1 {
@@ -197,24 +215,12 @@ body {
      background: url('../img/img_presentation/friends-3175059_1920.jpg') no-repeat center;
 }
 
-
-
-/* Who we are */
-
-.whoare {
-     animation: effectBlur ease 1s 1;
+@media screen and (max-width: 70rem) {
+     .img-bg {
+          background: url('../img/img_presentation/friends-3175059_1920.jpg') 40%;
+     }
 }
 
-@keyframes effectBlur {
-     from {
-          filter: blur(2rem);
-     }
-
-     to {
-          filter: blur(0rem);
-     }
-
-}
 
 .user {
      background: #edf2f97b;
@@ -238,11 +244,21 @@ body {
 }
 
 /* Crear evento de aparicion  */
+
 .img-bg-who {
-     height: 40rem;
+     height: 30rem;
      background: url('../img/img_presentation/venue-bg.jpg') no-repeat center;
      background-attachment: fixed;
 
+}
+
+@media screen and (max-width: 70rem) {
+     .img-bg-who {
+          height: 30rem;
+          background: url('../img/img_presentation/venue-bg.jpg') 50% center;
+          background-attachment: fixed;
+     
+     }
 }
 
 .text-who-apper {
@@ -278,90 +294,17 @@ body {
 
 }
 
-/* Contact */
-
-.contact-user {
-     height: 45em;
-     position: relative;
-     background: url('../img/img_presentation/Contact-bg.jpg') no-repeat center;
-     border-radius: 1%;
-     margin: 2%;
-     animation: contactsliding ease 4s;
-}
-
-@keyframes contactsliding {
-     0% {
-          opacity: 0;
-     }
-
-     100% {
-          opacity: 1;
-     }
+.layout-reverse {
 
 }
 
-/* Info */
-
-.info {
-     background: #c1d1e894;
-     position: relative;
-     margin: 8%;
-     border-radius: 1%;
-     animation: infosliding ease 1s 1;
-}
-
-@keyframes infosliding {
-     0% {
-          opacity: 0;
-     }
-
-     100% {
-          opacity: 1;
-     }
-
-}
-
-.block-effect-1 {
-     animation: effect1 ease 3s 1;
-}
-
-@keyframes effect1 {
-     0% {
-          opacity: 0;
-     }
-
-     100% {
-          opacity: 1;
-     }
-
-}
-
-.block-effect-2 {
-     animation: effect2 ease 5s 1;
-}
-
-@keyframes effect2 {
-     0% {
-          opacity: 0;
-     }
-
-     100% {
-          opacity: 1;
+@media screen and (max-width: 70rem ) {
+     .layout-reverse {
+          display: flex;
+          flex-direction: column-reverse;
      }
 }
 
-.block-effect-3 {
-     animation: effect3 ease 7s 1;
 
-}
 
-@keyframes effect3 {
-     0% {
-          opacity: 0;
-     }
 
-     100% {
-          opacity: 1;
-     }
-
-}
