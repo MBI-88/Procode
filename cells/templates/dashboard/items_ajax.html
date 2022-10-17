@@ -1,7 +1,7 @@
 {% for item in itemcells %}
 <!--Item Ajax-->
 <div class="col-md-3 col-sm-1 p-5 text-black-50">
-    <div class="container text-center p-2 rounded-3  bg-gradient shadow zoon">
+    <div class="container text-center p-2 rounded-3  bg-gradient shadow">
         <div class="p-3">
             <img src=" {%if item.image %}{{item.image.url}} {% else %} '' {% endif %}" class="img-fluid rounded w-50"
                 alt="No picture" loading="lazy">
@@ -11,7 +11,7 @@
             Precio: {{ item.price }} $<br>
             Actualizado: {{ item.updated_date|timesince }}. <br>
         </address>
-        <button class="btn btn-primary btn-fluid" id="detail-{{ item.pk }}" data-pk="{{item.pk}}" data-bs-toggle="modal"
+        <button class="btn btn-primary btn-fluid zoon" id="detail-{{ item.pk }}" data-pk="{{item.pk}}" data-bs-toggle="modal"
             data-bs-target="#modalblock">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                 class="bi bi-info-circle-fill" viewBox="0 0 16 16">
