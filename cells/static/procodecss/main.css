@@ -16,17 +16,9 @@
 
 
 .procode-background {
-     background: url('../img/img_presentation/smartphone.jpg') no-repeat center;
+     background-color: #0f183e;
      box-shadow: 1px 2px 10px rgba(68, 67, 67, 0.744);
 
-}
-
-@media screen and (max-width: 70rem) {
-     .procode-background {
-          background: url('../img/img_presentation/smartphone-small.jpg') no-repeat center;
-          box-shadow: 1px 2px 10px rgba(68, 67, 67, 0.744);
-
-     }
 }
 
 .procode-title {
@@ -264,7 +256,7 @@
 @media screen and (max-width: 70rem) {
      .img-bg-who {
           height: 30rem;
-          background: url('../img/img_presentation/venue-bg.jpg') 50% center;
+          background: url('../img/img_presentation/venue-bg-small.jpg') no-repeat center;
           background-attachment: fixed;
 
      }
