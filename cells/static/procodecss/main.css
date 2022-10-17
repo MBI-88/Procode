@@ -164,17 +164,11 @@
 }
 
 .bg-profile {
-     background: url('../img/img_presentation/background-users.jpg') no-repeat center;
-     background-position: fixed;
+     background: linear-gradient(#eea25f,#507cbd) ;
+ 
 }
 
-@media screen and (max-width: 70rem) {
-     .bg-profile {
-          background: url('../img/img_presentation/background-users-small.jpg') no-repeat center;
-          background-position: fixed;
-     }
 
-}
 
 .bg-verticalsearch {
      background: #1b1384;
