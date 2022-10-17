@@ -3,7 +3,7 @@
 coverage/
 .coverage
 .coveragerc
-procode/develop.db
+../develop.db
 
 
 
