@@ -18,26 +18,6 @@ class TestViews(TestCase):
             model_name='Item test view',price='200'
         )
     
-    # Index view
-    def test_index(self) -> None:
-        request = self.client.get('/cells/index/')
-        self.assertContains(response=request,text='<!--Index-->',count=1)
-    
-    # Info view
-    def test_info(self) -> None:
-        request = self.client.get('/cells/info/')
-        self.assertContains(response=request,text='<!--Info-->',count=1)
-    
-    # Contact view
-    def test_contact(self) -> None:
-        request = self.client.get('/cells/contact/')
-        self.assertContains(response=request,text='<!--Contact-->',count=1)
-    
-    # Who view
-    def test_who(self) -> None:
-        request = self.client.get('/cells/who/')
-        self.assertContains(response=request,text='<!--Who are we-->',count=1)
-    
     # Showitems view
     def test_show_items(self) -> None:
         response = self.client.get('/cells/shopping/')
