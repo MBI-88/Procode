@@ -50,7 +50,7 @@ class GeneratorDataDB(object):
                         self.phone_faker.cpu_frequency())
 
                     ShopCellModel.objects.create(
-                        owner_user=user,profile=user.profile,
+                        profile=user.profile,
                         model_name=self.phone_faker.phone_model(),
                         price=int(self.price_faker.price(minimum=150,maximum=2000)),
                         description=text_phone)
