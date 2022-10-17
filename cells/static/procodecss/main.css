@@ -16,15 +16,16 @@
 
 
 .procode-background {
-     background: url('../img/img_presentation/smartphone-3139219.jpg') no-repeat center;
+     background: url('../img/img_presentation/smartphone.jpg') no-repeat center;
      box-shadow: 1px 2px 10px rgba(68, 67, 67, 0.744);
 
 }
+
 @media screen and (max-width: 70rem) {
      .procode-background {
-          background: url('../img/img_presentation/smartphone-3139219.jpg') 50% center;
+          background: url('../img/img_presentation/smartphone-small.jpg') no-repeat center;
           box-shadow: 1px 2px 10px rgba(68, 67, 67, 0.744);
-     
+
      }
 }
 
@@ -76,7 +77,7 @@
      color: #f27405;
 }
 
-@media screen  and (max-width: 70rem){
+@media screen and (max-width: 70rem) {
      .navbar-onscroll {
           background: #fffA;
      }
@@ -97,7 +98,7 @@
      .middle-bg-2 {
           z-index: -2;
           height: 60rem;
-          background: url('../img/img_presentation/servers.jpg') 45% center;
+          background: url('../img/img_presentation/servers-small.jpg') no-repeat center;
           background-attachment: fixed;
      }
 }
@@ -171,8 +172,16 @@
 }
 
 .bg-profile {
-     background-image:url('../img/img_presentation/Background-Users.jpg');
+     background: url('../img/img_presentation/background-users.jpg') no-repeat center;
      background-position: fixed;
+}
+
+@media screen and (max-width: 70rem) {
+     .bg-profile {
+          background: url('../img/img_presentation/background-users-small.jpg') no-repeat center;
+          background-position: fixed;
+     }
+
 }
 
 .bg-verticalsearch {
@@ -212,12 +221,12 @@
 }
 
 .img-bg {
-     background: url('../img/img_presentation/friends-3175059_1920.jpg') no-repeat center;
+     background: url('../img/img_presentation/friends.jpg') no-repeat center;
 }
 
 @media screen and (max-width: 70rem) {
      .img-bg {
-          background: url('../img/img_presentation/friends-3175059_1920.jpg') 40%;
+          background: url('../img/img_presentation/friends-small.jpg') no-repeat center;
      }
 }
 
@@ -257,7 +266,7 @@
           height: 30rem;
           background: url('../img/img_presentation/venue-bg.jpg') 50% center;
           background-attachment: fixed;
-     
+
      }
 }
 
@@ -294,17 +303,11 @@
 
 }
 
-.layout-reverse {
+.layout-reverse {}
 
-}
-
-@media screen and (max-width: 70rem ) {
+@media screen and (max-width: 70rem) {
      .layout-reverse {
           display: flex;
           flex-direction: column-reverse;
      }
 }
-
-
-
-
