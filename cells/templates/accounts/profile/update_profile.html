@@ -1,5 +1,5 @@
 {% extends 'cell_index.html' %}
-{% block title %}Actualizar perfil{% endblock title %}
+{% block title %}User update{% endblock title %}
 {% load widget_tweaks %}
 
 {% block content %}
@@ -26,7 +26,7 @@
       <div class="row row-cols-1  container">
         <div class="col pb-2">
           <li class="list-unstyled">
-            <label for="inputUsername" class="form-label">Nombre de Usuario</label>
+            <label for="inputUsername" class="form-label">Username</label>
           </li>
           <li class="list-unstyled">
             {% if form.username.errors %}
@@ -40,7 +40,7 @@
       <div class="row row-cols-1  container">
         <div class="col pb-2">
           <li class="list-unstyled">
-            <label for="inputFirstname" class="form-label">Nombre</label>
+            <label for="inputFirstname" class="form-label">Name</label>
           </li>
           <li class="list-unstyled">
             {% if form.first_name.errors %}
@@ -54,7 +54,7 @@
       <div class="row row-cols-1 container">
         <div class="col pb-2">
           <li class="list-unstyled">
-            <label for="inputLastname" class="form-label">Apellidos</label>
+            <label for="inputLastname" class="form-label">Last name</label>
           </li>
           <li class="list-unstyled">
             {% if form.last_name.errors %}
@@ -68,7 +68,7 @@
       <div class="row row-cols-1 container">
         <div class="col pb-2">
           <li class="list-unstyled">
-            <label for="inputAddress" class="form-label">Dirección</label>
+            <label for="inputAddress" class="form-label">Address</label>
           </li>
           <li class="list-unstyled">
             {% if form.address.errors %}
@@ -82,7 +82,7 @@
       <div class="row row-cols-1 container">
         <div class="col pb-2">
           <li class="list-unstyled">
-            <label for="inputPhone" class="form-label">Movil</label>
+            <label for="inputPhone" class="form-label">Phone</label>
           </li>
           <li class="list-unstyled">
             {% if form.phone.errors %}
@@ -110,7 +110,7 @@
       <div class="row row-cols-1 container">
         <div class="col pb-2">
           <li class="list-unstyled">
-            <label for="inputImage" class="form-label">Imagen de perfil</label>
+            <label for="inputImage" class="form-label">Image</label>
           </li>
           <li class="list-unstyled">
             {% if form.image.errors %}
@@ -121,7 +121,7 @@
         </div>
       </div>
       <div class="container text-end">
-        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <button type="submit" class="btn btn-primary">Update</button>
       </div>
     </form>
   </div>

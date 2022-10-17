@@ -9,7 +9,7 @@
   <link rel="shortcut icon" href=" {% static 'img/logo/logoproc0d3.ico' %}  " type="image/x-icon">
   <link rel="stylesheet" href=" {% static 'procodecss/bootstrap.min.css' %} ">
   <link rel="stylesheet" href=" {% static 'procodecss/main.css' %} ">
-  <title>ProC0d3 {% block title %}Comercio{% endblock title %}</title>
+  <title>ProC0d3 {% block title %}Home{% endblock title %}</title>
 </head>
 
 <body>
@@ -46,80 +46,77 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link text-dark  active" data-bs-toogle="tooltip" data-bs-html="true" title="Tienda"
+              <a class="nav-link text-dark  active zoon" data-bs-toogle="tooltip" data-bs-html="true" title="Shop"
                 href=" {% url 'cells:dashboar_list' %} ">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="" class="bi bi-shop-window"
-                  viewBox="0 0 16 16">
+                  viewBox="0 0 18 18">
                   <path
                     d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h12V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zm2 .5a.5.5 0 0 1 .5.5V13h8V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5z" />
-                </svg>
-                <b> Tienda</b>
+                </svg> Shop
               </a>
             </li>
-            <li class="nav-item">
-              {% if user.is_authenticated %}
-              <a class="nav-link text-dark active" data-bs-toggle="tooltip" data-bs-html="true"
-                title="Perfil de usuario" href=" {% url 'cells:profile' %} ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="" class="bi bi-person"
-                  viewBox="0 0 16 16">
-                  <path
-                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
-                </svg>
-                <b> Usuarios</b>
-              </a>
-              {% else %}
-              <a class="nav-link text-dark text-muted" data-bs-toggle="tooltip" title="Vendedores">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="" class="bi bi-person"
-                  viewBox="0 0 16 16">
-                  <path
-                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
-                </svg>
-                <b> Usuarios</b>
-              </a>
-              {% endif %}
-            </li>
-          </ul>
-          <div class="navbar-nav">
             {% if user.is_authenticated %}
-            <ul>
-              <li class="nav-link">
-                <a href=" {% url 'cells:logout' %} " class="btn middle-bg-1" data-bs-toogle="tooltip"
-                  data-bs-html="true" title="Salir">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="" class="bi bi-box-arrow-right"
-                    viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                      d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
-                    <path fill-rule="evenodd"
-                      d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
-                  </svg><b> Salir</b>
-                </a>
-              </li>
-              {% else %}
-              <li class="nav-link">
-                <button class="btn middle-bg-1" data-bs-toggle="modal" data-bs-target="#modalblock" id="login">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill=""
-                    class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                      d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
-                    <path fill-rule="evenodd"
-                      d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
-                  </svg> Entrar
-                </button>
-              </li>
-              <li class="nav-link">
-                <button class="btn middle-bg-1" data-bs-toggle="modal" data-bs-target="#modalblock" id="register">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="" class="bi bi-person-check"
-                    viewBox="0 0 16 16">
-                    <path
-                      d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
-                    <path fill-rule="evenodd"
-                      d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                  </svg> Registrarse
-                </button>
-              </li>
-            </ul>
+            <li class="nav-item">
+              <a class="nav-link text-dark active zoon" data-bs-toggle="tooltip" data-bs-html="true"
+                title="User profile" href=" {% url 'cells:profile' %} ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="" class="bi bi-person"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                </svg> Profile
+              </a>
+            </li>
+            {% else %}
+            <li>
+              <a class="nav-link text-muted" data-bs-toggle="tooltip" title="User profile">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="" class="bi bi-person"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                </svg> Profile
+              </a>
+            </li>
             {% endif %}
-          </div>
+          </ul>
+          <ul class="navbar-nav mb-2 mb-lg-0">
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a href=" {% url 'cells:logout' %} " class="nav-link text-dark zoon" data-bs-toogle="tooltip" data-bs-html="true"
+                title="Logout">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="" class="bi bi-box-arrow-right"
+                  viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                    d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                  <path fill-rule="evenodd"
+                    d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                </svg> Logout
+              </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link text-dark zoon" data-bs-toggle="modal" data-bs-target="#modalblock" id="login">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="" class="bi bi-box-arrow-in-right"
+                  viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                    d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
+                  <path fill-rule="evenodd"
+                    d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                </svg> Login
+              </a>
+            </li>
+            <li class="nav-item me-auto">
+              <a class="nav-link text-dark zoon" data-bs-toggle="modal" data-bs-target="#modalblock" id="register">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="" class="bi bi-person-check"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                  <path fill-rule="evenodd"
+                    d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                </svg> Register
+              </a>
+            </li>
+            {% endif %}
+          </ul>
         </div>
       </div>
     </nav>
@@ -202,15 +199,15 @@
           </h5>
         </div>
         <div class="text-center">
-          <img src=" {% static 'img/img_presentation/services.jpg' %} " alt=""
-            class="img-thumbnail rounded-4  " loading="lazy" style="width: 18rem ;height: 8rem ;">
+          <img src=" {% static 'img/img_presentation/services.jpg' %} " alt="" class="img-thumbnail rounded-4  "
+            loading="lazy" style="width: 18rem ;height: 8rem ;">
         </div>
       </div>
       <div style="height: 3rem;"></div>
       <div class="container d-lg-flex d-md-block d-sm-block align-items-center gap-2 border-1 rounded-4 shadow p-4">
         <div class="text-center">
-          <img src=" {% static 'img/img_presentation/team.jpg' %} " alt=""
-            class="img-thumbnail rounded-4 w-75" loading="lazy" >
+          <img src=" {% static 'img/img_presentation/team.jpg' %} " alt="" class="img-thumbnail rounded-4 w-75"
+            loading="lazy">
         </div>
         <div class="text-center">
           <h5 class="h5-h-100 text-black-50 text-wrap p-1 mt-3">
@@ -254,27 +251,32 @@
                 alt="" loading="lazy">
             </div>
             <div class="carousel-item">
-              <img src=" {% static 'img/technology/django-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt="" loading="lazy">
+              <img src=" {% static 'img/technology/django-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt=""
+                loading="lazy">
             </div>
             <div class="carousel-item">
-              <img src=" {% static 'img/technology/fastapi-logo.jpg' %} " class="img-thumbnail rounded-pill w-25"
-                alt="" loading="lazy">
+              <img src=" {% static 'img/technology/fastapi-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt=""
+                loading="lazy">
             </div>
             <div class="carousel-item">
-              <img src=" {% static 'img/technology/ionic-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt="" loading="lazy">
+              <img src=" {% static 'img/technology/ionic-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt=""
+                loading="lazy">
             </div>
             <div class="carousel-item">
               <img src=" {% static 'img/technology/javascript-logo.jpg' %} " class="img-thumbnail rounded-pill w-25"
                 alt="" loading="lazy">
             </div>
             <div class="carousel-item">
-              <img src=" {% static 'img/technology/node-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt="" loading="lazy">
+              <img src=" {% static 'img/technology/node-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt=""
+                loading="lazy">
             </div>
             <div class="carousel-item">
-              <img src=" {% static 'img/technology/python-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt="" loading="lazy">
+              <img src=" {% static 'img/technology/python-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt=""
+                loading="lazy">
             </div>
             <div class="carousel-item">
-              <img src=" {% static 'img/technology/react-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt="" loading="lazy">
+              <img src=" {% static 'img/technology/react-logo.jpg' %} " class="img-thumbnail rounded-pill w-25" alt=""
+                loading="lazy">
             </div>
           </div>
         </div>

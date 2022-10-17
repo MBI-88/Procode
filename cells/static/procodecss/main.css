@@ -39,8 +39,8 @@
 
 }
 
-.zoon img {
-     border-radius: 2px;
+.zoon {
+     cursor: pointer;
      overflow: hidden;
      transition: all ease-in-out 0.2s;
 }

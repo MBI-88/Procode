@@ -22,18 +22,18 @@ async function goGet(urlget) {
 }
 
 async function login() {
-    document.getElementById('modaltitle').innerHTML = 'Entrar'
+    document.getElementById('modaltitle').innerHTML = 'Login'
     await goGet('../login/')
 }
 
 async function register() {
-    document.getElementById('modaltitle').innerHTML = 'Registrarse'
+    document.getElementById('modaltitle').innerHTML = 'Register'
     await goGet('../register/')
 }
 
 async function deleteitem(target) {
     const pk = target.dataset.pk
-    document.getElementById('modaltitle').innerHTML = 'Borrar articulo'
+    document.getElementById('modaltitle').innerHTML = 'Delete item'
     while (pk === undefined) {
         pk = document.getElementById(target.id).dataset.pk
     }
@@ -41,14 +41,14 @@ async function deleteitem(target) {
 }
 
 async function deleteprofile() {
-    document.getElementById('modaltitle').innerHTML = 'Eliminar cuenta'
+    document.getElementById('modaltitle').innerHTML = 'Delete account'
     await goGet('../delete/profile/');
 }
 
 async function itemdetail(target) {
     // Union item-{{pk }} forman el id
     const pk = target.dataset.pk
-    document.getElementById('modaltitle').innerHTML = 'Articulo'
+    document.getElementById('modaltitle').innerHTML = 'Item'
     while (pk === undefined) {
         pk = document.getElementById(target.id).dataset.pk
     }
@@ -57,13 +57,13 @@ async function itemdetail(target) {
 
 
 async function changepassword() {
-    document.getElementById('modaltitle').innerHTML = 'Cambio de clave'
+    document.getElementById('modaltitle').innerHTML = 'Change password'
     await goGet('../register/changepassword/')
 
 }
 
 async function restorepassword() {
-    document.getElementById('modaltitle').innerHTML = 'Restablecimiento de Clave'
+    document.getElementById('modaltitle').innerHTML = 'Restore password'
     await goGet('../restore/password/')
 }
 
@@ -90,7 +90,7 @@ window.addEventListener('show.bs.modal', event => {
     window.addEventListener('click', e => {
         const target = e.target
         switch (target.tagName) {
-            case "BUTTON":
+            case "A":
                 handleSelect(target)
                 break;
             case "svg":

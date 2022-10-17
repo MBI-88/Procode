@@ -17,7 +17,7 @@
     <div class="row row-cols-1 container">
         <div class="col p-3">
             <li class="list-unstyled">
-                <label for="inputUsername" class="for-label">Nombre de Usuario</label> 
+                <label for="inputUsername" class="for-label">Username</label> 
             </li>
             <li class="list-unstyled">
                 {% if form.username.errors %}
@@ -32,7 +32,7 @@
     <div class="row row-cols-1 container">
         <div class="col pb-3">
             <li class="list-unstyled">
-                <label for="inputPassword" class="form-label">Clave</label>
+                <label for="inputPassword" class="form-label">Password</label>
             </li>
             <li class="list-unstyled">
                 {% if form.password.errors %}
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="container text-end">
-        <button type="submit" class="btn btn-primary">Entrar</button>
+        <button type="submit" class="btn btn-primary">Login</button>
     </div>
 </form>
-<a href="#" class="nav-link active" onclick=restorepassword(event)>Si olvidó su clave click aqui</a>
+<a href="#" class="nav-link active" onclick=restorepassword(event)>Forgot your password...</a>

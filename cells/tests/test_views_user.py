@@ -157,7 +157,7 @@ class ViewUserTestCase(TestCase):
             'username':self.user2,'first_name':'User2Upd','last_name':'Updated','email':'user2upd@example.com',
             'phone':'52223242','image':image,'address':'User updated'
         })
-        self.assertEqual(response.status_code,302)
+        self.assertEqual(response.status_code,200)
     
     def test_update_profile_post_fail(self) -> None:
         self.client.force_login(user=self.user)

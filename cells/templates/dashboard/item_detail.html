@@ -2,10 +2,10 @@
 <div class="container-fluid text-center p-4 item-block">
   <img src=" {% if itemcell.image %}{{ itemcell.image.url }} {% else %} '' {% endif %} " class="img-fluid rounded-3 w-50" alt="No picture">
   <address class="text-start pt-2">
-    <h5 class="card-title">Actualizado: {{ itemcell.updated_date|timesince }} <br></h5>
-    <p class="card-text">Modelo: {{ itemcell.model_name }} <br></p>
-    <p class="card-text">Precio: {{ itemcell.price }} cup<br></p>
-    <p class="card-text">Vendedor: {{ itemcell.profile.user.first_name }} <br></p>
+    <h5 class="card-title">Updated: {{ itemcell.updated_date|timesince }} <br></h5>
+    <p class="card-text">Model: {{ itemcell.model_name }} <br></p>
+    <p class="card-text">Price: {{ itemcell.price }} $<br></p>
+    <p class="card-text">Seller: {{ itemcell.profile.user.first_name }} <br></p>
 
     <p class="card-text"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
         class="bi bi-at" viewBox="0 0 16 16">
@@ -22,7 +22,7 @@
         {{ itemcell.profile.phone }}
       </a> <br>
     </p>
-    <p class="card-text">Descripción:
+    <p class="card-text">Description:
     <div style="overflow:scroll ;height: 10rem; border:1px;border-radius:5%;">{{ itemcell.description|linebreaks }}
     </div>
     </p>

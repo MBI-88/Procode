@@ -1,5 +1,5 @@
 {% extends 'cell_index.html' %}
-{% block title %}Perfil{% endblock title %}
+{% block title %}User profile{% endblock title %}
 {% load static %}
 {% load cloudinary %}
 {% cloudinary test_model_instance.image.name width=100 height=100 %}
@@ -35,14 +35,14 @@
                     <div class="col-lg-8 col-sm-1 col-md-8">
                         <div class="card-body  ">
                             <h5 class="card-title"> {{ user.username }} </h5>
-                            <p class="card-text">Nombre: {{ user.first_name }} </p>
-                            <p class="card-text">Apellidos: {{ user.last_name }} </p>
-                            <p class="card-text">Dirección: {{ user.profile.address }} </p>
-                            <p class="card-text">Telefono: {{ user.profile.phone }} </p>
+                            <p class="card-text">Name: {{ user.first_name }} </p>
+                            <p class="card-text">Last name: {{ user.last_name }} </p>
+                            <p class="card-text">Address: {{ user.profile.address }} </p>
+                            <p class="card-text">Phone: {{ user.profile.phone }} </p>
                             <p class="card-text">E-mail: {{ user.email }} </p>
                             <p class="card-text"><small class="text-light">
-                                    Miembro de: {{ user.profile.created_date|timesince }} <br>
-                                    Ultima visita: {{ user.profile.updated_date|timesince }} <br>
+                                    Member of: {{ user.profile.created_date|timesince }} <br>
+                                    Last visit: {{ user.profile.updated_date|timesince }} <br>
                                 </small></p>
                         </div>
                     </div>
@@ -50,40 +50,40 @@
                 <!--Vertical navbar-->
                 <ul class="nav flex-column  bg-verticalsearch p-4">
                     <li class="nav-item p-2">
-                        <a href=" {% url 'cells:create_item' %} " class="btn middle-bg-1 zoon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                        <a href=" {% url 'cells:create_item' %} " class="nav-link zoon text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white"
                                 class="bi bi-boxes" viewBox="0 0 16 16">
                                 <path
                                     d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504ZM7.5 9.933l-2.75 1.571v3.134l2.75-1.571V9.933Zm1 3.134 2.75 1.571v-3.134L8.5 9.933v3.134Zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567-2.742 1.567Zm2.242-2.433V3.504L8.5 5.076V8.21l2.75-1.572ZM7.5 8.21V5.076L4.75 3.504v3.134L7.5 8.21ZM5.258 2.643 8 4.21l2.742-1.567L8 1.076 5.258 2.643ZM15 9.933l-2.75 1.571v3.134L15 13.067V9.933ZM3.75 14.638v-3.134L1 9.933v3.134l2.75 1.571Z" />
                             </svg>
-                            Articulos</a>
+                            Create</a>
                     </li>
                     <li class="nav-item p-2">
-                        <a href=" {% url 'cells:update_profile' %} " class="btn middle-bg-1 zoon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                        <a href=" {% url 'cells:update_profile' %} " class="nav-link zoon text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white"
                                 class="bi bi-file-person" viewBox="0 0 16 16">
                                 <path
                                     d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z" />
                                 <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                             </svg>
-                            Editar</a>
+                            Update</a>
                     </li>
                     <li class="nav-item p-2">
-                        <button class="btn middle-bg-1 zoon" id="deleteprofile" data-bs-toggle="modal"
+                        <a class="nav-link zoon text-white" id="deleteprofile" data-bs-toggle="modal"
                             data-bs-target="#modalblock" onclick=deleteprofile()>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white"
                                 class="bi bi-file-person" viewBox="0 0 16 16">
                                 <path
                                     d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z" />
                                 <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                             </svg>
-                            Eliminar
-                        </button>
+                            Delete
+                        </a>
                     </li>
                     <li class="nav-item p-2">
-                        <button class="btn middle-bg-1 zoon" id="changepassword" data-bs-toggle="modal"
+                        <a class="nav-link zoon text-white" id="changepassword" data-bs-toggle="modal"
                             data-bs-target="#modalblock">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white"
                                 class="bi bi-fingerprint" viewBox="0 0 16 16">
                                 <path
                                     d="M8.06 6.5a.5.5 0 0 1 .5.5v.776a11.5 11.5 0 0 1-.552 3.519l-1.331 4.14a.5.5 0 0 1-.952-.305l1.33-4.141a10.5 10.5 0 0 0 .504-3.213V7a.5.5 0 0 1 .5-.5Z" />
@@ -96,7 +96,8 @@
                                 <path
                                     d="M4.81 1.37A6.5 6.5 0 0 1 14.56 7a.5.5 0 1 1-1 0 5.5 5.5 0 0 0-8.25-4.765.5.5 0 0 1-.5-.865Zm-.89 1.257a.5.5 0 0 1 .04.706A5.478 5.478 0 0 0 2.56 7a.5.5 0 0 1-1 0c0-1.664.626-3.184 1.655-4.333a.5.5 0 0 1 .706-.04ZM1.915 8.02a.5.5 0 0 1 .346.616l-.779 2.767a.5.5 0 1 1-.962-.27l.778-2.767a.5.5 0 0 1 .617-.346Zm12.15.481a.5.5 0 0 1 .49.51c-.03 1.499-.161 3.025-.727 4.533l-.07.187a.5.5 0 0 1-.936-.351l.07-.187c.506-1.35.634-2.74.663-4.202a.5.5 0 0 1 .51-.49Z" />
                             </svg>
-                            Clave</button>
+                            Password
+                        </a>
                     </li>
                 </ul>
             </div>

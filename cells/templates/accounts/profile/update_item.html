@@ -1,5 +1,5 @@
 {% extends 'cell_index.html' %}
-{% block title %}Actualizar articulo{% endblock title %}
+{% block title %}Update Item{% endblock title %}
 {% load widget_tweaks %}
 
 {% block content %}
@@ -26,7 +26,7 @@
             <div class="row row-cols-1 container">
                 <div class="col p-3">
                     <li class="list-unstyled">
-                        <label for="inputModelName" class="for-label">Nombre del modelo</label>
+                        <label for="inputModelName" class="for-label">Model</label>
                     </li>
                     <li class="list-unstyled">
                         {% if form.model_name.errors %}
@@ -41,7 +41,7 @@
             <div class="row row-cols-1 container">
                 <div class="col pb-3">
                     <li class="list-unstyled">
-                        <label for="inputPrice" class="form-label">Precio</label>
+                        <label for="inputPrice" class="form-label">Price</label>
                     </li>
                     <li class="list-unstyled">
                         {% if form.price.errors %}
@@ -56,7 +56,7 @@
             <div class="row row-cols-1 container">
                 <div class="col pb-3">
                     <li class="list-unstyled">
-                        <label for="inputImage" class="form-label">Imagen</label>
+                        <label for="inputImage" class="form-label">Image</label>
                     </li>
                     <li class="list-unstyled">
                         {% if form.image.errors %}
@@ -71,7 +71,7 @@
             <div class="row row-cols-1 container">
                 <div class="col pb-3">
                     <li class="list-unstyled">
-                        <label for="inputDescription" class="form-label">Descripción</label>
+                        <label for="inputDescription" class="form-label">Description</label>
                     </li>
                     <li class="list-unstyled">
                         {% if form.description.errors %}
@@ -85,7 +85,7 @@
             </div>
 
             <div class="container text-end">
-                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </div>
         </form>
     </div>
