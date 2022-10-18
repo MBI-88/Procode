@@ -6,9 +6,9 @@
 {% block content %}
 <section class="bg-profile">
     <div style="height: 5rem;"></div>
-    <div class="row-cols-lg-2  row-md-2 row-g-2 row-cols-sm-1 pt-2 d-lg-flex d-md-flex d-g-flex">
+    <div class="d-lg-flex d-md-block d-sm-block  gap-3">
         <!--Column 1-->
-        <div class="col-lg-3 col-sm-6 col-md-3 col-g-3 p-2 me-0">
+        <div class="container">
             {% if messages %}
             <!--Message-->
             {% for mess in messages %}
@@ -26,13 +26,12 @@
             {% endif %}
             <!--User information-->
             <div class="card mb-3 text-light border-0 bg-transparent shadow">
-                <div
-                    class="row row-cols-lg-2 row-cols-md-1 row-cols-sm-1 g-0 card-bg d-md-block d-sm-block d-lg-flex d-g-flex">
-                    <div class="col-lg-4 col-sm-1 col-md-8">
+                <div class="d-lg-flex d-md-flex d-sm-block gap-3 card-bg">
+                    <div class="p-4">
                         <img src=" {% if user.profile.image %} {{ user.profile.image.url }} {% else %} '' {% endif %}"
-                            class="img-fluid rounded-circle p-lg-1 p-g-2 p-md-3 p-sm-5" alt="No picture">
+                            class="img-thumbnail rounded-circle p-2 bg-transparent" alt="No picture">
                     </div>
-                    <div class="col-lg-8 col-sm-1 col-md-8">
+                    <div class="p-2">
                         <div class="card-body  ">
                             <h5 class="card-title"> {{ user.username }} </h5>
                             <p class="card-text">Name: {{ user.first_name }} </p>
@@ -104,12 +103,12 @@
         </div>
         <!--Column 2-->
         <!--Items block-->
-        <div class="col-lg-9 col-sm-6 col-md-9 cols-g-9  p-2 container">
-            <form class="d-flex w-50 pb-3" method="GET" action="">
+        <div class="container">
+            <form class=" bg-transparent" method="GET" action="">
                 <input class="form-control me-2 shadow" id="id-search" onkeydown=takeKeypress(event) type="search"
                     placeholder="Buscar..." aria-label="Search" name="search">
             </form>
-            <div class="row row-cols-lg-5 row-cols-sm-1 row-cols-md-9 row-cols-g-4 p-1 text-light"
+            <div class="row p-2 text-light"
                 style="height: 50rem;overflow:scroll" id="items-ajax" onscroll=scrollInf()>
                 {% include 'accounts/profile/user_items_list.html' %}
             </div>

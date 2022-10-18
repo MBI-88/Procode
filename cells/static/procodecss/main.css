@@ -77,21 +77,19 @@
 
 .middle-bg-1 {
      background-color: #f27405;
+     max-height: max-content;
 }
 
 .middle-bg-2 {
      z-index: -2;
      height: 30rem;
-     background: url('../img/img_presentation/servers.jpg') no-repeat center;
+     background: url('../img/img_presentation/servers-small.jpg') no-repeat center;
      background-attachment: fixed;
 }
 
-@media screen and (max-width: 70rem) {
+@media screen and (min-width: 450px) {
      .middle-bg-2 {
-          z-index: -2;
-          height: 60rem;
-          background: url('../img/img_presentation/servers-small.jpg') no-repeat center;
-          background-attachment: fixed;
+          background: url('../img/img_presentation/servers.jpg') no-repeat center;
      }
 }
 
@@ -168,8 +166,6 @@
  
 }
 
-
-
 .bg-verticalsearch {
      background: #1b1384;
      border-radius: 0% 0% 3% 3%;
@@ -207,12 +203,12 @@
 }
 
 .img-bg {
-     background: url('../img/img_presentation/friends.jpg') no-repeat center;
+     background: url('../img/img_presentation/friends-small.jpg') no-repeat center;
 }
 
-@media screen and (max-width: 70rem) {
+@media screen and (min-width: 450px) {
      .img-bg {
-          background: url('../img/img_presentation/friends-small.jpg') no-repeat center;
+          background: url('../img/img_presentation/friends.jpg') no-repeat center;
      }
 }
 
@@ -242,17 +238,15 @@
 
 .img-bg-who {
      height: 30rem;
-     background: url('../img/img_presentation/venue-bg.jpg') no-repeat center;
+     background: url('../img/img_presentation/venue-bg-small.jpg') no-repeat center;
      background-attachment: fixed;
 
 }
 
-@media screen and (max-width: 70rem) {
+@media screen and (min-width: 420px) {
      .img-bg-who {
-          height: 30rem;
-          background: url('../img/img_presentation/venue-bg-small.jpg') no-repeat center;
-          background-attachment: fixed;
-
+          background: url('../img/img_presentation/venue-bg.jpg') no-repeat center;
+       
      }
 }
 
@@ -287,13 +281,4 @@
           opacity: 0;
      }
 
-}
-
-.layout-reverse {}
-
-@media screen and (max-width: 70rem) {
-     .layout-reverse {
-          display: flex;
-          flex-direction: column-reverse;
-     }
 }

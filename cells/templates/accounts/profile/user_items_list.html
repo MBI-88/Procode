@@ -1,17 +1,18 @@
 {% for item in items %}
-<div class="col-lg-5 col-md-8 col-g-3 col-sm-6">
-  <div class="text-black-50 shadow bg-gradient border-5">
-    <div class="container d-lg-flex d-g-flex d-md-flex d-sm-block p-4">
-      <div class="col-lg-3 col-md-8 col-sm-6">
-        <img src=" {% if item.image %} {{ item.image.url }} {% else %} '' {% endif %}" class="card-img-top img-fluid p-1 rounded" alt="No picture">
+<div class="col-lg-9 col-md-12 col-sm-12 pb-4">
+  <div class="text-black-50 shadow bg-gradient border-5 rounded-4">
+    <div class="d-lg-block d-md-block  d-sm-block p-4">
+      <div class="p-3">
+        <img src=" {% if item.image %} {{ item.image.url }} {% else %} '' {% endif %}"
+          class="card-img-top img-fluid p-1 rounded" alt="No picture">
       </div>
-      <div class="col-lg-0 col-md-12 col-sm-6 pb-4">
-        <div class="card-body w-75  p-sm-0 p-lg-1 p-g-1 p-md-2">
+      <div class="pb-4">
+        <div class="card-body w-auto  p-sm-0 p-lg-1 p-g-1 p-md-2">
           <h5 class="card-title"> {{ item.model_name }} </h5>
           <p class="card-text">Updated: {{ item.updated_date }}</p>
           <p class="card-text">Price: {{ item.price }} $</p>
           <p class="card-text">Description:
-          <div style="overflow:scroll ;height: 5em; border:1px;border-radius:5%;"> {{ item.description }}</div>
+          <div style="border:1px;border-radius:5%;"> {{ item.description }}</div>
           </p>
         </div>
         <ul class="nav d-lg-flex d-g-flex d-sm-block">
@@ -28,7 +29,7 @@
           </li>
           <li class="nav-item p-2">
             <a class="btn btn-primary zoon" id="delete-{{ item.pk }}" data-pk="{{item.pk}}" data-bs-toggle="modal"
-               data-bs-target="#modalblock">
+              data-bs-target="#modalblock">
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-recycle"
                 viewBox="0 0 16 16">
                 <path

@@ -81,8 +81,8 @@
           <ul class="navbar-nav mb-2 mb-lg-0">
             {% if user.is_authenticated %}
             <li class="nav-item">
-              <a href=" {% url 'cells:logout' %} " class="nav-link text-dark zoon" data-bs-toogle="tooltip" data-bs-html="true"
-                title="Logout">
+              <a href=" {% url 'cells:logout' %} " class="nav-link text-dark zoon" data-bs-toogle="tooltip"
+                data-bs-html="true" title="Logout">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="" class="bi bi-box-arrow-right"
                   viewBox="0 0 16 16">
                   <path fill-rule="evenodd"
@@ -146,10 +146,10 @@
     <div style="height: 10rem;"></div>
     <!--Images-->
     <div class="middle-bg-1 shadow" style="height: 23rem">
-      <div class="d-lg-flex d-md-block d-sm-block" id="block-1">
-        <div class="text-center pb-3">
-          <h5 class="h5-h-100 text-light text-wrap p-4" id="text-inter1" hidden>
-            <p class="fs-5 fw-lighter pt-4">
+      <div class="d-lg-flex d-md-block d-sm-block align-content-center" id="block-1">
+        <div class="text-center pt-3">
+          <h5 class="h5-h-100 text-light text-wrap p-3" id="text-inter1" hidden>
+            <p class="fs-5 fw-lighter">
               Trabajo y eficiencia nos caracterizan.
               Nos enfocamos en los pequeños detalles.
               Creemos que los pequeños detalles son la clave
@@ -159,9 +159,9 @@
             </p>
           </h5>
         </div>
-        <div class="text-center p-sm-4">
+        <div class="text-center pt-3">
           <img src="{% static 'img/img_presentation/working.jpg' %}" alt=""
-            class="img-thumbnail rounded-circle w-75 shadow" id="img-inter1" loading="lazy" hidden>
+            class="img-fluid rounded-circle bg-transparent w-50 shadow" id="img-inter1" loading="lazy" hidden>
         </div>
       </div>
     </div>
@@ -183,8 +183,11 @@
     </div>
     <div style="height: 5rem;"></div>
     <div class="ps-4 pe-4">
-      <div class="container d-lg-flex d-md-block d-sm-block align-items-center gap-2 border-1 rounded-4 shadow p-4 
-        layout-reverse">
+      <div class="container d-lg-flex d-md-block d-sm-block align-items-center gap-2 border-1 rounded-4 shadow p-4">
+        <div class="text-center">
+          <img src=" {% static 'img/img_presentation/services.jpg' %} " alt="" class="img-thumbnail rounded-4  "
+            loading="lazy" style="width: 18rem ;height: 8rem ;">
+        </div>
         <div class="text-center">
           <h5 class="h5-h-100 text-black-50 text-wrap p-1 mt-3">
             <p class="fs-5 fw-light">
@@ -197,10 +200,6 @@
               por nuestra cuenta
             </p>
           </h5>
-        </div>
-        <div class="text-center">
-          <img src=" {% static 'img/img_presentation/services.jpg' %} " alt="" class="img-thumbnail rounded-4  "
-            loading="lazy" style="width: 18rem ;height: 8rem ;">
         </div>
       </div>
       <div style="height: 3rem;"></div>
@@ -227,11 +226,11 @@
         </div>
       </div>
     </div>
-    <div class="row row-cols-lg-2 row-cols-g-2 row-cols-md-2 row-cols-sm-1 middle-bg-1 shadow"
+    <div class="row row-cols-lg-2 row-cols-md-1 row-cols-sm-1 middle-bg-1 shadow"
       style="height: 23rem;margin-top: 10rem;">
-      <div class="col-lg-5 col-g-5 col-sm-1 text-center pb-5">
-        <h5 class="h5-h-100 text-light text-wrap p-4">
-          <p class="fs-5 fw-lighter pt-4">
+      <div class="col-lg-5 col-sm-12 text-center pt-3">
+        <h5 class="h5-h-100 text-light text-wrap p-3">
+          <p class="fs-5 fw-lighter">
             Trabajamos con tecnologías emergentes.
             Nos mantenemos al tanto de los últimos acontecimientos y
             necesidades de nuestros usuarios. Brindamos servicios
@@ -239,7 +238,7 @@
           </p>
         </h5>
       </div>
-      <div class="col-lg-7 col-g-5 col-sm-1 text-center  p-lg-5 p-sm-5 p-md-3 pb-3">
+      <div class="col-lg-7 col-sm-12 text-center pt-3">
         <div id="mainSlider" class="carousel slide carousel-fade pt-2 pb-2" data-bs-ride="carousel">
           <div class="carousel-inner" id="img-inter1">
             <div class="carousel-item active">
