@@ -26,13 +26,14 @@ import re
 
 
 class Login(ObtainAuthToken):
-    """_summary_
+    """
+    Login, api view for login user 
 
     Args:
-        ObtainAuthToken (_type_): Session Token for login
+        ObtainAuthToken (object): Session Token for login
 
     Returns:
-        _type_: Response json
+        Object: Response json
     """
     authentication_classes = ()
     permission_classes = ()
@@ -63,13 +64,14 @@ class Login(ObtainAuthToken):
 
 # Logout (Register) ok
 class Logout(APIView):
-    """_summary_
+    """
+    Logout, api view for loging out user
 
     Args:
-        APIView (_type_): Log out 
+        APIView (object): Log out 
 
     Returns:
-        _type_: Response Json
+        Object: Response Json
     """
     queryset = Session.objects.all()
     http_method_names = ['get']
@@ -90,13 +92,14 @@ class Logout(APIView):
 
 # Register (Register) ok
 class Register(APIView):
-    """_summary_
+    """
+    Register, api view for registering user
 
     Args:
-        APIView (_type_): Resgister user only (post method)
+        APIView (object): Resgister user only (post method)
 
     Returns:
-        _type_: Response json
+        Object: Response json
     """
     authentication_classes = ()
     permission_classes = ()
@@ -128,13 +131,14 @@ class Register(APIView):
 
 # List Items (Dashboard) ok
 class ShowItems(APIView):
-    """_summary_
+    """
+    ShowItems, api view for showing items
 
     Args:
-        APIView (_type_): Show items only (get method)
+        APIView (object): Show items only (get method)
 
     Returns:
-        _type_: Response json
+        Object: Response json
     """
     authentication_classes = ()
     permission_classes = ()
@@ -184,13 +188,14 @@ class ShowItems(APIView):
 
 # Detail item (Dashboar) ok
 class DetailItem(APIView):
-    """_summary_
+    """
+    DetailItem, api view for showing detail items
 
     Args:
-        APIView (_type_): Deail item only (get method)
+        APIView (object): Deail item only (get method)
 
     Returns:
-        _type_: Response json
+        Object: Response json
     """
     authentication_classes = ()
     permission_classes = ()
@@ -222,13 +227,14 @@ class DetailItem(APIView):
 
 # Create Item (Profile) ok
 class ItemProfile(APIView):
-    """_summary_
+    """
+    ItemProfile, api view for doing CRUD
 
     Args:
-        APIView (_type_): Item of user only (post,delete,put method)
+        APIView (object): Item of user only (post,delete,put method)
 
     Returns:
-        _type_: Response json
+        Object: Response json
     """
     serializer_class = ShopingCellModelListSerializer
     queryset = ShopCellModel
@@ -272,13 +278,14 @@ class ItemProfile(APIView):
 
 # Show Items (Profile) ok
 class ShowItemProfile(ShowItems):
-    """_summary_
-
+    """
+    ShowItemProfile, api view for showing user's items
+    
     Args:
         ShowItems (_type_): Show item of users only (get method)
 
     Returns:
-        _type_: Response json
+        Object: Response json
     """
     authentication_classes = (TokenAuthentication,)
 
@@ -307,13 +314,14 @@ class ShowItemProfile(ShowItems):
 
 # Profile (Profile) ok
 class Profile(APIView):
-    """_summary_
+    """
+    Profile, api view for doing CRUD
 
     Args:
         APIView (_type_): User profile only (get,put,delete method)
 
     Returns:
-        _type_: Response json
+        Object: Response json
     """
     serializer_class = UserUpdateSerializer
     http_method_names = ['get', 'put', 'delete']
@@ -366,13 +374,14 @@ class Profile(APIView):
 
 # Profile Change password (Profile) ok
 class ChangePassword(APIView):
-    """_summary_
+    """
+    ChangePassword, api view for changing user's password
 
     Args:
-        APIView (_type_): Change user password only (put method)
+        APIView (object): Change user password only (put method)
 
     Returns:
-        _type_: Response json
+        Object: Response json
     """
     http_method_names = ['put']
     serializer_class = UserChangePassSerializer
@@ -401,13 +410,14 @@ class ChangePassword(APIView):
 
 # Profile Changed password (Profile) pendiente
 class TokenLinkRecived(APIView):
-    """_summary_
+    """
+    TokenLinkRecived, api view for reciving token
 
     Args:
-        APIView (_type_): Token recived only (get method)
+        APIView (object): Token recived only (get method)
 
     Returns:
-        _type_: Response json
+        Object: Response json
     """
     http_method_names = ['get']
     authentication_classes = ()
@@ -430,13 +440,14 @@ class TokenLinkRecived(APIView):
 
 # Profile Restore password (Profile) ok
 class RestorePassword(APIView):
-    """_summary_
+    """
+    RestorePassowrd, api view for restoring user's password
 
     Args:
-        APIView (_type_): Restore user password only (post method)
+        APIView (object): Restore user password only (post method)
 
     Returns:
-        _type_: Response json
+        Object: Response json
     """
     http_method_names = ['post']
     queryset = User.objects.all()
