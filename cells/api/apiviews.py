@@ -37,6 +37,7 @@ class Login(ObtainAuthToken):
     authentication_classes = ()
     permission_classes = ()
     http_method_names = ['post']
+    queryset = Session.objects.all()
 
     def post(self, request, *args, **kwargs) -> Response:
         login_s = self.serializer_class(
@@ -44,6 +45,12 @@ class Login(ObtainAuthToken):
         if login_s.is_valid():
             user = login_s.validated_data['user']
             user_s = UserSerializer(user)
+            all_sessions = self.queryset.filter(expire_date__gte=datetime.now())
+            for session in all_sessions:
+                session_id = session.get_decoded()
+                if user.id == int(session_id.get('_auth_user_id')):
+                    session.delete()
+                    return Response({'message':'A double session was attempted'})
             token, created = Token.objects.get_or_create(user=user)
             if created:
                 return Response(
@@ -72,7 +79,7 @@ class Logout(APIView):
         user = token.user
         all_sessions = self.queryset.filter(expire_date__gte=datetime.now())
         for session in all_sessions:
-            session_data = session.get_decode()
+            session_data = session.get_decoded()
             if user.id == int(session_data.get('_auth_user_id')):
                 session.delete()
         token.delete()

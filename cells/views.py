@@ -7,6 +7,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.decorators import method_decorator
 from django.views.generic import View
+from django.contrib.sessions.models import Session
 from django.http import HttpResponse
 from .forms import (LoginForm, UserRegistrationForm, DeleteItemForm, UpdateItemForm,
                     DeleteUserForm, UpdateUserForm, ChangePasswordForm, RestorePassowrdForm)
@@ -18,6 +19,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from threading import Thread
 import re
+import datetime
 
 # ************************************* Email tool ************************************************
 
@@ -35,7 +37,7 @@ def sendEmail(subject: str, message: dict, recipient_list: str, name_thred: str)
     """
 
     thred = Thread(target=send_mail, args=[
-                  subject, message, 'procode@example.com', [recipient_list], True], name=name_thred)
+        subject, message, 'procode@example.com', [recipient_list], True], name=name_thred)
     thred.start()
 
 
@@ -85,6 +87,7 @@ class LoginUser(View):
     template_name = 'accounts/registration/login.html'
     form_class = LoginForm
     context_object_name = 'form'
+    queryset = Session.objects.all()
 
     def get(self, request: str, *args, **kwargs) -> HttpResponse:
         form = self.form_class()
@@ -97,6 +100,14 @@ class LoginUser(View):
             user = authenticate(
                 request, username=cd['username'], password=cd['password'])
             if user is not None:
+                all_sessions = self.queryset.filter(expire_date__gte = datetime.datetime.now())
+                for session in all_sessions:
+                    session_id = session.get_decoded()
+                    if user.id == int(session_id.get('_auth_user_id')):
+                        session.delete()
+                        messages.add_message(request, level=messages.WARNING,
+                                             message='Se intentó una doble sesión')
+                        return render(request, self.template_name, {self.context_object_name: form})
                 login(request, user=user)
                 return HttpResponse('302')
             messages.add_message(request, level=messages.INFO,
@@ -216,9 +227,10 @@ class ShowItems(View):
         pattern = re.compile("[a-zA-Z0-9\s]+")
         if search is not None and pattern.search(search):
             items = self.model.objects.defer(
-                'created_date','description','slug').filter(model_name__icontains=search)
+                'created_date', 'description', 'slug').filter(model_name__icontains=search)
         else:
-            items = self.model.objects.defer('created_date','description','slug').all()
+            items = self.model.objects.defer(
+                'created_date', 'description', 'slug').all()
         paginator = Paginator(items, 15)
         try:
             items = paginator.page(page)
@@ -249,7 +261,8 @@ class DetailItem(View):
 
     def get(self, request: str, *args, **kwargs) -> HttpResponse:
         pk = kwargs['pk']
-        item = self.model.objects.select_related('profile__user').defer('created_date','slug').get(pk=pk)
+        item = self.model.objects.select_related(
+            'profile__user').defer('created_date', 'slug').get(pk=pk)
         return render(request, self.template_name, {self.context_object_name: item})
 
 
@@ -321,7 +334,7 @@ class UpdateItem(View):
     @method_decorator(login_required)
     def post(self, request: str, *args, **kwargs) -> HttpResponse:
         user_item = self.model.objects.select_related('profile__user').defer(
-            'model_name','image','description','price','created_date','slug','updated_date').get(pk=kwargs['pk'])
+            'model_name', 'image', 'description', 'price', 'created_date', 'slug', 'updated_date').get(pk=kwargs['pk'])
         if request.user.username == user_item.profile.user.username:
             form = self.form_class(
                 request.POST, files=request.FILES, instance=user_item)
@@ -363,7 +376,7 @@ class DeleteItem(View):
     def post(self, request: str, *args, **kwargs) -> HttpResponse:
         form = self.form_class(request.POST)
         user_item = self.model.objects.select_related('profile__user').defer(
-            'model_name','image','description','price','created_date','slug','updated_date').get(pk=kwargs['pk'])
+            'model_name', 'image', 'description', 'price', 'created_date', 'slug', 'updated_date').get(pk=kwargs['pk'])
         if request.user.username == user_item.profile.user.username:
             if form.is_valid():
                 self.model.objects.filter(pk=kwargs['pk']).delete()
@@ -398,11 +411,11 @@ class Profile(View):
         pattern = re.compile("[a-zA-Z0-9\s]+")
         if search is not None and pattern.search(search):
             items = self.model.objects.select_related('profile__user').defer(
-                'description','slug','created_date').filter(
+                'description', 'slug', 'created_date').filter(
                 profile=request.user.profile).filter(model_name__icontains=search)
         else:
             items = self.model.objects.select_related('profile__user').defer(
-                'description','slug','created_date').filter(profile=request.user.profile)
+                'description', 'slug', 'created_date').filter(profile=request.user.profile)
         paginator = Paginator(items, 15)
         try:
             items = paginator.page(page)
@@ -479,7 +492,8 @@ class UpdateProfile(View):
                     'protocol': request.scheme,
                 })
                 #sendEmail(subject, message, cd['email'], cd['username'])
-                messages.add_message(request, level=messages.SUCCESS, message="Perfil actualizado.")
+                messages.add_message(
+                    request, level=messages.SUCCESS, message="Perfil actualizado.")
                 # redireccion
                 return redirect('cells:logout')
             except:
@@ -595,8 +609,8 @@ class RestorePassword(View):
                 user = self.model.objects.get(email=cd['email'])
                 #user.is_active = False
                 # hacerlo mas fuerte para producción
-                #user.set_password('password1')
-                #user.save()
+                # user.set_password('password1')
+                # user.save()
                 # email
                 subject = 'ProC0d3 Restablecimiento de credenciales'
                 message = render_to_string('email/email_restored.html', {
