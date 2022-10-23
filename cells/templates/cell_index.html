@@ -138,17 +138,17 @@
     {% endfor %}
     {% endif %}
     <!--ProC0d3 presentation-->
-    <div class="row row-cols-1">
-      <div class="text-center procode-background" style="height: 30rem">
-        <h1 class="procode-title  procode-pres1">© PR0C0D3|Team</h1>
+    <div class="container-fluid procode-background" style="height: 30rem">
+      <div class="text-center " >
+        <h1 class="procode-title procode-pres1">© PR0C0D3|Team</h1>
       </div>
     </div>
     <div style="height: 10rem;"></div>
     <!--Images-->
-    <div class="middle-bg-1 shadow" style="height: 23rem">
+    <div class="shadow" style="height: 30rem;background-color: #f27405;">
       <div class="d-lg-flex d-md-block d-sm-block align-content-center" id="block-1">
         <div class="text-center pt-3">
-          <h5 class="h5-h-100 text-light text-wrap p-3" id="text-inter1" hidden>
+          <h5 class="h5-h-100 text-light text-wrap ps-3 pe-3 pt-3" id="text-inter1" hidden>
             <p class="fs-5 fw-lighter">
               Trabajo y eficiencia nos caracterizan.
               Nos enfocamos en los pequeños detalles.
@@ -159,9 +159,9 @@
             </p>
           </h5>
         </div>
-        <div class="text-center pt-3">
+        <div class="text-center pt-sm-1 pt-lg-5">
           <img src="{% static 'img/img_presentation/working.jpg' %}" alt=""
-            class="img-fluid rounded-circle bg-transparent w-50 shadow" id="img-inter1" loading="lazy" hidden>
+            class="img rounded-5  w-50" id="img-inter1" loading="lazy" hidden>
         </div>
       </div>
     </div>
@@ -226,10 +226,10 @@
         </div>
       </div>
     </div>
-    <div class="row row-cols-lg-2 row-cols-md-1 row-cols-sm-1 middle-bg-1 shadow"
-      style="height: 23rem;margin-top: 10rem;">
+    <div class="row row-cols-lg-2 row-cols-md-1 row-cols-sm-1 shadow"
+      style="height: 30rem;margin-top: 10rem;background-color: #022758;">
       <div class="col-lg-5 col-sm-12 text-center pt-3">
-        <h5 class="h5-h-100 text-light text-wrap p-3">
+        <h5 class="h5-h-100 text-light text-wrap ps-3 pe-3 pt-3">
           <p class="fs-5 fw-lighter">
             Trabajamos con tecnologías emergentes.
             Nos mantenemos al tanto de los últimos acontecimientos y
@@ -238,11 +238,11 @@
           </p>
         </h5>
       </div>
-      <div class="col-lg-7 col-sm-12 text-center pt-3">
-        <div id="mainSlider" class="carousel slide carousel-fade pt-2 pb-2" data-bs-ride="carousel">
+      <div class="col-lg-7 col-sm-12 text-center pt-sm-1 pt-lg-5">
+        <div id="mainSlider" class="carousel slide carousel-fade pb-2" data-bs-ride="carousel">
           <div class="carousel-inner" id="img-inter1">
             <div class="carousel-item active">
-              <img src=" {% static 'img/technology/angular-logo.jpg' %} " class="img-thumbnail rounded-pill w-25 h-25"
+              <img src=" {% static 'img/technology/angular-logo.jpg' %} " class="img-thumbnail rounded-pill w-25"
                 alt="" loading="lazy">
             </div>
             <div class="carousel-item">

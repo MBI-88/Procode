@@ -16,9 +16,14 @@
 
 
 .procode-background {
-     background-color: #022758;
+     background: url('../img/img_presentation/digitization-small.jpg') no-repeat center;
      box-shadow: 1px 2px 10px rgba(68, 67, 67, 0.744);
+}
 
+@media screen and (min-width: 450px) {
+     .procode-background {
+          background: url('../img/img_presentation/digitization.jpg') no-repeat center;
+     }
 }
 
 .procode-title {
@@ -34,7 +39,7 @@
 @media screen and (max-width: 720px) {
      .procode-title {
           font-size: 2.5rem;
-          padding-top: 40%;
+          padding-top: 50%;
      }
 
 }
@@ -66,7 +71,6 @@
      position: fixed;
      z-index: 5;
      background-color: transparent;
-     color: #f27405;
 }
 
 @media screen and (max-width: 70rem) {
@@ -162,8 +166,8 @@
 }
 
 .bg-profile {
-     background: linear-gradient(#eea25f,#507cbd) ;
- 
+     background: linear-gradient(#eea25f, #507cbd);
+
 }
 
 .bg-verticalsearch {
@@ -246,7 +250,7 @@
 @media screen and (min-width: 420px) {
      .img-bg-who {
           background: url('../img/img_presentation/venue-bg.jpg') no-repeat center;
-       
+
      }
 }
 
