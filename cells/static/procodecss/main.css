@@ -27,7 +27,7 @@
 }
 
 .procode-title {
-     font-weight: 500;
+     font-weight: 800;
      font-family: 'Gill Sans';
      font-style: 0 45;
      font-size: 5rem;
@@ -42,6 +42,13 @@
           padding-top: 50%;
      }
 
+}
+
+.procode-navbar-title {
+     color: #f27405;
+     font-family: sans-serif;
+     font-size: 2.2em;
+     font-weight: bolder;
 }
 
 .zoon {
@@ -59,7 +66,7 @@
 }
 
 .navbar-bg {
-     background: #fffA;
+     background: transparent;
      width: 100%;
      position: fixed;
      z-index: 5;
@@ -70,12 +77,12 @@
      width: 100%;
      position: fixed;
      z-index: 5;
-     background-color: transparent;
+     background: #022758;
 }
 
 @media screen and (max-width: 70rem) {
      .navbar-onscroll {
-          background: #fffA;
+          background: #022758;
      }
 }
 
@@ -93,7 +100,10 @@
 
 @media screen and (min-width: 450px) {
      .middle-bg-2 {
+          z-index: -2;
+          height: 30rem;
           background: url('../img/img_presentation/servers.jpg') no-repeat center;
+          background-attachment: fixed;
      }
 }
 
@@ -156,12 +166,6 @@
 .card-bg {
      background: #0b5ed7;
      border-radius: 3% 3% 0 0;
-
-}
-
-#items-ajax {
-     border-radius: 5%;
-     margin: solid 5%;
 
 }
 
@@ -249,7 +253,9 @@
 
 @media screen and (min-width: 420px) {
      .img-bg-who {
+          height: 30rem;
           background: url('../img/img_presentation/venue-bg.jpg') no-repeat center;
+          background-attachment: fixed;
 
      }
 }
